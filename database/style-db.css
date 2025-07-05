@@ -1,0 +1,187 @@
+/* Merthtmlcss Database Arayüzü CSS - Gelişmiş */
+:root {
+  --primary: #007bff;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --danger: #dc3545;
+  --warning: #ffc107;
+  --info: #17a2b8;
+  --light: #f8f9fa;
+  --dark: #343a40;
+  --background: #f5f5f5;
+  --foreground: #fff;
+  --text: #222;
+  --border-radius: 10px;
+  --transition: 0.3s cubic-bezier(.4,0,.2,1);
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+body {
+  background: var(--background);
+  color: var(--text);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  transition: background 0.4s, color 0.4s;
+}
+.dark-theme {
+  --background: #181c22;
+  --foreground: #23272f;
+  --text: #f1f1f1;
+  --primary: #0d6efd;
+  --secondary: #adb5bd;
+  --success: #51cf66;
+  --danger: #ff6b6b;
+  --warning: #ffd43b;
+  --info: #339af0;
+}
+h1, h2, h3, h4 {
+  color: var(--primary);
+  margin-top: 0;
+  letter-spacing: 0.5px;
+}
+.step, .test-result, .info, .success, .error, .warning, .download {
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  background: var(--foreground);
+  margin-bottom: 18px;
+  padding: 20px 22px;
+  transition: background 0.4s, color 0.4s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.success { border-left: 6px solid var(--success); color: var(--success); }
+.error { border-left: 6px solid var(--danger); color: var(--danger); }
+.warning { border-left: 6px solid var(--warning); color: #856404; }
+.info { border-left: 6px solid var(--info); color: var(--info); }
+.download { border-left: 6px solid var(--primary); }
+button, .btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 11px 26px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 8px 0;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  position: relative;
+  overflow: hidden;
+  outline: none;
+  user-select: none;
+}
+button:active, .btn:active {
+  background: var(--dark);
+  color: var(--warning);
+}
+button:focus-visible, .btn:focus-visible {
+  outline: 2px solid var(--info);
+  outline-offset: 2px;
+}
+button .ripple, .btn .ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 0.5s linear;
+  background: rgba(255,255,255,0.5);
+  pointer-events: none;
+}
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+.theme-toggle {
+  position: fixed;
+  top: 18px;
+  right: 24px;
+  z-index: 1000;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  font-size: 1.4rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.theme-toggle:hover {
+  background: var(--info);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background: var(--foreground);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: background 0.4s;
+}
+table th, table td {
+  padding: 13px 15px;
+  border-bottom: 1px solid #e9ecef;
+  text-align: left;
+  transition: background 0.3s, color 0.3s;
+}
+table th {
+  background: var(--light);
+  color: var(--primary);
+  font-weight: 600;
+}
+table tr:last-child td {
+  border-bottom: none;
+}
+table tr:hover td {
+  background: rgba(0,123,255,0.07);
+  transition: background 0.2s;
+}
+::-webkit-scrollbar {
+  width: 9px;
+  background: var(--background);
+  transition: background 0.3s;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--primary), var(--info));
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+@media (max-width: 700px) {
+  .step, .test-result, .info, .success, .error, .warning, .download {
+    padding: 11px 5px;
+    font-size: 0.98rem;
+  }
+  table th, table td {
+    padding: 8px 6px;
+    font-size: 0.95rem;
+  }
+  .theme-toggle {
+    top: 8px;
+    right: 8px;
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+  }
+}
+.fade-in {
+  animation: fadeIn 0.7s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Bildirim kapama animasyonu */
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; height: 0; margin: 0; padding: 0; }
+}
+.close-anim {
+  animation: fadeOut 0.5s forwards;
+} 

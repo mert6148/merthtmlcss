@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+    <proje>
+        <isim>Merthtmlcss</isim>
+        <versiyon>3.0</versiyon>
+        <aciklama>Modern web geliştirme projesi - HTML, CSS, JavaScript ve backend teknolojileri</aciklama>
+        <tarih>2025</tarih>
+        <durum>Aktif Geliştirme</durum>
+    </proje>
+    
+    <gelistirici>
+        <isim>Mert</isim>
+        <rol>Full Stack Developer</rol>
+        <deneyim>3+ yıl</deneyim>
+        <email>mertdoganay437@gmail.com</email>
+        <telefon>+90 533 472 75 61</telefon>
+        <konum>Muğla, Türkiye</konum>
+        <hakkimda>Modern web teknolojileri konusunda tutkulu bir geliştirici. Kullanıcı deneyimi ve performans odaklı projeler geliştiriyorum.</hakkimda>
+    </gelistirici>
+    
+    <teknolojiler>
+        <frontend>
+            <teknoloji>HTML5</teknoloji>
+            <teknoloji>CSS3</teknoloji>
+            <teknoloji>JavaScript (ES6+)</teknoloji>
+            <teknoloji>React.js</teknoloji>
+            <teknoloji>Vue.js</teknoloji>
+            <teknoloji>Bootstrap 5</teknoloji>
+            <teknoloji>Tailwind CSS</teknoloji>
+            <teknoloji>Sass/SCSS</teknoloji>
+        </frontend>
+        
+        <backend>
+            <teknoloji>PHP 8</teknoloji>
+            <teknoloji>Python 3</teknoloji>
+            <teknoloji>Node.js</teknoloji>
+            <teknoloji>Laravel</teknoloji>
+            <teknoloji>Flask</teknoloji>
+            <teknoloji>Express.js</teknoloji>
+            <teknoloji>ASP.NET Core</teknoloji>
+        </backend>
+        
+        <veritabani>
+            <teknoloji>MySQL</teknoloji>
+            <teknoloji>PostgreSQL</teknoloji>
+            <teknoloji>MongoDB</teknoloji>
+            <teknoloji>SQLite</teknoloji>
+            <teknoloji>Redis</teknoloji>
+        </veritabani>
+        
+        <araclar>
+            <teknoloji>Git ve GitHub</teknoloji>
+            <teknoloji>Docker</teknoloji>
+            <teknoloji>VS Code</teknoloji>
+            <teknoloji>Postman</teknoloji>
+            <teknoloji>Figma</teknoloji>
+            <teknoloji>Adobe XD</teknoloji>
+        </araclar>
+    </teknolojiler>
+    
+    <sosyal_medya>
+        <platform platform="github">https://github.com/mert6148</platform>
+        <platform platform="linkedin">https://linkedin.com/in/merthtmlcss</platform>
+        <platform platform="twitter">https://x.com/MertDoganay61</platform>
+        <platform platform="instagram">https://instagram.com/doganay_mert_5092</platform>
+        <platform platform="youtube">https://www.youtube.com/@mert_doganay</platform>
+        <platform platform="discord">https://discord.gg/mert15005</platform>
+        <platform platform="telegram">https://t.me/merthtmlcss</platform>
+        <platform platform="facebook">https://facebook.com/merthtmlcss</platform>
+    </sosyal_medya>
+    
+    <projeler>
+        <proje>
+            <isim>E-Ticaret Platformu</isim>
+            <aciklama>Laravel ve Vue.js ile geliştirilmiş modern e-ticaret sitesi</aciklama>
+            <teknolojiler>Laravel, Vue.js, MySQL, Redis</teknolojiler>
+            <durum>Tamamlandı</durum>
+        </proje>
+        <proje>
+            <isim>Blog Sistemi</isim>
+            <aciklama>Flask ve SQLAlchemy ile geliştirilmiş blog platformu</aciklama>
+            <teknolojiler>Python, Flask, PostgreSQL</teknolojiler>
+            <durum>Geliştirme Aşamasında</durum>
+        </proje>
+        <proje>
+            <isim>Portfolio Sitesi</isim>
+            <aciklama>Modern ve responsive portfolio web sitesi</aciklama>
+            <teknolojiler>HTML5, CSS3, JavaScript, PHP, ython</teknolojiler>
+            <durum>Tamamlandı</durum>
+        </proje>
+    </projeler>
+    
+    <iletisim>
+        <adres>
+            <ulke>Türkiye</ulke>
+            <sehir>Muğla</sehir>
+            <ilce>Marmaris</ilce>
+            <tam_adres>Çıldır Mahallesi, 134. Sokak, No:123</tam_adres>
+        </adres>
+        <calisma_saatleri>
+            <gun>Pazartesi - Cuma: 09:00 - 18:00</gun>
+            <gun>Cumartesi: 10:00 - 16:00</gun>
+            <gun>Pazar: Kapalı</gun>
+        </calisma_saatleri>
+    </iletisim>
+</site> 

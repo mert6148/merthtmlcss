@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bilgi>
+    <yazar>
+        <isim>Mert</isim>
+        <unvan>Full Stack Developer</unvan>
+        <email>mert@merthtmlcss.com</email>
+        <website>https://merthtmlcss.com</website>
+        <bio>Modern web teknolojileri konusunda tutkulu bir geliştirici. Kullanıcı deneyimi ve performans odaklı projeler geliştiriyorum.</bio>
+    </yazar>
+    
+    <aciklama>Bu dosya, Merthtmlcss projesi için örnek XML içeriğidir. Blog yazıları, makaleler ve dinamik içerik yönetimi için kullanılır.</aciklama>
+    
+    <blog_yazilari>
+        <yazi>
+            <baslik>Modern Web Geliştirme Teknolojileri</baslik>
+            <alt_baslik>2024'te Öne Çıkan Framework'ler ve Araçlar</alt_baslik>
+            <yazar>Mert</yazar>
+            <tarih>2025-01-15</tarih>
+            <kategori>Web Geliştirme</kategori>
+            <etiketler>
+                <etiket>JavaScript</etiket>
+                <etiket>React</etiket>
+                <etiket>Vue.js</etiket>
+                <etiket>Frontend</etiket>
+            </etiketler>
+            <ozet>Modern web geliştirme dünyasında kullanılan en popüler teknolojiler ve framework'ler hakkında detaylı bir inceleme.</ozet>
+            <icerik>
+                <paragraf>Web geliştirme dünyası sürekli evrim geçiriyor. 2024 yılında öne çıkan teknolojiler arasında React, Vue.js ve Angular gibi modern framework'ler yer alıyor.</paragraf>
+                <paragraf>Bu teknolojiler, geliştiricilere daha hızlı ve etkili uygulama geliştirme imkanı sunuyor. Component-based mimari ve virtual DOM kavramları modern web uygulamalarının temelini oluşturuyor.</paragraf>
+            </icerik>
+            <okuma_suresi>5 dakika</okuma_suresi>
+            <goruntulenme>1250</goruntulenme>
+            <begeni>89</begeni>
+        </yazi>
+        
+        <yazi>
+            <baslik>CSS Grid ve Flexbox Rehberi</baslik>
+            <alt_baslik>Responsive Tasarım İçin Modern CSS Teknikleri</alt_baslik>
+            <yazar>Mert</yazar>
+            <tarih>2024-01-10</tarih>
+            <kategori>CSS</kategori>
+            <etiketler>
+                <etiket>CSS</etiket>
+                <etiket>Grid</etiket>
+                <etiket>Flexbox</etiket>
+                <etiket>Responsive</etiket>
+            </etiketler>
+            <ozet>CSS Grid ve Flexbox kullanarak modern ve responsive web tasarımları oluşturmanın püf noktaları.</ozet>
+            <icerik>
+                <paragraf>CSS Grid ve Flexbox, modern web tasarımının iki temel aracıdır. Grid, iki boyutlu düzenler için idealken, Flexbox tek boyutlu düzenler için mükemmeldir.</paragraf>
+                <paragraf>Bu iki teknolojiyi birlikte kullanarak, her cihazda mükemmel görünen responsive tasarımlar oluşturabilirsiniz.</paragraf>
+            </icerik>
+            <okuma_suresi>8 dakika</okuma_suresi>
+            <goruntulenme>980</goruntulenme>
+            <begeni>67</begeni>
+        </yazi>
+        
+        <yazi>
+            <baslik>API Geliştirme Best Practices</baslik>
+            <alt_baslik>RESTful API Tasarım Prensipleri</alt_baslik>
+            <yazar>Mert</yazar>
+            <tarih>2024-01-05</tarih>
+            <kategori>Backend</kategori>
+            <etiketler>
+                <etiket>API</etiket>
+                <etiket>REST</etiket>
+                <etiket>Backend</etiket>
+                <etiket>Node.js</etiket>
+            </etiketler>
+            <ozet>Modern ve ölçeklenebilir API'ler geliştirmek için uygulanması gereken best practice'ler ve tasarım prensipleri.</ozet>
+            <icerik>
+                <paragraf>RESTful API tasarımı, modern web uygulamalarının temelini oluşturur. Doğru HTTP metodları, status kodları ve endpoint tasarımı büyük önem taşır.</paragraf>
+                <paragraf>Güvenlik, performans ve ölçeklenebilirlik, API geliştirme sürecinde göz önünde bulundurulması gereken kritik faktörlerdir.</paragraf>
+            </icerik>
+            <okuma_suresi>12 dakika</okuma_suresi>
+            <goruntulenme>756</goruntulenme>
+            <begeni>45</begeni>
+        </yazi>
+    </blog_yazilari>
+    
+    <kategoriler>
+        <kategori>
+            <isim>Web Geliştirme</isim>
+            <aciklama>Frontend ve backend web geliştirme ile ilgili makaleler</aciklama>
+            <yazi_sayisi>15</yazi_sayisi>
+        </kategori>
+        <kategori>
+            <isim>CSS</isim>
+            <aciklama>CSS teknikleri, animasyonlar ve tasarım ipuçları</aciklama>
+            <yazi_sayisi>8</yazi_sayisi>
+        </kategori>
+        <kategori>
+            <isim>JavaScript</isim>
+            <aciklama>JavaScript programlama ve modern ES6+ özellikleri</aciklama>
+            <yazi_sayisi>12</yazi_sayisi>
+        </kategori>
+        <kategori>
+            <isim>Backend</isim>
+            <aciklama>Server-side programlama ve veritabanı yönetimi</aciklama>
+            <yazi_sayisi>10</yazi_sayisi>
+        </kategori>
+        <kategori>
+            <isim>Tutorial</isim>
+            <aciklama>Adım adım öğretici yazılar ve kod örnekleri</aciklama>
+            <yazi_sayisi>20</yazi_sayisi>
+        </kategori>
+    </kategoriler>
+    
+    <etiketler>
+        <etiket>HTML5</etiket>
+        <etiket>CSS3</etiket>
+        <etiket>JavaScript</etiket>
+        <etiket>React</etiket>
+        <etiket>Vue.js</etiket>
+        <etiket>Node.js</etiket>
+        <etiket>PHP</etiket>
+        <etiket>Python</etiket>
+        <etiket>MySQL</etiket>
+        <etiket>MongoDB</etiket>
+        <etiket>API</etiket>
+        <etiket>REST</etiket>
+        <etiket>Responsive</etiket>
+        <etiket>Performance</etiket>
+        <etiket>SEO</etiket>
+    </etiketler>
+    
+    <istatistikler>
+        <toplam_yazi>65</toplam_yazi>
+        <toplam_goruntulenme>15420</toplam_goruntulenme>
+        <toplam_begeni>892</toplam_begeni>
+        <ortalama_okuma_suresi>7 dakika</ortalama_okuma_suresi>
+        <en_populer_yazi>Modern Web Geliştirme Teknolojileri</en_populer_yazi>
+    </istatistikler>
+    
+    <yorumlar>
+        <yorum>
+            <yazar>Ahmet Yılmaz</yazar>
+            <email>ahmet@example.com</email>
+            <tarih>2024-01-16</tarih>
+            <mesaj>Harika bir yazı olmuş! CSS Grid konusunda çok faydalı bilgiler var. Teşekkürler.</mesaj>
+            <begeni>12</begeni>
+        </yorum>
+        <yorum>
+            <yazar>Ayşe Demir</yazar>
+            <email>ayse@example.com</email>
+            <tarih>2024-01-14</tarih>
+            <mesaj>API geliştirme yazınız çok açıklayıcıydı. Özellikle best practices kısmı çok faydalı oldu.</mesaj>
+            <begeni>8</begeni>
+        </yorum>
+    </yorumlar>
+</bilgi> 

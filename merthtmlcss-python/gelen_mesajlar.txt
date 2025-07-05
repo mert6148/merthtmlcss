@@ -1,0 +1,7 @@
+# Bu dosya, API üzerinden gelen iletişim mesajlarını saklar.
+Isim: Mert Doğanay
+Mesaj: Merhaba, Merthtmlcss projesi harika!
+---
+Isim: Ayşe Yılmaz
+Mesaj: API üzerinden mesaj göndermeyi test ediyorum.
+---

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<merthtmlcss>
+    <baslik>Merthtmlcss - Modern Web Geliştirme Platformu</baslik>
+    <aciklama>
+        Frontend, modern web geliştirme için HTML, CSS, JavaScript ve daha fazlasını bir araya getiren kapsamlı bir projedir. 
+        Bu projede, temel web teknolojilerini öğrenebilir ve kendi projelerinize ilham alabilirsiniz. 
+        Responsive tasarım, modern animasyonlar, tema desteği ve API entegrasyonu ile güçlendirilmiş 
+        tam özellikli bir web geliştirme platformu.
+    </aciklama>
+    <gelistirici>Mert Doğanay</gelistirici>
+    <iletisim>mertdoganay437@gmail.com</iletisim>
+    <sosyal>
+        <twitter>https://x.com/MertDoganay61</twitter>
+        <github>https://github.com/mert6148</github>
+        <youtube>https://www.youtube.com/@mert_doganay</youtube>
+        <linkedin>https://linkedin.com/in/mertdoganay</linkedin>
+        <instagram>https://instagram.com/mertdoganay</instagram>
+        <discord>https://discord.gg/mert15005</discord>
+    </sosyal>
+    <teknolojiler>
+        <frontend>
+            <teknoloji>HTML5</teknoloji>
+            <teknoloji>CSS3</teknoloji>
+            <teknoloji>JavaScript ES6+</teknoloji>
+            <teknoloji>React</teknoloji>
+            <teknoloji>Vue.js</teknoloji>
+            <teknoloji>TypeScript</teknoloji>
+            <teknoloji>Sass/SCSS</teknoloji>
+            <teknoloji>Tailwind CSS</teknoloji>
+        </frontend>
+        <backend>
+            <teknoloji>PHP 8.0+</teknoloji>
+            <teknoloji>Python 3.8+</teknoloji>
+            <teknoloji>Node.js</teknoloji>
+            <teknoloji>Laravel</teknoloji>
+            <teknoloji>Django</teknoloji>
+            <teknoloji>Express.js</teknoloji>
+        </backend>
+        <database>
+            <teknoloji>MySQL</teknoloji>
+            <teknoloji>PostgreSQL</teknoloji>
+            <teknoloji>SQLite</teknoloji>
+            <teknoloji>MongoDB</teknoloji>
+            <teknoloji>Redis</teknoloji>
+        </database>
+        <tools>
+            <teknoloji>Git</teknoloji>
+            <teknoloji>Docker</teknoloji>
+            <teknoloji>VS Code</teknoloji>
+            <teknoloji>Postman</teknoloji>
+            <teknoloji>Webpack</teknoloji>
+            <teknoloji>Vite</teknoloji>
+        </tools>
+    </teknolojiler>
+    <proje_bilgileri>
+        <versiyon>2.1.0</versiyon>
+        <son_guncelleme>2024-12-19</son_guncelleme>
+        <lisans>MIT</lisans>
+        <platform>Cross-platform</platform>
+        <desteklenen_tarayicilar>
+            <tarayici>Chrome 90+</tarayici>
+            <tarayici>Firefox 88+</tarayici>
+            <tarayici>Safari 14+</tarayici>
+            <tarayici>Edge 90+</tarayici>
+        </desteklenen_tarayicilar>
+        <minimum_php>8.0</minimum_php>
+        <minimum_python>3.8</minimum_python>
+        <minimum_node>16.0</minimum_node>
+    </proje_bilgileri>
+    <ozellikler>
+        <ozellik>Responsive Tasarım</ozellik>
+        <ozellik>Dark/Light Tema Desteği</ozellik>
+        <ozellik>Modern Animasyonlar</ozellik>
+        <ozellik>API Entegrasyonu</ozellik>
+        <ozellik>Veritabanı Yönetimi</ozellik>
+        <ozellik>Güvenlik Özellikleri</ozellik>
+        <ozellik>SEO Optimizasyonu</ozellik>
+        <ozellik>Performans Optimizasyonu</ozellik>
+        <ozellik>Erişilebilirlik Desteği</ozellik>
+        <ozellik>Çoklu Dil Desteği</ozellik>
+    </ozellikler>
+    <istatistikler>
+        <toplam_proje>15</toplam_proje>
+        <toplam_kullanici>1250</toplam_kullanici>
+        <toplam_indirme>8900</toplam_indirme>
+        <github_star>45</github_star>
+        <github_fork>12</github_fork>
+        <son_aktivite>2024-12-19</son_aktivite>
+    </istatistikler>
+    <dokumantasyon>
+        <baslangic_rehberi>docs/getting-started.md</baslangic_rehberi>
+        <api_dokumantasyonu>docs/api.md</api_dokumantasyonu>
+        <ornekler>docs/examples.md</ornekler>
+        <sss>docs/faq.md</sss>
+        <katkida_bulunma>docs/contributing.md</katkida_bulunma>
+    </dokumantasyon>
+    <gelistirme_ortami>
+        <ide>Visual Studio Code</ide>
+        <eklentiler>
+            <eklenti>Live Server</eklenti>
+            <eklenti>Prettier</eklenti>
+            <eklenti>ESLint</eklenti>
+            <eklenti>PHP Intelephense</eklenti>
+            <eklenti>Python</eklenti>
+        </eklentiler>
+        <versiyon_kontrol>Git</versiyon_kontrol>
+        <hosting>GitHub Pages</hosting>
+        <ci_cd>GitHub Actions</ci_cd>
+    </gelistirme_ortami>
+    <iletisim_bilgileri>
+        <email>mertdoganay437@gmail.com</email>
+        <website>https://merthtmlcss.com</website>
+        <blog>https://blog.merthtmlcss.com</blog>
+        <destek>https://support.merthtmlcss.com</destek>
+        <topluluk>https://community.merthtmlcss.com</topluluk>
+    </iletisim_bilgileri>
+    <gelecek_planlari>
+        <plan>PWA Desteği</plan>
+        <plan>Mikroservis Mimarisi</plan>
+        <plan>AI Entegrasyonu</plan>
+        <plan>Mobil Uygulama</plan>
+        <plan>Cloud Deployment</plan>
+        <plan>Real-time Özellikler</plan>
+    </gelecek_planlari>
+    <katkida_bulunanlar>
+        <katkida_bulunan>
+            <isim>Mert Doğanay</isim>
+            <rol>Ana Geliştirici</rol>
+            <katki>Proje liderliği ve ana geliştirme</katki>
+        </katkida_bulunan>
+    </katkida_bulunanlar>
+    <lisans_bilgileri>
+        <lisans_turu>MIT License</lisans_turu>
+        <lisans_metni>Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için LICENSE dosyasına bakın.</lisans_metni>
+        <telif_hakki>© 2024 Mert Doğanay. Tüm hakları saklıdır.</telif_hakki>
+    </lisans_bilgileri>
+    <guncelleme_gecmisi>
+        <guncelleme>
+            <versiyon>2.1.0</versiyon>
+            <tarih>2024-12-19</tarih>
+            <degisiklikler>
+                <degisiklik>Yeni tema sistemi eklendi</degisiklik>
+                <degisiklik>Performans iyileştirmeleri yapıldı</degisiklik>
+                <degisiklik>Güvenlik güncellemeleri eklendi</degisiklik>
+                <degisiklik>Yeni animasyonlar eklendi</degisiklik>
+            </degisiklikler>
+        </guncelleme>
+        <guncelleme>
+            <versiyon>2.0.0</versiyon>
+            <tarih>2024-11-15</tarih>
+            <degisiklikler>
+                <degisiklik>Tam yeniden tasarım</degisiklik>
+                <degisiklik>API sistemi eklendi</degisiklik>
+                <degisiklik>Veritabanı entegrasyonu</degisiklik>
+            </degisiklikler>
+        </guncelleme>
+    </guncelleme_gecmisi>
+</merthtmlcss>

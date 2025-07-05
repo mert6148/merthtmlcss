@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merthtmlcss | Modern Web Geliştirme Platformu</title>
+    <meta name="description" content="Modern web teknolojileri ile geliştirilmiş kapsamlı web uygulaması. HTML, CSS, JavaScript, PHP, Python ve API entegrasyonu.">
+    <meta name="keywords" content="web geliştirme, HTML, CSS, JavaScript, PHP, Python, API, modern web">
+    <meta name="author" content="Mert Doğanay">
+    
+    <!-- Preload kritik kaynaklar -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+    
+    <!-- Fontlar ve ikonlar -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Merthtmlcss | Modern Web Geliştirme">
+    <meta property="og:description" content="Modern web teknolojileri ile geliştirilmiş kapsamlı web uygulaması">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://merthtmlcss.com">
+    
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #ff6b6b;
+            --success: #51cf66;
+            --warning: #ffd43b;
+            --error: #ff4757;
+            --light: #fff;
+            --dark: #1a1a1a;
+            --gray: #6c757d;
+            --light-gray: #f8f9fa;
+            --border: #e9ecef;
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --gradient-dark: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            --shadow-light: 0 8px 32px rgba(0,0,0,0.1);
+            --shadow-dark: 0 8px 32px rgba(0,0,0,0.3);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gradient-primary);
+            min-height: 100vh;
+            color: var(--dark);
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        body.dark {
+            background: var(--gradient-dark);
+            color: var(--light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+
+        .header img {
+            width: 100%;
+            max-width: 480px;
+            border-radius: 18px;
+            box-shadow: var(--shadow-light);
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+        }
+
+        .header img:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .bilgi-kutusu {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-light);
+            width: 100%;
+            max-width: 700px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bilgi-kutusu::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        body.dark .bilgi-kutusu {
+            background: #2d2d2d;
+            color: var(--light);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .bilgi-kutusu h2 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bilgi-kutusu h2 i {
+            font-size: 1.2em;
+            opacity: 0.8;
+        }
+
+        .bilgi-kutusu p {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            color: var(--gray);
+        }
+
+        body.dark .bilgi-kutusu p {
+            color: #ccc;
+        }
+
+        .bilgi-kutusu ul {
+            list-style: none;
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .bilgi-kutusu ul li {
+            background: var(--light-gray);
+            padding: 1rem;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        body.dark .bilgi-kutusu ul li {
+            background: #3a3a3a;
+        }
+
+        .bilgi-kutusu ul li:hover {
+            transform: translateX(5px);
+            background: var(--primary);
+            color: var(--light);
+        }
+
+        .bilgi-kutusu ul li a {
+            color: inherit;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .bilgi-kutusu ul li a:hover {
+            color: inherit;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--light);
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--light);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary);
+            color: var(--light);
+            transform: scale(1.1) rotate(180deg);
+        }
+
+        body.dark .theme-toggle {
+            background: #2d2d2d;
+            color: var(--light);
+            border-color: var(--accent);
+        }
+
+        #js-mesaj {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+            animation: slideInUp 0.3s ease-out;
+        }
+
+        .message-success {
+            background: linear-gradient(135deg, var(--success), #a8e6cf);
+            color: var(--light);
+            border: 1px solid var(--success);
+        }
+
+        .message-error {
+            background: linear-gradient(135deg, var(--error), #ff7675);
+            color: var(--light);
+            border: 1px solid var(--error);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            color: var(--primary);
+            font-size: 1.5rem;
+            transition: var(--transition);
+            padding: 0.5rem;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+            transform: scale(1.2) rotate(5deg);
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Gelişmiş animasyonlar */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive tasarım */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .bilgi-kutusu {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+
+            .theme-toggle {
+                top: 1rem;
+                right: 1rem;
+                width: 48px;
+                height: 48px;
+                font-size: 1rem;
+            }
+
+            .social-links {
+                gap: 0.8rem;
+            }
+
+            .social-links a {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Performans optimizasyonları */
+        .container {
+            will-change: transform;
+        }
+
+        .header img {
+            will-change: transform;
+        }
+
+        /* Erişilebilirlik iyileştirmeleri */
+        .btn:focus,
+        .theme-toggle:focus,
+        .social-links a:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* Print styles */
+        @media print {
+            .theme-toggle,
+            .social-links {
+                display: none;
+            }
+            
+            body {
+                background: white;
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" aria-label="Tema Değiştir" onclick="toggleTheme()">
+        <span class="icon-moon">🌙</span>
+        <span class="icon-sun" style="display:none;">☀️</span>
+    </button>
+    
+    <div class="container">
+        <div class="header">
+            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=cover&w=480&q=80" 
+                 alt="Web Geliştirme" 
+                 class="floating"
+                 loading="lazy">
+            <h1 id="xml-baslik">Merthtmlcss'e Hoş Geldiniz</h1>
+            <p id="xml-aciklama">Bu projede, temel web teknolojilerini öğrenebilir ve kendi projelerinize ilham alabilirsiniz.</p>
+            <div class="social-links">
+                <a href="#" onclick="showSocial('github')" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="#" onclick="showSocial('twitter')" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" onclick="showSocial('linkedin')" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="#" onclick="showSocial('instagram')" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        
+        <div class="bilgi-kutusu" id="xml-bilgi">
+            <h2><i class="fas fa-user"></i> Geliştirici</h2>
+            <p id="xml-gelistirici"></p>
+            <h2><i class="fas fa-envelope"></i> İletişim</h2>
+            <p id="xml-iletisim"></p>
+            <h2><i class="fas fa-share-alt"></i> Sosyal Medya</h2>
+            <ul id="xml-sosyal"></ul>
+        </div>
+        
+        <button class="btn btn-primary pulse" id="js-buton" onclick="contactUs()">
+            <i class="fas fa-paper-plane"></i> Bize Ulaşın
+        </button>
+        
+        <div id="js-mesaj"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Gelişmiş tema değiştirme fonksiyonu
+        function toggleTheme() {
+            const body = document.body;
+            const iconMoon = document.querySelector('.icon-moon');
+            const iconSun = document.querySelector('.icon-sun');
+            
+            body.classList.toggle('dark');
+            
+            if (body.classList.contains('dark')) {
+                iconMoon.style.display = 'none';
+                iconSun.style.display = 'block';
+                localStorage.setItem('theme', 'dark');
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                iconMoon.style.display = 'block';
+                iconSun.style.display = 'none';
+                localStorage.setItem('theme', 'light');
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        }
+
+        // Sayfa yüklendiğinde tema kontrolü
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark');
+                document.querySelector('.icon-moon').style.display = 'none';
+                document.querySelector('.icon-sun').style.display = 'block';
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        });
+
+        // Gelişmiş iletişim fonksiyonu
+        function contactUs() {
+            const button = document.getElementById('js-buton');
+            const originalText = button.innerHTML;
+            
+            button.innerHTML = '<span class="loading"></span> Gönderiliyor...';
+            button.disabled = true;
+            
+            // Simüle edilmiş API çağrısı
+            setTimeout(() => {
+                showMessage('Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.', 'success');
+                button.innerHTML = originalText;
+                button.disabled = false;
+                
+                // Başarı animasyonu
+                button.style.background = 'var(--success)';
+                setTimeout(() => {
+                    button.style.background = '';
+                }, 2000);
+            }, 2000);
+        }
+
+        // Gelişmiş sosyal medya fonksiyonu
+        function showSocial(platform) {
+            const platforms = {
+                github: { message: 'GitHub profilinizi görüntülemek için tıklayın', url: 'https://github.com/mert6148' },
+                twitter: { message: 'Twitter hesabınızı görüntülemek için tıklayın', url: 'https://x.com/MertDoganay61' },
+                linkedin: { message: 'LinkedIn profilinizi görüntülemek için tıklayın', url: '#' },
+                instagram: { message: 'Instagram hesabınızı görüntülemek için tıklayın', url: '#' }
+            };
+            
+            const platformInfo = platforms[platform];
+            showMessage(platformInfo.message, 'success');
+            
+            // Eğer URL varsa yeni sekmede aç
+            if (platformInfo.url && platformInfo.url !== '#') {
+                setTimeout(() => {
+                    window.open(platformInfo.url, '_blank');
+                }, 1000);
+            }
+        }
+
+        // Gelişmiş mesaj gösterme fonksiyonu
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('js-mesaj');
+            messageDiv.textContent = text;
+            messageDiv.className = `message-${type}`;
+            messageDiv.style.display = 'block';
+            
+            // Otomatik kapatma
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 4000);
+        }
+
+        // XML'den dinamik veri çekme ve sayfaya yerleştirme
+        fetch('blade/hakkinda.xml')
+            .then(r => r.ok ? r.text() : Promise.reject('XML bulunamadı'))
+            .then(str => (new window.DOMParser()).parseFromString(str, 'text/xml'))
+            .then(xml => {
+                document.getElementById('xml-baslik').textContent = xml.querySelector('baslik')?.textContent || '';
+                document.getElementById('xml-aciklama').textContent = xml.querySelector('aciklama')?.textContent || '';
+                document.getElementById('xml-gelistirici').textContent = xml.querySelector('gelistirici')?.textContent || '';
+                document.getElementById('xml-iletisim').innerHTML = `<a href="mailto:${xml.querySelector('iletisim')?.textContent}">${xml.querySelector('iletisim')?.textContent}</a>`;
+                
+                // Sosyal medya
+                const sosyal = xml.querySelector('sosyal');
+                let sosyalHTML = '';
+                if (sosyal) {
+                    if (sosyal.querySelector('twitter')) {
+                        sosyalHTML += `<li><a href="${sosyal.querySelector('twitter').textContent}" target="_blank" rel="noopener"><i class="fab fa-twitter"></i> Twitter</a></li>`;
+                    }
+                    if (sosyal.querySelector('github')) {
+                        sosyalHTML += `<li><a href="${sosyal.querySelector('github').textContent}" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a></li>`;
+                    }
+                    if (sosyal.querySelector('youtube')) {
+                        sosyalHTML += `<li><a href="${sosyal.querySelector('youtube').textContent}" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> YouTube</a></li>`;
+                    }
+                }
+                document.getElementById('xml-sosyal').innerHTML = sosyalHTML;
+            })
+            .catch(e => {
+                console.warn('XML yüklenemedi:', e);
+                document.getElementById('xml-bilgi').innerHTML = `
+                  <div class="message-error" style="text-align:center;">
+                    <strong>Hakkında bilgisi yüklenemedi.</strong><br>
+                    <span style="font-size:0.98em;">Lütfen bağlantınızı ve <code>blade/hakkinda.xml</code> dosyasının varlığını kontrol edin.</span>
+                  </div>
+                `;
+            });
+
+        // Sayfa yüklendiğinde animasyon
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Intersection Observer ile performans optimizasyonu
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            document.querySelectorAll('.bilgi-kutusu, .btn').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        }
+    </script>
+</body>
+</html>

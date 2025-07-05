@@ -1,0 +1,407 @@
+# c.ai.yml - Gelişmiş AI Entegrasyonu Konfigürasyonu v2.1.0
+# OpenAI, Anthropic, Google AI ve diğer AI servisleri için kapsamlı yapılandırma
+
+# ===========================================
+# AI Model Konfigürasyonu
+# ===========================================
+
+# Kullanılacak AI servisi (openai, anthropic, google, azure, local)
+ai_provider: "openai"
+
+# Model seçenekleri
+models:
+  openai:
+    default: "gpt-4-turbo-preview"
+    alternatives:
+      - "gpt-4-turbo"
+      - "gpt-4"
+      - "gpt-3.5-turbo"
+      - "gpt-3.5-turbo-16k"
+    max_tokens: 4096
+    temperature: 0.7
+    top_p: 0.95
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+  
+  anthropic:
+    default: "claude-3-opus-20240229"
+    alternatives:
+      - "claude-3-sonnet-20240229"
+      - "claude-3-haiku-20240307"
+      - "claude-2.1"
+    max_tokens: 4096
+    temperature: 0.7
+    top_p: 0.95
+  
+  google:
+    default: "gemini-pro"
+    alternatives:
+      - "gemini-pro-vision"
+      - "text-bison-001"
+    max_tokens: 2048
+    temperature: 0.7
+    top_p: 0.95
+  
+  azure:
+    default: "gpt-4"
+    alternatives:
+      - "gpt-35-turbo"
+      - "gpt-4-32k"
+    max_tokens: 4096
+    temperature: 0.7
+    top_p: 0.95
+
+# ===========================================
+# API Konfigürasyonu
+# ===========================================
+
+# API anahtarları (güvenlik için environment variables kullanın)
+api_keys:
+  openai: "${OPENAI_API_KEY}"
+  anthropic: "${ANTHROPIC_API_KEY}"
+  google: "${GOOGLE_AI_API_KEY}"
+  azure: "${AZURE_OPENAI_API_KEY}"
+
+# API endpoint'leri
+endpoints:
+  openai: "https://api.openai.com/v1/chat/completions"
+  anthropic: "https://api.anthropic.com/v1/messages"
+  google: "https://generativelanguage.googleapis.com/v1beta/models"
+  azure: "https://your-resource.openai.azure.com/openai/deployments/your-deployment"
+
+# ===========================================
+# Dil ve Lokalizasyon
+# ===========================================
+
+# Varsayılan dil
+default_language: "tr"
+
+# Desteklenen diller
+supported_languages:
+  - "tr"  # Türkçe
+  - "en"  # İngilizce
+  - "de"  # Almanca
+  - "fr"  # Fransızca
+  - "es"  # İspanyolca
+  - "it"  # İtalyanca
+  - "ru"  # Rusça
+  - "ja"  # Japonca
+  - "ko"  # Korece
+  - "zh"  # Çince
+
+# Dil özellikleri
+language_features:
+  tr:
+    formal: true
+    informal: true
+    regional_variants: ["istanbul", "ankara", "izmir"]
+    special_characters: ["ç", "ğ", "ı", "ö", "ş", "ü"]
+  en:
+    formal: true
+    informal: true
+    regional_variants: ["us", "uk", "au", "ca"]
+  de:
+    formal: true
+    informal: true
+    regional_variants: ["de", "at", "ch"]
+
+# ===========================================
+# Güvenlik ve Doğrulama
+# ===========================================
+
+# Güvenlik ayarları
+security:
+  # Rate limiting
+  rate_limit:
+    requests_per_minute: 60
+    requests_per_hour: 1000
+    requests_per_day: 10000
+  
+  # Content filtering
+  content_filter:
+    enabled: true
+    level: "moderate"  # low, moderate, high
+    blocked_categories:
+      - "hate"
+      - "harassment"
+      - "self_harm"
+      - "sexual"
+      - "violence"
+  
+  # Input validation
+  input_validation:
+    max_input_length: 10000
+    min_input_length: 1
+    allowed_file_types: ["txt", "md", "json", "xml", "csv"]
+    max_file_size: "10MB"
+  
+  # Output sanitization
+  output_sanitization:
+    enabled: true
+    remove_scripts: true
+    remove_iframes: true
+    allowed_tags: ["p", "br", "strong", "em", "ul", "ol", "li", "code", "pre"]
+
+# ===========================================
+# Performans ve Optimizasyon
+# ===========================================
+
+# Performans ayarları
+performance:
+  # Caching
+  caching:
+    enabled: true
+    duration: 3600  # saniye
+    max_cache_size: "100MB"
+    cache_strategy: "lru"  # lru, fifo, random
+  
+  # Connection pooling
+  connection_pool:
+    max_connections: 10
+    connection_timeout: 30
+    request_timeout: 60
+  
+  # Retry logic
+  retry:
+    max_retries: 3
+    retry_delay: 1000  # ms
+    exponential_backoff: true
+    max_retry_delay: 10000  # ms
+
+# ===========================================
+# Prompt Mühendisliği
+# ===========================================
+
+# Varsayılan prompt şablonları
+prompt_templates:
+  default: |
+    Sen bir Türkçe konuşan yardımcı yapay zekasın. 
+    Kullanıcıya nazik, yardımsever ve bilgilendirici yanıtlar ver.
+    Yanıtlarını Türkçe dilinde, açık ve anlaşılır şekilde yaz.
+  
+  auth_assistant: |
+    Sen bir güvenlik odaklı AI asistanısın. 
+    Kullanıcı kimlik doğrulama işlemlerinde yardımcı ol.
+    Güvenlik açıklarını tespit et ve öneriler sun.
+    Şifre gücü, kullanıcı adı güvenliği ve genel güvenlik konularında rehberlik et.
+  
+  code_assistant: |
+    Sen bir programlama asistanısın.
+    Kod yazma, hata ayıklama ve optimizasyon konularında yardım et.
+    HTML, CSS, JavaScript, PHP, Python, C#, C++ dillerinde uzmanlaşmışsın.
+    Kod örnekleri ver ve açıklamalar yap.
+  
+  content_writer: |
+    Sen bir içerik yazarısın.
+    SEO uyumlu, ilgi çekici ve bilgilendirici içerikler oluştur.
+    Farklı ton ve stillerde yazabilirsin.
+    Başlık, meta açıklama ve anahtar kelime önerileri sun.
+
+# ===========================================
+# Özelleştirme ve Kişiselleştirme
+# ===========================================
+
+# Kullanıcı tercihleri
+user_preferences:
+  # Tema tercihleri
+  theme:
+    default: "light"  # light, dark, auto
+    auto_detect: true
+  
+  # Yanıt stili
+  response_style:
+    tone: "friendly"  # formal, casual, friendly, professional
+    length: "medium"  # short, medium, long
+    detail_level: "balanced"  # basic, balanced, detailed
+  
+  # Özelleştirilmiş ayarlar
+  custom_settings:
+    enable_emojis: true
+    enable_code_highlighting: true
+    enable_markdown: true
+    enable_links: true
+
+# ===========================================
+# Entegrasyon ve Webhook'lar
+# ===========================================
+
+# Webhook konfigürasyonu
+webhooks:
+  enabled: false
+  endpoints:
+    - url: "https://your-webhook-url.com/ai-events"
+      events: ["completion", "error", "rate_limit"]
+      headers:
+        Authorization: "Bearer your-webhook-token"
+  
+  # Event types
+  events:
+    completion:
+      enabled: true
+      include_response: true
+      include_metadata: true
+    
+    error:
+      enabled: true
+      include_error_details: true
+    
+    rate_limit:
+      enabled: true
+      include_usage_info: true
+
+# ===========================================
+# Logging ve Monitoring
+# ===========================================
+
+# Logging ayarları
+logging:
+  level: "info"  # debug, info, warn, error
+  format: "json"  # json, text, structured
+  
+  # Log destinations
+  destinations:
+    - type: "file"
+      path: "./logs/ai.log"
+      max_size: "100MB"
+      max_files: 10
+    
+    - type: "console"
+      enabled: true
+    
+    - type: "syslog"
+      enabled: false
+      facility: "local0"
+  
+  # Log filters
+  filters:
+    include_requests: true
+    include_responses: false
+    include_errors: true
+    include_performance: true
+
+# ===========================================
+# Analytics ve Metrikler
+# ===========================================
+
+# Analytics ayarları
+analytics:
+  enabled: true
+  
+  # Metrikler
+  metrics:
+    - "request_count"
+    - "response_time"
+    - "token_usage"
+    - "error_rate"
+    - "user_satisfaction"
+  
+  # Dashboard
+  dashboard:
+    enabled: true
+    refresh_interval: 60  # saniye
+    charts:
+      - "requests_per_hour"
+      - "average_response_time"
+      - "error_distribution"
+      - "model_usage"
+
+# ===========================================
+# Gelişmiş Özellikler
+# ===========================================
+
+# Gelişmiş AI özellikleri
+advanced_features:
+  # Çoklu model desteği
+  multi_model:
+    enabled: true
+    fallback_strategy: "cascade"  # cascade, parallel, smart
+  
+  # Context management
+  context:
+    max_history: 10
+    memory_type: "sliding_window"  # sliding_window, fixed, adaptive
+    context_compression: true
+  
+  # Function calling
+  function_calling:
+    enabled: true
+    available_functions:
+      - "get_weather"
+      - "calculate"
+      - "translate"
+      - "search_web"
+  
+  # Streaming responses
+  streaming:
+    enabled: true
+    chunk_size: 100
+    buffer_size: 1000
+
+# ===========================================
+# Test ve Geliştirme
+# ===========================================
+
+# Test konfigürasyonu
+testing:
+  # Test modu
+  test_mode:
+    enabled: false
+    mock_responses: true
+    simulate_delays: true
+  
+  # Test senaryoları
+  test_scenarios:
+    - name: "basic_conversation"
+      input: "Merhaba, nasılsın?"
+      expected_tone: "friendly"
+    
+    - name: "code_assistance"
+      input: "JavaScript'te async/await nasıl kullanılır?"
+      expected_include: "code example"
+    
+    - name: "security_check"
+      input: "Şifrem güvenli mi?"
+      expected_include: "security advice"
+
+# ===========================================
+# Deployment ve Environment
+# ===========================================
+
+# Environment ayarları
+environments:
+  development:
+    debug: true
+    log_level: "debug"
+    cache_enabled: false
+    rate_limit: false
+  
+  staging:
+    debug: false
+    log_level: "info"
+    cache_enabled: true
+    rate_limit: true
+  
+  production:
+    debug: false
+    log_level: "warn"
+    cache_enabled: true
+    rate_limit: true
+    security_checks: true
+
+# ===========================================
+# Notlar ve Uyarılar
+# ===========================================
+
+# Önemli notlar
+notes:
+  - "API anahtarlarınızı güvenli tutun ve asla kod içinde saklamayın"
+  - "Production ortamında debug modunu kapatın"
+  - "Rate limit ayarlarını servis sağlayıcınızın limitlerine göre ayarlayın"
+  - "Güvenlik filtrelerini aktif tutun"
+  - "Düzenli olarak log dosyalarını kontrol edin"
+  - "API kullanımınızı izleyin ve optimize edin"
+
+# Son güncelleme
+last_updated: "2024-12-19T10:00:00Z"
+version: "2.1.0"
+maintainer: "Mert Doğanay <mertdoganay437@gmail.com>"
