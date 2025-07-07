@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animasyonlu CSS & JS Framework</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #ff6b6b;
+            --success: #51cf66;
+            --warning: #ffd43b;
+            --error: #ff6b6b;
+            --light: #fff;
+            --dark: #222;
+            --gray: #6c757d;
+            --light-gray: #f8f9fa;
+            --border: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            animation: fadeIn 0.8s cubic-bezier(.4,2,.6,1);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        body.dark .container {
+            background: rgba(34, 34, 34, 0.95);
+            border-color: rgba(255,255,255,0.1);
+        }
+        
+        .button {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--light);
+            border: none;
+            border-radius: 30px;
+            padding: 16px 32px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            font-size: 16px;
+            margin: 12px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+        
+        .button:hover::before {
+            left: 100%;
+        }
+        
+        .button:hover {
+            background: linear-gradient(45deg, var(--accent), var(--secondary));
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(255, 107, 107, 0.4);
+        }
+        
+        .button:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+        
+        .button.pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .card {
+            background: var(--light);
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 28px;
+            margin: 24px 0;
+            border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        body.dark .card {
+            background: #333;
+            color: var(--light);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .card:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .card:hover {
+            border-color: var(--primary);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        body.dark .card:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        
+        .card h3, .card h4 {
+            color: var(--primary);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        
+        .card p {
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        
+        .card ul {
+            text-align: left;
+            margin-top: 16px;
+            list-style: none;
+        }
+        
+        .card ul li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 24px;
+        }
+        
+        .card ul li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            top: 8px;
+        }
+        
+        .counter-display {
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            color: var(--light);
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.2em;
+            display: inline-block;
+            margin: 16px 0;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            animation: bounce 2s infinite;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--light);
+            padding: 16px 28px;
+            border-radius: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            z-index: 1000;
+            font-size: 1em;
+            font-weight: 600;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+            backdrop-filter: blur(10px);
+        }
+        
+        .notification.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(0);
+        }
+        
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--light);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .theme-toggle:hover {
+            background: var(--primary);
+            color: var(--light);
+            transform: scale(1.1) rotate(180deg);
+        }
+        
+        body.dark .theme-toggle {
+            background: #333;
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+        
+        body.dark {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: var(--light);
+        }
+        
+        body.dark .button {
+            background: linear-gradient(45deg, #444, #222);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        body.dark .button:hover {
+            background: linear-gradient(45deg, var(--accent), #333);
+        }
+        
+        /* Animasyonlar */
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(40px) scale(0.9); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-8px); }
+            60% { transform: translateY(-4px); }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .fade-in { 
+            animation: fadeIn 0.8s ease-out; 
+        }
+        
+        .slide-in { 
+            animation: slideIn 0.6s ease-out; 
+        }
+        
+        .float { 
+            animation: float 3s ease-in-out infinite; 
+        }
+        
+        /* Yeni özellikler */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+        
+        .feature-item {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+        
+        body.dark .feature-item {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+        
+        .feature-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        
+        .feature-desc {
+            font-size: 0.9em;
+            color: var(--gray);
+        }
+        
+        body.dark .feature-desc {
+            color: #ccc;
+        }
+        
+        /* Loading animasyonu */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive tasarım */
+        @media (max-width: 768px) {
+            .container { 
+                padding: 24px; 
+                margin: 10px;
+            }
+            
+            .button { 
+                padding: 14px 28px; 
+                font-size: 14px; 
+                margin: 8px;
+            }
+            
+            .card {
+                padding: 20px;
+                margin: 16px 0;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .theme-toggle {
+                top: 15px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.1em;
+            }
+        }
+        
+        /* Parçacık efekti */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: particleFloat 6s infinite linear;
+        }
+        
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <button class="theme-toggle" onclick="toggleTheme()" title="Tema Değiştir">
+        <span class="icon-moon">🌙</span>
+        <span class="icon-sun" style="display:none;">☀️</span>
+    </button>
+    
+    <div class="container fade-in">
+        <h1 style="margin-bottom: 24px; color: var(--primary); font-size: 2.2em; font-weight: 700;">
+            <i class="fas fa-magic"></i> Animasyonlu Framework
+        </h1>
+        
+        <div class="card slide-in">
+            <h3><i class="fas fa-hand-wave"></i> Hoş Geldiniz!</h3>
+            <p>Bu interaktif CSS ve JavaScript framework'ü ile harika animasyonlar oluşturabilirsiniz.</p>
+            <div class="counter-display">
+                <i class="fas fa-mouse-pointer"></i> Tıklama Sayısı: <span id="counter">0</span>
+            </div>
+        </div>
+        
+        <div style="margin: 24px 0;">
+            <button class="button pulse" onclick="showNotification('Animasyonlu butona tıklandı! 🎨')">
+                <i class="fas fa-palette"></i> Animasyonlu Buton
+            </button>
+            <button class="button" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i> Tema Değiştir
+            </button>
+            <button class="button" onclick="showFeatures()">
+                <i class="fas fa-star"></i> Özellikler
+            </button>
+        </div>
+        
+        <div class="card slide-in">
+            <h4><i class="fas fa-sparkles"></i> Özellikler</h4>
+            <div class="feature-grid" id="featureGrid">
+                <div class="feature-item">
+                    <div class="feature-icon">🎭</div>
+                    <div class="feature-title">Hover Animasyonları</div>
+                    <div class="feature-desc">Kartların üzerine gelin</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Tıklama Efektleri</div>
+                    <div class="feature-desc">Butonlara tıklayın</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-title">Otomatik Animasyonlar</div>
+                    <div class="feature-desc">Sürekli hareket</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📱</div>
+                    <div class="feature-title">Responsive Tasarım</div>
+                    <div class="feature-desc">Mobil uyumlu</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card slide-in">
+            <h4><i class="fas fa-rocket"></i> Deneyin</h4>
+            <p>Butonlara tıklayın, kartların üzerine gelin ve animasyonları keşfedin!</p>
+            <div class="float" style="font-size: 2em; margin: 16px 0;">🚀</div>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification"></div>
+    
+    <script>
+        let counter = 0;
+        let isDark = false;
+        
+        // Parçacık efekti oluşturma
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    width: ${Math.random() * 4 + 2}px;
+                    height: ${Math.random() * 4 + 2}px;
+                    animation-delay: ${Math.random() * 6}s;
+                    animation-duration: ${Math.random() * 3 + 3}s;
+                `;
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Buton tıklama sayacı
+        document.querySelectorAll('.button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if(btn.textContent.includes('Buton')) {
+                    counter++;
+                    document.getElementById('counter').textContent = counter;
+                    
+                    // Buton animasyonu
+                    btn.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        btn.style.transform = '';
+                    }, 150);
+                }
+            });
+        });
+        
+        // Bildirim gösterme
+        function showNotification(message) {
+            const notif = document.getElementById('notification');
+            notif.textContent = message;
+            notif.classList.add('show');
+            
+            setTimeout(() => {
+                notif.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Tema değiştirme
+        function toggleTheme() {
+            const body = document.body;
+            const iconMoon = document.querySelector('.icon-moon');
+            const iconSun = document.querySelector('.icon-sun');
+            
+            body.classList.toggle('dark');
+            isDark = !isDark;
+            
+            if (isDark) {
+                iconMoon.style.display = 'none';
+                iconSun.style.display = 'block';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                iconMoon.style.display = 'block';
+                iconSun.style.display = 'none';
+                localStorage.setItem('theme', 'light');
+            }
+            
+            showNotification('Tema değiştirildi! ' + (isDark ? '🌙' : '☀️'));
+        }
+        
+        // Özellikler gösterme
+        function showFeatures() {
+            const featureGrid = document.getElementById('featureGrid');
+            
+            if (featureGrid.style.display === 'none') {
+                featureGrid.style.display = 'grid';
+                showNotification('Özellikler gösteriliyor! ✨');
+            } else {
+                featureGrid.style.display = 'none';
+                showNotification('Özellikler gizlendi! 🔒');
+            }
+        }
+        
+        // Sayfa yüklendiğinde çalışacak kodlar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tema kontrolü
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark');
+                document.querySelector('.icon-moon').style.display = 'none';
+                document.querySelector('.icon-sun').style.display = 'block';
+                isDark = true;
+            }
+            
+            // Parçacık efektini başlat
+            createParticles();
+            
+            // Hoş geldin mesajı
+            setTimeout(() => {
+                showNotification('Animasyonlu framework\'e hoş geldiniz! 🎉');
+            }, 1000);
+            
+            // Kart animasyonları
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.2}s`;
+            });
+        });
+        
+        // Mouse hareket efekti
+        document.addEventListener('mousemove', function(e) {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+            });
+        });
+        
+        // Mouse leave efekti
+        document.addEventListener('mouseleave', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>

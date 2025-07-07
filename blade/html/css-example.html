@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merthtmlcss CSS Örneği</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0ea0a0;
+            --secondary: #ffb347;
+            --accent: #ff6b6b;
+            --success: #2ed573;
+            --warning: #ffd43b;
+            --error: #ff4757;
+            --dark: #222;
+            --light: #fff;
+            --gray: #6c757d;
+            --light-gray: #f8f9fa;
+            --border: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 0.8s cubic-bezier(.4,2,.6,1);
+        }
+        
+        body.dark .container {
+            background: rgba(34, 34, 34, 0.95);
+            border-color: rgba(255,255,255,0.1);
+        }
+        
+        .hero-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero-section h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .hero-section p {
+            font-size: 1.2em;
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+        
+        .glow {
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(14, 160, 160, 0.6);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(14, 160, 160, 0.6); }
+            to { text-shadow: 0 0 30px rgba(14, 160, 160, 0.8), 0 0 40px rgba(14, 160, 160, 0.4); }
+        }
+        
+        .button {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--light);
+            border: none;
+            border-radius: 12px;
+            padding: 14px 28px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1em;
+            font-weight: 600;
+            margin: 8px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(14, 160, 160, 0.3);
+        }
+        
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+        
+        .button:hover::before {
+            left: 100%;
+        }
+        
+        .button:hover {
+            background: linear-gradient(45deg, var(--accent), var(--secondary));
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+        
+        .button:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        .button-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+        }
+        
+        .button-small {
+            padding: 10px 20px;
+            font-size: 0.9em;
+        }
+        
+        .button-success {
+            background: linear-gradient(45deg, var(--success), #28a745);
+        }
+        
+        .button-warning {
+            background: linear-gradient(45deg, var(--warning), #ffc107);
+        }
+        
+        .button-error {
+            background: linear-gradient(45deg, var(--error), #dc3545);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
+        }
+        
+        .feature-card {
+            background: var(--light);
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            padding: 28px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        body.dark .feature-card {
+            background: #333;
+            color: var(--light);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(14, 160, 160, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .feature-card:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .feature-card:hover {
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--primary);
+        }
+        
+        body.dark .feature-card:hover {
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+        
+        .feature-card h3 {
+            color: var(--primary);
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        body.dark .feature-card p {
+            color: #ccc;
+        }
+        
+        .feature-icon {
+            font-size: 3em;
+            color: var(--primary);
+            margin-bottom: 16px;
+            display: block;
+        }
+        
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--light);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .theme-toggle:hover {
+            background: var(--primary);
+            color: var(--light);
+            transform: scale(1.1) rotate(180deg);
+        }
+        
+        body.dark .theme-toggle {
+            background: #333;
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+        
+        /* Animasyonlar */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px) scale(0.9); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-8px); }
+            60% { transform: translateY(-4px); }
+        }
+        
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--light);
+            padding: 16px 28px;
+            border-radius: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            z-index: 1000;
+            font-size: 1em;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Yeni özellikler */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin: 30px 0;
+        }
+        
+        .stat-item {
+            background: linear-gradient(135deg, rgba(14, 160, 160, 0.1), rgba(255, 179, 71, 0.1));
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(14, 160, 160, 0.2);
+        }
+        
+        body.dark .stat-item {
+            background: linear-gradient(135deg, rgba(14, 160, 160, 0.2), rgba(255, 179, 71, 0.2));
+            border-color: rgba(14, 160, 160, 0.3);
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(14, 160, 160, 0.2);
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        body.dark .stat-label {
+            color: #ccc;
+        }
+        
+        /* Loading animasyonu */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive tasarım */
+        @media (max-width: 768px) {
+            .container { 
+                padding: 24px; 
+                margin: 20px;
+            }
+            
+            .hero-section h1 {
+                font-size: 2em;
+            }
+            
+            .grid { 
+                grid-template-columns: 1fr; 
+                gap: 20px;
+            }
+            
+            .button { 
+                padding: 12px 24px; 
+                font-size: 14px; 
+                margin: 6px;
+            }
+            
+            .theme-toggle {
+                top: 15px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.1em;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Tema Değiştir">
+        <span class="icon-moon">🌙</span>
+        <span class="icon-sun" style="display:none;">☀️</span>
+    </button>
+    
+    <div class="container">
+        <div class="hero-section">
+            <h1 class="glow">
+                <i class="fas fa-palette"></i> Merthtmlcss CSS Framework
+            </h1>
+            <p>Modern ve responsive CSS framework'ü ile harika tasarımlar oluşturun</p>
+            <button class="button button-primary" id="startBtn">
+                <i class="fas fa-rocket"></i> Başla
+            </button>
+            <button class="button" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i> Tema
+            </button>
+            <button class="button" onclick="showStats()">
+                <i class="fas fa-chart-bar"></i> İstatistikler
+            </button>
+        </div>
+        
+        <div class="stats-grid" id="statsGrid" style="display: none;">
+            <div class="stat-item">
+                <div class="stat-number">95%</div>
+                <div class="stat-label">Performans</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Responsive</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Bileşen</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Destek</div>
+            </div>
+        </div>
+        
+        <div class="grid">
+            <div class="feature-card fade-in delay-1">
+                <i class="fas fa-paint-brush feature-icon"></i>
+                <h3>Modern Tasarım</h3>
+                <p>Güncel tasarım trendlerine uygun stiller ve bileşenler</p>
+                <button class="button button-small" onclick="showFeature('Modern Tasarım')">
+                    <i class="fas fa-eye"></i> Detay
+                </button>
+            </div>
+            <div class="feature-card fade-in delay-2">
+                <i class="fas fa-mobile-alt feature-icon"></i>
+                <h3>Responsive</h3>
+                <p>Tüm cihazlarda mükemmel görünüm ve kullanıcı deneyimi</p>
+                <button class="button button-small" onclick="showFeature('Responsive')">
+                    <i class="fas fa-eye"></i> Detay
+                </button>
+            </div>
+            <div class="feature-card fade-in delay-3">
+                <i class="fas fa-magic feature-icon"></i>
+                <h3>Animasyonlar</h3>
+                <p>Etkileyici CSS animasyonları ve geçiş efektleri</p>
+                <button class="button button-small" onclick="showFeature('Animasyonlar')">
+                    <i class="fas fa-eye"></i> Detay
+                </button>
+            </div>
+        </div>
+        
+        <div class="feature-card fade-in delay-4">
+            <h3><i class="fas fa-star"></i> Özellikler</h3>
+            <div class="stats-grid">
+                <div class="stat-item bounce">
+                    <div class="stat-number">🎨</div>
+                    <div class="stat-label">CSS Grid</div>
+                </div>
+                <div class="stat-item bounce">
+                    <div class="stat-number">⚡</div>
+                    <div class="stat-label">Flexbox</div>
+                </div>
+                <div class="stat-item bounce">
+                    <div class="stat-number">🌙</div>
+                    <div class="stat-label">Dark Mode</div>
+                </div>
+                <div class="stat-item bounce">
+                    <div class="stat-number">📱</div>
+                    <div class="stat-label">Mobile First</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="notification" class="notification"></div>
+    </div>
+    
+    <script>
+        let isDark = false;
+        
+        function showNotification(message) {
+            const notif = document.getElementById('notification');
+            notif.textContent = message;
+            notif.classList.add('show');
+            
+            setTimeout(() => {
+                notif.classList.remove('show');
+            }, 3000);
+        }
+        
+        function showFeature(featureName) {
+            const messages = {
+                'Modern Tasarım': 'CSS Grid ve Flexbox ile modern layout oluşturma, gradient arka planlar ve modern renk paletleri',
+                'Responsive': 'Tüm cihazlarda mükemmel görünüm sağlama, mobile-first yaklaşım ve esnek grid sistemi',
+                'Animasyonlar': 'CSS animasyonları ile etkileyici efektler, smooth transitions ve hover animasyonları'
+            };
+            showNotification(messages[featureName] || 'Özellik detayı');
+        }
+        
+        function toggleTheme() {
+            const body = document.body;
+            const iconMoon = document.querySelector('.icon-moon');
+            const iconSun = document.querySelector('.icon-sun');
+            
+            body.classList.toggle('dark');
+            isDark = !isDark;
+            
+            if (isDark) {
+                iconMoon.style.display = 'none';
+                iconSun.style.display = 'block';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                iconMoon.style.display = 'block';
+                iconSun.style.display = 'none';
+                localStorage.setItem('theme', 'light');
+            }
+            
+            showNotification('Tema değiştirildi! ' + (isDark ? '🌙' : '☀️'));
+        }
+        
+        function showStats() {
+            const statsGrid = document.getElementById('statsGrid');
+            
+            if (statsGrid.style.display === 'none') {
+                statsGrid.style.display = 'grid';
+                statsGrid.style.animation = 'fadeIn 0.6s ease-out';
+                showNotification('İstatistikler gösteriliyor! 📊');
+            } else {
+                statsGrid.style.display = 'none';
+                showNotification('İstatistikler gizlendi! 🔒');
+            }
+        }
+        
+        document.getElementById('startBtn').addEventListener('click', function() {
+            const button = this;
+            const originalText = button.innerHTML;
+            
+            button.innerHTML = '<span class="loading"></span> Başlatılıyor...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.innerHTML = '<i class="fas fa-check"></i> Başlatıldı! 🚀';
+                button.classList.add('button-success');
+                showNotification('Framework başarıyla başlatıldı! 🎉');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('button-success');
+                    button.disabled = false;
+                }, 2000);
+            }, 1500);
+        });
+        
+        // Sayfa yüklendiğinde çalışacak kodlar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tema kontrolü
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark');
+                document.querySelector('.icon-moon').style.display = 'none';
+                document.querySelector('.icon-sun').style.display = 'block';
+                isDark = true;
+            }
+            
+            // Hoş geldin mesajı
+            setTimeout(() => {
+                showNotification('CSS Framework\'e hoş geldiniz! 🎨');
+            }, 1000);
+            
+            // Kart animasyonları
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.2}s`;
+            });
+        });
+        
+        // Mouse hareket efekti
+        document.addEventListener('mousemove', function(e) {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 15;
+                const rotateY = (centerX - x) / 15;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(5px)`;
+            });
+        });
+        
+        // Mouse leave efekti
+        document.addEventListener('mouseleave', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach(card => {
+                card.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>
