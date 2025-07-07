@@ -1,0 +1,20 @@
+{
+  "admin": {
+    "username": "admin",
+    "password_hash": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+    "email": "admin@merthtmlcss.com",
+    "role": "admin",
+    "created_at": "2025-07-05T21:34:48.830375",
+    "last_login": "2025-07-05T22:01:13.239842",
+    "is_active": true
+  },
+  "mert": {
+    "username": "mert",
+    "password_hash": "19d75c03b1e93f857a20e1ae7d687f51ecfbc139b6f2c8ffc7e78997c19009eb",
+    "email": "mert@merthtmlcss.com",
+    "role": "user",
+    "created_at": "2025-07-05T21:34:48.831353",
+    "last_login": null,
+    "is_active": true
+  }
+}
