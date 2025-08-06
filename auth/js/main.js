@@ -221,7 +221,7 @@ const AuthAI = (() => {
         },
 
         setTheme(theme) {
-            const root = document.documentElement;
+    const root = document.documentElement;
             
             // Tema değişkenlerini uygula
             if (this.themes[theme]) {

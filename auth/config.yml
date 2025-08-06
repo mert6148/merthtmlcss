@@ -1,0 +1,8 @@
+config:
+  name: "Auth Service"
+  version: "1.0.0"
+
+Auth:
+  name: "Auth Service"
+  description: "Service for user authentication and authorization"
+  version: "1.0.0"
