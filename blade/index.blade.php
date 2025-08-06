@@ -486,6 +486,23 @@ $iletisimLink = '<a
     </section>
     <script type="module" src="{{ asset('script.js') }}"></script>
     <script>
+    // Hakkında bilgilerini XML'den dinamik olarak çek
+    fetch('hakkinda.xml')
+        .then(response => {
+            if (!response.ok) throw new Error('XML dosyası bulunamadı veya erişilemiyor.');
+            return response.text();
+        })
+        .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+        .then(data => {
+            document.querySelector('.bilgi-baslik').textContent = data.getElementsByTagName('baslik')[0]?.textContent || 'Modern Web Geliştirme Projesi';
+            document.querySelector('.bilgi-gelistirici').textContent = data.getElementsByTagName('gelistirici')[0]?.textContent || 'Mert';
+            document.querySelector('.bilgi-aciklama').textContent = data.getElementsByTagName('aciklama')[0]?.textContent || 'Bu proje, modern web geliştirme teknolojilerini bir araya getiren örnek bir projedir. HTML, CSS ve JavaScript teknolojileri kullanılarak oluşturulmuştur.';
+        })
+        .catch(e => {
+            document.querySelector('.bilgi-baslik').textContent = 'Hakkında bilgisi yüklenemedi.';
+            document.querySelector('.bilgi-gelistirici').textContent = '';
+            document.querySelector('.bilgi-aciklama').textContent = 'XML dosyası bulunamadı veya erişilemiyor.';
+        });
     document.addEventListener("DOMContentLoaded", function() {
         const btn = document.getElementById("bilgi-btn");
         const ekBilgi = document.getElementById("ek-bilgi");

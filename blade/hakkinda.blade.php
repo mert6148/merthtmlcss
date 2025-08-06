@@ -272,9 +272,12 @@ console.log(selamla('Dünya'));
         document.getElementById('form-sonuc').textContent = 'Mesajınız başarıyla gönderildi! (Demo)';
         this.reset();
     });
-    // XML'den veri çekme
+    // XML'den veri çekme (güncel ve güvenli)
     fetch('hakkinda.xml')
-        .then(response => response.text())
+        .then(response => {
+            if (!response.ok) throw new Error('XML dosyası bulunamadı veya erişilemiyor.');
+            return response.text();
+        })
         .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
         .then(data => {
             document.getElementById('hakkinda-baslik').textContent = data.getElementsByTagName('baslik')[0]?.textContent || '';
@@ -284,12 +287,25 @@ console.log(selamla('Dünya'));
             if(iletisim) {
                 document.getElementById('hakkinda-iletisim').innerHTML = '<b>İletişim:</b> <a href="mailto:' + iletisim + '">' + iletisim + '</a>';
             }
-            const twitter = data.getElementsByTagName('twitter')[0]?.textContent;
-            const github = data.getElementsByTagName('github')[0]?.textContent;
-            let sosyal = '';
-            if(twitter) sosyal += '<a href="' + twitter + '" target="_blank">Twitter</a> ';
-            if(github) sosyal += '<a href="' + github + '" target="_blank">GitHub</a>';
-            if(sosyal) document.getElementById('hakkinda-sosyal').innerHTML = '<b>Sosyal:</b> ' + sosyal;
+            // Sosyal medya
+            const sosyal = data.getElementsByTagName('sosyal')[0];
+            let sosyalHTML = '';
+            if(sosyal) {
+                const twitter = sosyal.getElementsByTagName('twitter')[0]?.textContent;
+                const github = sosyal.getElementsByTagName('github')[0]?.textContent;
+                const youtube = sosyal.getElementsByTagName('youtube')[0]?.textContent;
+                if(twitter) sosyalHTML += '<a href="' + twitter + '" target="_blank">Twitter</a> ';
+                if(github) sosyalHTML += '<a href="' + github + '" target="_blank">GitHub</a> ';
+                if(youtube) sosyalHTML += '<a href="' + youtube + '" target="_blank">YouTube</a>';
+            }
+            if(sosyalHTML) document.getElementById('hakkinda-sosyal').innerHTML = '<b>Sosyal:</b> ' + sosyalHTML;
+        })
+        .catch(e => {
+            document.getElementById('hakkinda-baslik').textContent = 'Hakkında bilgisi yüklenemedi.';
+            document.getElementById('hakkinda-aciklama').textContent = 'XML dosyası bulunamadı veya erişilemiyor.';
+            document.getElementById('hakkinda-gelistirici').textContent = '';
+            document.getElementById('hakkinda-iletisim').textContent = '';
+            document.getElementById('hakkinda-sosyal').innerHTML = '<span style="color:#c00;">Hata: ' + e.message + '</span>';
         });
     </script>
 </body>

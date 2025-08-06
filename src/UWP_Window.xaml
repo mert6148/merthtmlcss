@@ -1,0 +1,40 @@
+<Window x:Class="src.UWP_Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:src"
+        mc:Ignorable="d"
+        Title="UWP_Window"
+        Height="450"
+        Width="800">
+    <Grid Margin="24">
+        <StackPanel HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Width="500"
+                Spacing="20"
+                Padding="32"
+                Background="#F4F6FB"
+                CornerRadius="18"
+                BorderBrush="#D0D0D0"
+                BorderThickness="1">
+            <TextBlock Text="UWP Demo Uygulaması"
+                    FontSize="36"
+                    FontWeight="Bold"
+                    Margin="0,0,0,12"
+                    Foreground="#222"
+                    TextAlignment="Center"
+                    Effect="{DynamicResource DropShadowEffect}"
+                    AutomationProperties.Name="Uygulama Başlığı"/>
+            <local:UWP_UserControl/>
+            <Border Background="#F0F0F0"
+                    CornerRadius="8"
+                    Padding="16"
+                    Margin="0,16,0,0">
+                <TextBlock Text="Hoşgeldiniz! Bu bir bilgi kutusudur."
+                        FontSize="16"
+                        Foreground="#444"/>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -490,10 +490,10 @@
             <h1 id="xml-baslik">Merthtmlcss'e Hoş Geldiniz</h1>
             <p id="xml-aciklama">Bu projede, temel web teknolojilerini öğrenebilir ve kendi projelerinize ilham alabilirsiniz.</p>
             <div class="social-links">
-                <a href="#" onclick="showSocial('github')" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="#" onclick="showSocial('twitter')" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" onclick="showSocial('linkedin')" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="#" onclick="showSocial('instagram')" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <button type="button" onclick="showSocial('github')" aria-label="GitHub"><i class="fab fa-github"></i></button>
+                <button type="button" onclick="showSocial('twitter')" aria-label="Twitter"><i class="fab fa-twitter"></i></button>
+                <button type="button" onclick="showSocial('linkedin')" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></button>
+                <button type="button" onclick="showSocial('instagram')" aria-label="Instagram"><i class="fab fa-instagram"></i></button>
             </div>
         </div>
         
@@ -604,14 +604,20 @@
 
         // XML'den dinamik veri çekme ve sayfaya yerleştirme
         fetch('blade/hakkinda.xml')
-            .then(r => r.ok ? r.text() : Promise.reject('XML bulunamadı'))
+            .then(response => {
+                if (!response.ok) throw new Error('XML dosyası bulunamadı veya erişilemiyor.');
+                return response.text();
+            })
             .then(str => (new window.DOMParser()).parseFromString(str, 'text/xml'))
             .then(xml => {
                 document.getElementById('xml-baslik').textContent = xml.querySelector('baslik')?.textContent || '';
                 document.getElementById('xml-aciklama').textContent = xml.querySelector('aciklama')?.textContent || '';
                 document.getElementById('xml-gelistirici').textContent = xml.querySelector('gelistirici')?.textContent || '';
-                document.getElementById('xml-iletisim').innerHTML = `<a href="mailto:${xml.querySelector('iletisim')?.textContent}">${xml.querySelector('iletisim')?.textContent}</a>`;
-                
+                const iletisim = xml.querySelector('iletisim')?.textContent || '';
+                document.getElementById('xml-iletisim').innerHTML = iletisim
+                    ? `<a href="mailto:${iletisim}">${iletisim}</a>`
+                    : '';
+
                 // Sosyal medya
                 const sosyal = xml.querySelector('sosyal');
                 let sosyalHTML = '';
@@ -633,7 +639,8 @@
                 document.getElementById('xml-bilgi').innerHTML = `
                   <div class="message-error" style="text-align:center;">
                     <strong>Hakkında bilgisi yüklenemedi.</strong><br>
-                    <span style="font-size:0.98em;">Lütfen bağlantınızı ve <code>blade/hakkinda.xml</code> dosyasının varlığını kontrol edin.</span>
+                    <span style="font-size:0.98em;">Lütfen bağlantınızı ve <code>blade/hakkinda.xml</code> dosyasının varlığını kontrol edin.<br>
+                    Hata: ${e.message}</span>
                   </div>
                 `;
             });

@@ -95,3 +95,39 @@ if __name__ == "__main__":
     print(f"Python sürümü: {sys.version}")
     print(f"Çalışma dizini: {os.getcwd()}")
     print_css_js('tr')
+
+if __concat__(a, b) == "__main__":
+    Class MerthtmlcssApp:
+        def __init__(self):
+            self.is_initialized = False
+            self.animations = AnimationManager()
+            self.forms = FormManager()
+            self.ui = UIManager()
+            self.utils = UtilityManager()
+            self.init()
+            
+if __enter__(a2b_base64(string)) == "__main__":
+    """
+    <!DOCTYPE html>
+    <html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Modern CSS & JS Framework</title>
+        <link rel="stylesheet" href="merthtmlcss-styles.css">
+    <div class="container">
+        <h1 style="text-align: center; margin-bottom: 30px; color: var(--primary);">
+            🎨 Modern CSS & JS Framework
+        </h1>
+        <div class="card fade-in">
+            <h3>{t['welcome']}</h3>
+            <p>{t['desc']}</p>
+            <div class="notification" id="ai-suggestion">{t['ai_suggestion']}</div>
+        </div>
+    </div>
+    <script src="script.js">
+        let t = LANG.get(lang, LANG['tr'])
+    </script>
+    </body>
+    </html>
+    """
