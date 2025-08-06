@@ -32,5 +32,38 @@ def print_post():
         "cevap": "Veriniz başarıyla alındı ve işlendi. Merthtmlcss API ile test başarılı!"
     })
 
+# HTML ve CSS ile test sayfası
+@app.route('/print/html', methods=['GET'])
+def print_html():
+    return """
+    <html lang=\"tr\">
+    <head>
+        <meta charset=\"UTF-8\">
+        <title>Print API Test</title>
+        <style>
+            body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8fafc; color: #222; }
+            .container { max-width: 500px; margin: 40px auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(14,160,160,0.10); padding: 32px; }
+            h1 { color: #0ea0a0; }
+            label { display: block; margin-top: 12px; }
+            input, textarea { width: 100%; padding: 8px; margin-top: 4px; border-radius: 6px; border: 1px solid #b2dfdb; }
+            button { margin-top: 16px; background: #0ea0a0; color: #fff; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; }
+            button:hover { background: #097c7c; }
+        </style>
+    </head>
+    <body>
+        <div class=\"container\">
+            <h1>Print API Test</h1>
+            <form method=\"post\" action=\"/print\">
+                <label for=\"kullanici\">Kullanıcı:</label>
+                <input type=\"text\" id=\"kullanici\" name=\"kullanici\" required>
+                <label for=\"mesaj\">Mesaj:</label>
+                <textarea id=\"mesaj\" name=\"mesaj\" required></textarea>
+                <button type=\"submit\">Gönder</button>
+            </form>
+        </div>
+    </body>
+    </html>
+    """
+
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
