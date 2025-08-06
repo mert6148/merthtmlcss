@@ -6,6 +6,9 @@ echo '<script src="../script-db.js"></script>';
  * Merthtmlcss Projesi - Database Includes
  */
 
+// Modern QueryBuilder - Hata yönetimi ve loglama
+// Merthtmlcss Projesi
+require_once __DIR__ . '/includes.php';
 class QueryBuilder {
     private $pdo;
     private $table;
@@ -173,13 +176,16 @@ class QueryBuilder {
     }
     
     public function get() {
-        $query = $this->buildQuery();
-        $params = $this->getParameters();
-        
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute($params);
-        
-        return $stmt->fetchAll();
+        try {
+            $query = $this->buildQuery();
+            $params = $this->getParameters();
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute($params);
+            return $stmt->fetchAll();
+        } catch (Exception $e) {
+            db_error($e->getMessage());
+            return [];
+        }
     }
     
     public function first() {
@@ -224,4 +230,4 @@ class QueryBuilder {
 //     ->orderBy('created_at', 'DESC')
 //     ->limit(10)
 //     ->get();
-?> 
+?>

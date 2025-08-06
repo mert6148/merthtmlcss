@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <xsd:schema id="root"
+        xmlns=""
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            <xsd:complexType>
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" />
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
+            </xsd:complexType>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="TextBlock.Text" xml:space="preserve">
+        <value>Hello World</value>
+        <comment>Demo comment</comment>
+    </data>
+    <data name="PageTitle" xml:space="preserve">
+        <value>Hoşgeldiniz</value>
+        <comment>Sayfa başlığı</comment>
+    </data>
+    <data name="PageDescription" xml:space="preserve">
+        <value>Bu sayfa modern bir UWP örneğidir.</value>
+        <comment>Sayfa açıklaması</comment>
+    </data>
+    <data name="InputPlaceholder" xml:space="preserve">
+        <value>Bir şeyler yazın...</value>
+        <comment>TextBox için placeholder</comment>
+    </data>
+    <data name="SubmitButton" xml:space="preserve">
+        <value>Gönder</value>
+        <comment>Buton metni</comment>
+    </data>
+    <data name="InfoBoxText" xml:space="preserve">
+        <value>Hoşgeldiniz! Bu bir bilgi kutusudur.</value>
+        <comment>Bilgi kutusu metni</comment>
+    </data>
+    <data name="PageTitle_en" xml:space="preserve">
+        <value>Welcome</value>
+        <comment>Page title (English)</comment>
+    </data>
+    <data name="PageDescription_en" xml:space="preserve">
+        <value>This page is a modern UWP sample.</value>
+        <comment>Page description (English)</comment>
+    </data>
+    <data name="InputPlaceholder_en" xml:space="preserve">
+        <value>Type something...</value>
+        <comment>TextBox placeholder (English)</comment>
+    </data>
+    <data name="SubmitButton_en" xml:space="preserve">
+        <value>Submit</value>
+        <comment>Button text (English)</comment>
+    </data>
+    <data name="InfoBoxText_en" xml:space="preserve">
+        <value>Welcome! This is an info box.</value>
+        <comment>Info box text (English)</comment>
+    </data>
+</root>

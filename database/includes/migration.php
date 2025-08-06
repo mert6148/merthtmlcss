@@ -6,6 +6,9 @@ echo '<script src="../script-db.js"></script>';
  * Merthtmlcss Projesi - Database Includes
  */
 
+// Modern Migration Sistemi - Hata yönetimi ve loglama
+// Merthtmlcss Projesi
+require_once __DIR__ . '/includes.php';
 class DatabaseMigration {
     private $pdo;
     private $migrations_table = 'migrations';
@@ -26,7 +29,7 @@ class DatabaseMigration {
         try {
             $this->pdo->exec($sql);
         } catch (Exception $e) {
-            throw new Exception("Migration tablosu oluşturulamadı: " . $e->getMessage());
+            db_error("Migration tablosu oluşturulamadı: " . $e->getMessage());
         }
     }
     
@@ -52,7 +55,7 @@ class DatabaseMigration {
                     echo "✅ Migration çalıştırıldı: {$migration['name']}\n";
                 } catch (Exception $e) {
                     $this->pdo->rollBack();
-                    throw new Exception("Migration hatası ({$migration['name']}): " . $e->getMessage());
+                    db_error("Migration hatası ({$migration['name']}): " . $e->getMessage());
                 }
             }
         }
@@ -86,7 +89,7 @@ class DatabaseMigration {
                 echo "🔄 Migration geri alındı: {$migration['name']}\n";
             } catch (Exception $e) {
                 $this->pdo->rollBack();
-                throw new Exception("Rollback hatası ({$migration['name']}): " . $e->getMessage());
+                db_error("Rollback hatası ({$migration['name']}): " . $e->getMessage());
             }
         }
         

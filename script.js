@@ -12,7 +12,7 @@
 
 // Modern modül sistemi
 const Merthtmlcss = (() => {
-    
+
     // Konfigürasyon
     const CONFIG = {
         API_BASE_URL: 'https://api.merthtmlcss.com',
@@ -41,7 +41,7 @@ const Merthtmlcss = (() => {
         // Throttle fonksiyonu
         throttle(func, limit) {
             let inThrottle;
-            return function() {
+            return function () {
                 const args = arguments;
                 const context = this;
                 if (!inThrottle) {
@@ -174,17 +174,17 @@ const Merthtmlcss = (() => {
         setTheme(theme) {
             document.documentElement.setAttribute('data-theme', theme);
             document.body.classList.toggle('dark', theme === 'dark');
-            
+
             const iconMoon = utils.$('.icon-moon');
             const iconSun = utils.$('.icon-sun');
-            
+
             if (iconMoon && iconSun) {
                 iconMoon.style.display = theme === 'dark' ? 'none' : 'block';
                 iconSun.style.display = theme === 'dark' ? 'block' : 'none';
             }
 
             utils.storage.set(CONFIG.THEME_KEY, theme);
-            
+
             // Tema değişikliği eventi
             window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
         },
@@ -215,7 +215,7 @@ const Merthtmlcss = (() => {
     const apiManager = {
         async request(endpoint, options = {}) {
             const url = `${CONFIG.API_BASE_URL}${endpoint}`;
-            
+
             return utils.retry(async () => {
                 return await utils.fetch(url, options);
             });
@@ -269,19 +269,19 @@ const Merthtmlcss = (() => {
         validateField(field) {
             const value = field.value.trim();
             const isValid = this.isFieldValid(field, value);
-            
+
             field.classList.toggle('input-error', !isValid);
             field.classList.toggle('input-success', isValid && value.length > 0);
-            
+
             return isValid;
         },
 
         isFieldValid(field, value) {
             const type = field.type;
             const required = field.hasAttribute('required');
-            
+
             if (required && !value) return false;
-            
+
             switch (type) {
                 case 'email':
                     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -296,37 +296,37 @@ const Merthtmlcss = (() => {
 
         async handleSubmit(e) {
             e.preventDefault();
-            
+
             const form = e.target;
             const formData = new FormData(form);
             const submitButton = form.querySelector('button[type="submit"]');
             const originalText = submitButton?.textContent;
-            
+
             // Form validasyonu
             const inputs = form.querySelectorAll('input[required], textarea[required]');
             let isValid = true;
-            
+
             inputs.forEach(input => {
                 if (!this.validateField(input)) {
                     isValid = false;
                 }
             });
-            
+
             if (!isValid) {
                 this.showMessage('Lütfen tüm gerekli alanları doldurun.', 'error');
                 return;
             }
-            
+
             // Submit butonunu devre dışı bırak
             if (submitButton) {
                 submitButton.disabled = true;
                 submitButton.innerHTML = '<span class="loading"></span> Gönderiliyor...';
             }
-            
+
             try {
                 // Form verilerini gönder
                 const response = await apiManager.post('/api/contact', Object.fromEntries(formData));
-                
+
                 if (response.success) {
                     this.showMessage('Form başarıyla gönderildi!', 'success');
                     form.reset();
@@ -349,17 +349,17 @@ const Merthtmlcss = (() => {
         showMessage(text, type) {
             const messageDiv = utils.$('#js-mesaj');
             if (!messageDiv) return;
-            
+
             messageDiv.textContent = text;
             messageDiv.className = `message-${type}`;
             messageDiv.style.display = 'block';
-            
+
             // Animasyon
             utils.animate(messageDiv, [
                 { opacity: 0, transform: 'translateY(20px)' },
                 { opacity: 1, transform: 'translateY(0)' }
             ]);
-            
+
             // Otomatik kapatma
             setTimeout(() => {
                 utils.animate(messageDiv, [
@@ -400,25 +400,25 @@ const Merthtmlcss = (() => {
         getPlatformFromElement(element) {
             const icon = element.querySelector('i');
             if (!icon) return null;
-            
+
             const classList = icon.className;
             if (classList.includes('fa-github')) return 'github';
             if (classList.includes('fa-twitter')) return 'twitter';
             if (classList.includes('fa-linkedin')) return 'linkedin';
             if (classList.includes('fa-instagram')) return 'instagram';
             if (classList.includes('fa-youtube')) return 'youtube';
-            
+
             return null;
         },
 
         handleSocialClick(platform) {
             if (!platform || !this.platforms[platform]) return;
-            
+
             const platformInfo = this.platforms[platform];
-            
+
             // Mesaj göster
             formManager.showMessage(platformInfo.message, 'success');
-            
+
             // URL varsa yeni sekmede aç
             if (platformInfo.url && platformInfo.url !== '#') {
                 setTimeout(() => {
@@ -443,29 +443,29 @@ const Merthtmlcss = (() => {
 
         async handleContact(e) {
             e.preventDefault();
-            
+
             const button = e.target;
             const originalText = button.innerHTML;
-            
+
             button.innerHTML = '<span class="loading"></span> Gönderiliyor...';
             button.disabled = true;
-            
+
             try {
                 // E-posta uygulamasını aç
                 const email = 'info@merthtmlcss.com';
                 const subject = 'İletişim';
                 const body = 'Merhaba, Merthtmlcss ile ilgili bir sorum var.';
-                
+
                 const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-                
+
                 // E-posta uygulamasını açmaya çalış
                 window.location.href = mailtoUrl;
-                
+
                 // Başarı mesajı göster
                 setTimeout(() => {
                     formManager.showMessage('E-posta uygulamanız açılmadıysa, lütfen info@merthtmlcss.com adresine manuel olarak e-posta gönderebilirsiniz.', 'info');
                 }, 1000);
-                
+
             } catch (error) {
                 console.error('Contact error:', error);
                 formManager.showMessage('Bir hata oluştu. Lütfen tekrar deneyin.', 'error');
@@ -483,7 +483,7 @@ const Merthtmlcss = (() => {
                 const response = await utils.fetch('blade/hakkinda.xml');
                 const xmlText = await response.text();
                 const xmlDoc = new DOMParser().parseFromString(xmlText, 'text/xml');
-                
+
                 this.updatePageContent(xmlDoc);
             } catch (error) {
                 console.warn('XML yüklenemedi:', error);
@@ -502,7 +502,7 @@ const Merthtmlcss = (() => {
             Object.entries(mappings).forEach(([elementId, xmlTag]) => {
                 const element = utils.$(`#${elementId}`);
                 const xmlElement = xmlDoc.querySelector(xmlTag);
-                
+
                 if (element && xmlElement) {
                     if (elementId === 'xml-iletisim') {
                         element.innerHTML = `<a href="mailto:${xmlElement.textContent}">${xmlElement.textContent}</a>`;
@@ -578,7 +578,7 @@ const Merthtmlcss = (() => {
             window.addEventListener('load', () => {
                 const loadTime = performance.now();
                 console.log(`Sayfa yükleme süresi: ${loadTime.toFixed(2)}ms`);
-                
+
                 // Analytics'e gönder
                 this.sendAnalytics('page_load', { loadTime });
             });
@@ -629,7 +629,7 @@ const Merthtmlcss = (() => {
 
         init() {
             console.log('🚀 Merthtmlcss uygulaması başlatılıyor...');
-            
+
             // DOM hazır olduğunda başlat
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', () => this.start());
@@ -649,12 +649,12 @@ const Merthtmlcss = (() => {
 
                 // Sayfa animasyonu
                 this.animatePageLoad();
-                
+
                 // XML verilerini yükle
                 xmlManager.loadXMLData();
 
                 console.log('✅ Merthtmlcss uygulaması başarıyla başlatıldı!');
-                
+
             } catch (error) {
                 console.error('❌ Uygulama başlatma hatası:', error);
             }
@@ -663,7 +663,7 @@ const Merthtmlcss = (() => {
         animatePageLoad() {
             document.body.style.opacity = '0';
             document.body.style.transition = 'opacity 0.5s ease';
-            
+
             setTimeout(() => {
                 document.body.style.opacity = '1';
             }, 100);
@@ -672,7 +672,7 @@ const Merthtmlcss = (() => {
 
     // Global fonksiyonlar (geriye uyumluluk için)
     window.toggleTheme = () => themeManager.toggleTheme();
-    window.contactUs = () => contactManager.handleContact({ preventDefault: () => {} });
+    window.contactUs = () => contactManager.handleContact({ preventDefault: () => { } });
     window.showSocial = (platform) => socialManager.handleSocialClick(platform);
     window.showMessage = (text, type) => formManager.showMessage(text, type);
 
@@ -722,3 +722,91 @@ window.addEventListener('unhandledrejection', (event) => {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = Merthtmlcss;
 }
+
+// Toast Bildirim Sistemi
+function showToast(message, type = 'info', duration = 3500) {
+    let toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add('show'), 10);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, duration);
+}
+
+// Sistem Temasını Algıla ve Uygula
+function autoDetectTheme() {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedTheme = localStorage.getItem('merthtmlcss_theme');
+    if (!savedTheme) {
+        document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+        document.body.classList.toggle('dark', prefersDark);
+    }
+}
+window.addEventListener('DOMContentLoaded', autoDetectTheme);
+
+// Erişilebilirlik: Tüm buton ve linklere klavye ile erişim için focus-visible
+function enableFocusVisible() {
+    document.body.addEventListener('keydown', e => {
+        if (e.key === 'Tab') {
+            document.body.classList.add('user-is-tabbing');
+        }
+    });
+    document.body.addEventListener('mousedown', () => {
+        document.body.classList.remove('user-is-tabbing');
+    });
+}
+window.addEventListener('DOMContentLoaded', enableFocusVisible);
+
+// Micro-interaction: Butonlara tıklama animasyonu
+function enableButtonBounce() {
+    document.body.addEventListener('click', e => {
+        if (e.target.classList.contains('btn')) {
+            e.target.classList.remove('bounce');
+            void e.target.offsetWidth; // reflow
+            e.target.classList.add('bounce');
+        }
+    });
+}
+window.addEventListener('DOMContentLoaded', enableButtonBounce);
+
+// Form Validasyonu: Gerçek zamanlı, erişilebilir, inline hata mesajı
+function enableFormValidation() {
+    document.querySelectorAll('form').forEach(form => {
+        form.setAttribute('novalidate', 'true');
+        form.addEventListener('submit', e => {
+            let valid = true;
+            form.querySelectorAll('input, textarea, select').forEach(field => {
+                const errorId = field.name + '-error';
+                let error = form.querySelector('#' + errorId);
+                if (field.required && !field.value.trim()) {
+                    valid = false;
+                    if (!error) {
+                        error = document.createElement('div');
+                        error.id = errorId;
+                        error.className = 'input-error';
+                        error.setAttribute('role', 'alert');
+                        error.setAttribute('aria-live', 'polite');
+                        error.textContent = 'Bu alan zorunludur.';
+                        field.setAttribute('aria-invalid', 'true');
+                        field.setAttribute('aria-describedby', errorId);
+                        field.parentNode.insertBefore(error, field.nextSibling);
+                    }
+                } else {
+                    if (error) error.remove();
+                    field.removeAttribute('aria-invalid');
+                    field.removeAttribute('aria-describedby');
+                }
+            });
+            if (!valid) {
+                e.preventDefault();
+                showToast('Lütfen gerekli alanları doldurun.', 'error');
+            }
+        });
+    });
+}
+window.addEventListener('DOMContentLoaded', enableFormValidation);

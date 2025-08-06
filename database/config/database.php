@@ -1,21 +1,31 @@
 <?php
-echo '<link rel="stylesheet" href="../style-db.css">';
-echo '<script src="../script-db.js"></script>';
-/**
- * Veritabanı Bağlantı Konfigürasyonu
- * Merthtmlcss Projesi - Database Klasörü
- */
+// Modern PDO Bağlantı Konfigürasyonu - .env desteği ve gelişmiş hata yönetimi
+// Merthtmlcss Projesi - Gelişmiş Database Sınıfı
+
+// require_once __DIR__ . '/../../vendor/autoload.php'; // Bu satırı kaldırdım, composer gereksiz
+use Dotenv\Dotenv;
+
+if (file_exists(__DIR__ . '/../../.env')) {
+    $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+    $dotenv->load();
+}
 
 class Database {
-    private $host = 'localhost';
-    private $db_name = 'merthtmlcss';
-    private $username = 'root';
-    private $password = '';
+    private $host;
+    private $db_name;
+    private $username;
+    private $password;
     private $conn;
+    
+    public function __construct() {
+        $this->host = $_ENV['DB_HOST'] ?? 'localhost';
+        $this->db_name = $_ENV['DB_NAME'] ?? 'merthtmlcss';
+        $this->username = $_ENV['DB_USER'] ?? 'root';
+        $this->password = $_ENV['DB_PASS'] ?? '';
+    }
     
     public function getConnection() {
         $this->conn = null;
-        
         try {
             $this->conn = new PDO(
                 "mysql:host=" . $this->host . ";dbname=" . $this->db_name . ";charset=utf8",
@@ -28,9 +38,9 @@ class Database {
                 )
             );
         } catch(PDOException $exception) {
+            error_log("Veritabanı bağlantı hatası: " . $exception->getMessage());
             echo "Veritabanı bağlantı hatası: " . $exception->getMessage();
         }
-        
         return $this->conn;
     }
     
@@ -38,25 +48,17 @@ class Database {
         $this->conn = null;
     }
     
-    // Veritabanı bağlantısını test et
     public function testConnection() {
         $db = $this->getConnection();
-        
-        if($db) {
-            return true;
-        } else {
-            return false;
-        }
+        return $db ? true : false;
     }
     
-    // Veritabanı durumunu kontrol et
     public function getDatabaseInfo() {
         try {
             $db = $this->getConnection();
             if ($db) {
                 $version = $db->query('SELECT VERSION()')->fetchColumn();
                 $tables = $db->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
-                
                 return [
                     'connected' => true,
                     'version' => $version,
@@ -70,16 +72,13 @@ class Database {
                 'error' => $e->getMessage()
             ];
         }
-        
         return ['connected' => false];
     }
 }
 
-// Veritabanı bağlantısını test et
 function testDatabaseConnection() {
     $database = new Database();
     $db = $database->getConnection();
-    
     if($db) {
         echo "✅ Veritabanı bağlantısı başarılı!";
         return true;
@@ -89,8 +88,6 @@ function testDatabaseConnection() {
     }
 }
 
-// Otomatik bağlantı testi (sadece doğrudan çalıştırıldığında)
 if (basename(__FILE__) == basename($_SERVER["SCRIPT_FILENAME"])) {
     testDatabaseConnection();
-}
-?> 
+} 

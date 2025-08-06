@@ -16,13 +16,33 @@ overiler = {
 @app.route('/', methods=['GET'])
 def home():
     return """
-    <h1>Merthtmlcss Python API</h1>
-    <p>Hoş geldiniz! Aşağıdaki endpointleri kullanabilirsiniz:</p>
-    <ul>
-      <li>/api/about - Proje hakkında bilgi</li>
-      <li>/api/contact - İletişim bilgileri (GET/POST)</li>
-      <li>/print - Veri gönderimi ve test (GET/POST)</li>
-    </ul>
+    <html lang=\"tr\">
+    <head>
+        <meta charset=\"UTF-8\">
+        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+        <title>Merthtmlcss Python API</title>
+        <style>
+            body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8fafc; color: #222; margin: 0; padding: 0; }
+            .container { max-width: 600px; margin: 40px auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(14,160,160,0.10); padding: 32px; }
+            h1 { color: #0ea0a0; }
+            ul { margin-top: 18px; }
+            li { margin-bottom: 8px; }
+            a { color: #0ea0a0; text-decoration: none; }
+            a:hover { text-decoration: underline; }
+        </style>
+    </head>
+    <body>
+        <div class=\"container\">
+            <h1>Merthtmlcss Python API</h1>
+            <p>Hoş geldiniz! Aşağıdaki endpointleri kullanabilirsiniz:</p>
+            <ul>
+              <li><a href=\"/api/about\">/api/about</a> - Proje hakkında bilgi</li>
+              <li><a href=\"/api/contact\">/api/contact</a> - İletişim bilgileri (GET/POST)</li>
+              <li><a href=\"/print\">/print</a> - Veri gönderimi ve test (GET/POST)</li>
+            </ul>
+        </div>
+    </body>
+    </html>
     """
 
 # GET işlemi: /api/about

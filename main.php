@@ -39,17 +39,24 @@ $config = [
 ];
 
 // Ana sayfa mesajları
-$anasayfaMesaj = "Merthtmlcss projesine hoş geldiniz! Burada modern web teknolojileriyle ilgili örnekler ve açıklamalar bulabilirsiniz.";
-$iletisimMail = $config['admin_email'];
-$iletisimLink = '<a href="mailto:' . $iletisimMail . '?subject=İletişim&body=Merhaba, Merthtmlcss ile ilgili bir sorum var." class="btn btn-info" target="_blank" rel="noopener">Bize e-posta gönderin</a>';
-$ekbilgi = $config['site_name'];
+$anasayfaMesaj = "Merthtmlcss projesine <strong>hoş geldiniz!</strong> Modern web teknolojileriyle ilgili örnekler, açıklamalar ve kaynaklar burada sizi bekliyor.";
+$iletisimMail = isset($config['admin_email']) ? sanitizeInput($config['admin_email']) : 'info@merthtmlcss.com';
+$iletisimLink = '<a href="mailto:' . $iletisimMail . '?subject=' . rawurlencode('İletişim') . '&body=' . rawurlencode('Merhaba, Merthtmlcss ile ilgili bir sorum var.') . '" class="btn btn-info" target="_blank" rel="noopener">Bize e-posta gönderin</a>';
+$ekbilgi = isset($config['site_name']) ? sanitizeInput($config['site_name']) : 'Merthtmlcss';
 
 // Güvenlik fonksiyonları
+/**
+ * Kullanıcıdan gelen veriyi XSS ve injection saldırılarına karşı temizler.
+ * Hem string hem dizi için çalışır.
+ * @param mixed $input
+ * @return mixed
+ */
 function sanitizeInput($input) {
     if (is_array($input)) {
         return array_map('sanitizeInput', $input);
     }
-    return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
+    // Gereksiz boşlukları temizle, özel karakterleri HTML entity'ye çevir
+    return htmlspecialchars(trim((string)$input), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
 function validateEmail($email) {
@@ -126,24 +133,81 @@ function logActivity($action, $details = '') {
     file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX);
 }
 
-// Cache fonksiyonları
-function getCache($key) {
-    $cacheFile = "cache/{$key}.cache";
-    if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < 3600) {
-        return unserialize(file_get_contents($cacheFile));
+// Gelişmiş log fonksiyonu
+function writeLog($message, $level = 'INFO', $logFile = 'app.log') {
+    $date = date('Y-m-d H:i:s');
+    $logLine = "[$date][$level] $message" . PHP_EOL;
+    $logPath = __DIR__ . '/' . $logFile;
+    $fp = @fopen($logPath, 'a');
+    if ($fp) {
+        flock($fp, LOCK_EX);
+        fwrite($fp, $logLine);
+        flock($fp, LOCK_UN);
+        fclose($fp);
+    } else {
+        // Dosya açılamazsa ekrana yaz
+        error_log($logLine);
     }
-    return null;
 }
 
-function setCache($key, $data, $expiry = 3600) {
-    $cacheFile = "cache/{$key}.cache";
-    $cacheDir = dirname($cacheFile);
-    
+// Cache ayarları
+$cacheConfig = [
+    'dir' => __DIR__ . '/cache/', // Cache dizini
+    'default_ttl' => 300,         // Varsayılan süre (saniye)
+    'max_size' => 10 * 1024 * 1024 // Maksimum toplam boyut (10 MB)
+];
+
+// Basit dosya tabanlı cache fonksiyonları (güncellenmiş)
+function setCache($key, $data, $ttl = null) {
+    global $cacheConfig;
+    $cacheDir = $cacheConfig['dir'];
+    $ttl = $ttl ?? $cacheConfig['default_ttl'];
     if (!is_dir($cacheDir)) {
         mkdir($cacheDir, 0755, true);
     }
-    
-    file_put_contents($cacheFile, serialize($data));
+    $file = $cacheDir . md5($key) . '.cache';
+    $expire = time() + $ttl;
+    $content = serialize(['expire' => $expire, 'data' => $data]);
+    file_put_contents($file, $content, LOCK_EX);
+    // Maksimum boyut kontrolü
+    enforceCacheSizeLimit();
+}
+
+function getCache($key) {
+    global $cacheConfig;
+    $file = $cacheConfig['dir'] . md5($key) . '.cache';
+    if (!file_exists($file)) return false;
+    $content = @file_get_contents($file);
+    if ($content === false) return false;
+    $cache = @unserialize($content);
+    if (!$cache || !isset($cache['expire']) || time() > $cache['expire']) {
+        @unlink($file);
+        return false;
+    }
+    return $cache['data'];
+}
+
+// Cache boyutunu sınırla (en eski dosyaları sil)
+function enforceCacheSizeLimit() {
+    global $cacheConfig;
+    $cacheDir = $cacheConfig['dir'];
+    $maxSize = $cacheConfig['max_size'];
+    $files = glob($cacheDir . '*.cache');
+    $totalSize = 0;
+    $fileTimes = [];
+    foreach ($files as $file) {
+        $totalSize += filesize($file);
+        $fileTimes[$file] = filemtime($file);
+    }
+    if ($totalSize > $maxSize) {
+        // En eski dosyaları sil
+        asort($fileTimes);
+        foreach ($fileTimes as $file => $time) {
+            if ($totalSize <= $maxSize) break;
+            $totalSize -= filesize($file);
+            @unlink($file);
+        }
+    }
 }
 
 // Performans izleme
@@ -308,4 +372,43 @@ set_exception_handler(function($exception) {
 
 // Çıktıyı temizle ve döndür
 $cleanOutput = cleanupOutput();
-?> 
+
+// Exception yakalama, çıktı temizleme ve döngü örnekleri
+/**
+ * Exception yakalama, çıktı tamponu ve döngülerin birlikte kullanımı örneği
+ */
+function ornekDonguVeException() {
+    try {
+        // Çıktı tamponunu başlat
+        ob_start();
+        echo "<strong>For döngüsü örneği:</strong><br>";
+        for ($i = 1; $i <= 5; $i++) {
+            if ($i % 2 == 0) {
+                echo "$i çift sayı<br>";
+            } else {
+                echo "$i tek sayı<br>";
+            }
+        }
+        echo "<strong>While döngüsü örneği:</strong><br>";
+        $j = 1;
+        while ($j <= 3) {
+            echo "While döngüsü: $j<br>";
+            $j++;
+        }
+        // Burada örnek bir hata fırlatıyoruz
+        if (rand(0, 1) === 1) {
+            throw new Exception("Rastgele bir hata oluştu!");
+        }
+        // Tamponu al ve temizle
+        $icerik = ob_get_clean();
+        echo "<div style='color:green;'>Döngüler başarıyla çalıştı:</div>" . $icerik;
+    } catch (Exception $e) {
+        // Hata olursa tamponu temizle
+        ob_end_clean();
+        echo "<div style='color:red;'>Hata yakalandı: " . htmlspecialchars($e->getMessage()) . "</div>";
+    }
+}
+
+// Kullanım örneği:
+// ornekDonguVeException();
+?>

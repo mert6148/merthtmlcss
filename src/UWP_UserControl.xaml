@@ -1,0 +1,32 @@
+<UserControl x:Class="src.UWP_UserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:src"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+    <Grid Margin="16">
+        <StackPanel Spacing="12"
+                Padding="16"
+                Background="#F4F6FB"
+                CornerRadius="12"
+                BorderBrush="#D0D0D0"
+                BorderThickness="1">
+            <TextBlock Text="Kullanıcı Girişi"
+                    FontSize="22"
+                    FontWeight="SemiBold"
+                    Margin="0,0,0,8"
+                    Foreground="#2D2D2D"
+                    TextAlignment="Center"
+                    Effect="{DynamicResource DropShadowEffect}"/>
+            <TextBox x:Name="UserInput"
+                    PlaceholderText="Adınızı girin..."
+                    Margin="0,0,0,8"/>
+            <Button Content="Gönder"
+                    Width="100"
+                    Height="32"/>
+        </StackPanel>
+    </Grid>
+</UserControl> 

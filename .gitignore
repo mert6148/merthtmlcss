@@ -621,3 +621,17 @@ Thumbs.db
 
 # Bu dosyayı gitignore'a dahil etme
 !.gitignore 
+
+# =========================
+# merthtmlcss-python için özel
+merthtmlcss-python/venv/
+merthtmlcss-python/__pycache__/
+merthtmlcss-python/*.pyc
+merthtmlcss-python/*.pyo
+merthtmlcss-python/*.pyd
+# Takip edilecek dosyalar (force include)
+!merthtmlcss-python/app.py
+!merthtmlcss-python/print.py
+!merthtmlcss-python/requirements.txt
+!merthtmlcss-python/gelen_mesajlar.txt
+# ========================= 

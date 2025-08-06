@@ -1,0 +1,46 @@
+<Page x:Class="src.UWP_Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="clr-namespace:src"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d">
+        <Grid Margin="24">
+                <StackPanel HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Width="400"
+                                Spacing="16"
+                                Padding="24"
+                                Background="#F8F9FA"
+                                CornerRadius="16"
+                                BorderBrush="#E0E0E0"
+                                BorderThickness="1">
+                        <TextBlock Text="{x:Static local:Resources.PageTitle}"
+                                        FontSize="32"
+                                        FontWeight="Bold"
+                                        Margin="0,0,0,8"
+                                        Foreground="#3B3B3B"
+                                        TextAlignment="Center"
+                                        Effect="{DynamicResource DropShadowEffect}"
+                                        AutomationProperties.Name="Sayfa Başlığı"/>
+                        <TextBlock Text="{x:Static local:Resources.PageDescription}"
+                                        FontSize="16"
+                                        Margin="0,0,0,16"
+                                        Foreground="#666"
+                                        TextWrapping="Wrap"
+                                        TextAlignment="Center"/>
+                        <TextBox x:Name="InputBox"
+                                        PlaceholderText="{x:Static local:Resources.InputPlaceholder}"
+                                        Margin="0,0,0,8"/>
+                        <Button Content="{x:Static local:Resources.SubmitButton}"
+                                        Width="120"
+                                        Height="40"
+                                        Margin="0,0,0,16"/>
+                        <ListView x:Name="ItemList"
+                                        Height="120">
+                                <ListViewItem Content="Örnek 1"/>
+                                <ListViewItem Content="Örnek 2"/>
+                        </ListView>
+                </StackPanel>
+        </Grid>
+</Page>

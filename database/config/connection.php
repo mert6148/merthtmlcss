@@ -1,29 +1,35 @@
 <?php
-echo '<link rel="stylesheet" href="../style-db.css">';
-echo '<script src="../script-db.js"></script>';
-/**
- * Veritabanı Bağlantı Yönetimi
- * Merthtmlcss Projesi - Database Config
- */
+// Modern PDO Bağlantı Yönetimi - .env desteği ve gelişmiş hata yönetimi
+// Merthtmlcss Projesi - Gelişmiş Database Connection
+
+require_once __DIR__ . '/../../vendor/autoload.php'; // Dotenv için
+use Dotenv\Dotenv;
+
+// .env dosyasından ayarları yükle
+if (file_exists(__DIR__ . '/../../.env')) {
+    $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+    $dotenv->load();
+}
 
 class DatabaseConnection {
     private static $instance = null;
     private $connection = null;
-    private $config = [
-        'host' => 'localhost',
-        'dbname' => 'merthtmlcss',
-        'username' => 'root',
-        'password' => '',
-        'charset' => 'utf8',
-        'options' => [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-            PDO::ATTR_PERSISTENT => true
-        ]
-    ];
+    private $config;
     
     private function __construct() {
+        $this->config = [
+            'host' => $_ENV['DB_HOST'] ?? 'localhost',
+            'dbname' => $_ENV['DB_NAME'] ?? 'merthtmlcss',
+            'username' => $_ENV['DB_USER'] ?? 'root',
+            'password' => $_ENV['DB_PASS'] ?? '',
+            'charset' => $_ENV['DB_CHARSET'] ?? 'utf8',
+            'options' => [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false,
+                PDO::ATTR_PERSISTENT => true
+            ]
+        ];
         $this->connect();
     }
     
@@ -39,11 +45,20 @@ class DatabaseConnection {
             $dsn = "mysql:host={$this->config['host']};dbname={$this->config['dbname']};charset={$this->config['charset']}";
             $this->connection = new PDO($dsn, $this->config['username'], $this->config['password'], $this->config['options']);
         } catch (PDOException $e) {
+            error_log("Veritabanı bağlantı hatası: " . $e->getMessage());
             throw new Exception("Veritabanı bağlantı hatası: " . $e->getMessage());
         }
     }
+
+    public function reconnect() {
+        $this->closeConnection();
+        $this->connect();
+    }
     
     public function getConnection() {
+        if ($this->connection === null) {
+            $this->connect();
+        }
         return $this->connection;
     }
     
@@ -62,6 +77,7 @@ class DatabaseConnection {
     public function updateConfig($key, $value) {
         if (isset($this->config[$key])) {
             $this->config[$key] = $value;
+            $this->reconnect();
             return true;
         }
         return false;
@@ -87,8 +103,7 @@ class DatabaseConnection {
         return null;
     }
 }
-
 // Kullanım örneği:
 // $db = DatabaseConnection::getInstance();
 // $pdo = $db->getConnection();
-?> 
+?>

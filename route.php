@@ -440,4 +440,27 @@ Route::get('/clear-logs', function () {
     }
 })->name('clear-logs');
 
+Route::get('/test', function () {
+    return response()->json([
+        'success' => true,
+        'message' => 'Test route çalışıyor',
+        'timestamp' => now()->format('Y-m-d H:i:s')
+    ]);
+
+})->middleware('auth')->middleware('throttle:60,1')->middleware('cors')->before(function (Request $request) {
+    Log::info('Test route accessed', [
+        'ip' => $request->ip(),
+        'user_agent' => $request->userAgent(),
+        'timestamp' => now()->format('Y-m-d H:i:s')
+    ]);
+    Cache::put('test_route_accessed', true, 60);
+    DB::table('route_access_logs')->insert([
+        'route' => '/test',
+        'ip_address' => $request->ip(),
+        'user_agent' => $request->userAgent(),
+        'accessed_at' => now()
+    ]);
+    
+})->name('test');
+
 ?>

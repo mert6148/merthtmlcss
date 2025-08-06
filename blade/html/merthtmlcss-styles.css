@@ -1,3 +1,4 @@
+/* Merthtmlcss CSS Framework - Ortak stiller burada */
 /*
 Merthtmlcss CSS Framework
 Oluşturulma Tarihi: 2025-07-05 21:11:22
@@ -428,5 +429,6 @@ Versiyon: 3.0
 .d-block { display: block; }
 .d-flex { display: flex; }
 .d-grid { display: grid; }
+
 
 

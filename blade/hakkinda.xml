@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <hakkinda>
-    <baslik>Hakkında</baslik>
-    <aciklama>Merthtmlcss, modern web geliştirme için HTML, CSS ve JavaScript teknolojilerini bir araya getiren örnek bir projedir.</aciklama>
-    <gelistirici>Mert</gelistirici>
+    <baslik>Merthtmlcss'e Hoş Geldiniz</baslik>
+    <aciklama>Bu projede, temel web teknolojilerini öğrenebilir ve kendi projelerinize ilham alabilirsiniz.</aciklama>
+    <gelistirici>Mert Doğanay</gelistirici>
     <iletisim>mertdoganay437@gmail.com</iletisim>
     <sosyal>
-        <twitter>https://x.com/MertDoganay61?t=yJuy6pp5Rw2ZMMLjaoIJog&amp;s=09</twitter>
+        <twitter>https://twitter.com/MertDoganay61</twitter>
         <github>https://github.com/mert6148</github>
+        <youtube>https://www.youtube.com/@mert_doganay</youtube>
     </sosyal>
 </hakkinda> 
