@@ -1,41 +1,36 @@
-// Function declarations for database management system
+// Veritabanı yönetim sistemi için fonksiyon ve veri yapısı tanımları
 #ifndef DATABASE_H
 #define DATABASE_H
 #include <stdio.h>
-#include <stdlib.h> // Include standard libraries for input/output and memory management
-#include <string.h> // Include string manipulation functions
-#include <stdbool.h> // Include boolean type support
-#include <stdint.h> // Include fixed-width integer types
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <stdint.h>
 
-// Function to initialize the database
-void db_init();
-// Function to add a record to the database
-void db_add_record(const char *record);
-// Function to retrieve a record from the database by its ID
-const char *db_get_record(int id);
-// Function to delete a record from the database by its ID
-void db_delete_record(int id);
-// Function to close the database connection
-void db_close();
-// Function to check if the database is initialized
-bool db_is_initialized();
-// Function to get the number of records in the database
-int db_get_record_count();
-// Function to clear all records from the database
-void db_clear_records();
+// Kayıt veri modeli
+#define MAX_RECORD_DATA 256
 
-int main() {
-    // Example usage of the database functions
-    db_init();
-    db_add_record("First Record");
-    db_add_record("Second Record");
-    
-    const char *record = db_get_record(1);
-    printf("Retrieved: %s\n", record);
-    
-    db_delete_record(1);
-    
-    db_close();
-    
-    return 0;
-}
+typedef struct
+{
+    int id;
+    char data[MAX_RECORD_DATA];
+} Record;
+
+// Hata kodları
+#define DB_SUCCESS 0
+#define DB_ERROR_FULL -1
+#define DB_ERROR_NOT_FOUND -2
+#define DB_ERROR_NOT_INITIALIZED -3
+
+// Fonksiyon prototipleri
+typedef struct Database Database;
+Database *db_init();
+int db_add_record(Database *db, const char *record);
+const char *db_get_record(Database *db, int id);
+int db_delete_record(Database *db, int id);
+void db_close(Database *db);
+bool db_is_initialized(Database *db);
+int db_get_record_count(Database *db);
+int db_clear_records(Database *db);
+
+#endif // DATABASE_H

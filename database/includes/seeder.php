@@ -6,6 +6,9 @@ echo '<script src="../script-db.js"></script>';
  * Merthtmlcss Projesi - Database Includes
  */
 
+// Modern Seeder Sistemi - Hata yönetimi ve loglama
+// Merthtmlcss Projesi
+require_once __DIR__ . '/includes.php';
 class DatabaseSeeder {
     private $pdo;
     private $seeded_table = 'seeders';
@@ -26,7 +29,7 @@ class DatabaseSeeder {
         try {
             $this->pdo->exec($sql);
         } catch (Exception $e) {
-            throw new Exception("Seeder tablosu oluşturulamadı: " . $e->getMessage());
+            db_error("Seeder tablosu oluşturulamadı: " . $e->getMessage());
         }
     }
     
@@ -52,7 +55,7 @@ class DatabaseSeeder {
                     echo "🌱 Seeder çalıştırıldı: {$seeder['name']}\n";
                 } catch (Exception $e) {
                     $this->pdo->rollBack();
-                    throw new Exception("Seeder hatası ({$seeder['name']}): " . $e->getMessage());
+                    db_error("Seeder hatası ({$seeder['name']}): " . $e->getMessage());
                 }
             }
         }
