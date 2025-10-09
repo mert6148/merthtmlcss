@@ -598,6 +598,7 @@ const Merthtmlcss = (() => {
                     rootMargin: '0px 0px -50px 0px'
                 });
 
+                const style = field.style || field.id || 'field';
                 const elements = utils.$$('.bilgi-kutusu, .btn, .social-links');
                 elements.forEach(el => {
                     el.style.opacity = '0';
@@ -658,6 +659,32 @@ const Merthtmlcss = (() => {
             } catch (error) {
                 console.error('❌ Uygulama başlatma hatası:', error);
             }
+        }
+
+        footerManager() {
+            const footer = utils.$('#footer');
+            if (footer) {
+                footer.addEventListener('click', (e) => this.handleFooterClick(e));
+                document.addEvenListener('click', (e) => this.handleFooterLinkClick(e));
+            }
+        }
+
+        handleFooterClick(e) {
+            e.preventDefault();
+            const footer = e.target;
+            const footerLinks = footer.querySelectorAll('.footer-links a');
+            const footerLinkHref = footerLinks.href;
+            this.handleFooterLinkHref(footerLinkHref);
+        }
+
+        handleFooterLinkClick(e) {
+            e.preventDefault();
+            const footerLink = e.target;
+            const footerLinkHref = footerLink.href;
+        }
+
+        handleFooterLinkHref(href) {
+            window.location.href = href;
         }
 
         animatePageLoad() {
@@ -810,3 +837,15 @@ function enableFormValidation() {
     });
 }
 window.addEventListener('DOMContentLoaded', enableFormValidation);
+window.addEventListener('load', enableFormValidation);
+// Erişilebilirlik: Tüm formlara etiket ekle
+function enableAccessibleLabels() {
+    document.querySelectorAll('input, textarea, select').forEach(field => {
+        if (!field.labels.length) {
+            const label = document.createElement('label');
+            label.textContent = field.placeholder || field.name || 'Bu alan';
+            label.htmlFor = field.id || field.name;
+            field.parentNode.insertBefore(label, field);
+        }
+    });
+}

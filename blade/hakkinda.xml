@@ -1,12 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <hakkinda>
     <baslik>Merthtmlcss'e Hoş Geldiniz</baslik>
-    <aciklama>Bu projede, temel web teknolojilerini öğrenebilir ve kendi projelerinize ilham alabilirsiniz.</aciklama>
+    <aciklama>Bu projede, temel web teknolojilerini öğrenebilir ve kendi projelerinize ilham alabilirsiniz. Modern web geliştirme teknikleri, responsive tasarım ve kullanıcı deneyimi odaklı çözümler sunuyoruz.</aciklama>
     <gelistirici>Mert Doğanay</gelistirici>
     <iletisim>mertdoganay437@gmail.com</iletisim>
+    
+    <!-- İstatistikler -->
+    <istatistikler>
+        <proje-sayisi>50+</proje-sayisi>
+        <kullanici-sayisi>1000+</kullanici-sayisi>
+        <yildiz-sayisi>4.9</yildiz-sayisi>
+        <deneyim-yili>5+</deneyim-yili>
+    </istatistikler>
+    
+    <!-- Teknik Yetenekler -->
+    <yetenekler>
+        <yetenek seviye="95">HTML5</yetenek>
+        <yetenek seviye="90">CSS3</yetenek>
+        <yetenek seviye="85">JavaScript</yetenek>
+        <yetenek seviye="80">PHP</yetenek>
+        <yetenek seviye="75">Python</yetenek>
+        <yetenek seviye="70">MySQL</yetenek>
+    </yetenekler>
+    
+    <!-- Sosyal Medya -->
     <sosyal>
         <twitter>https://twitter.com/MertDoganay61</twitter>
         <github>https://github.com/mert6148</github>
         <youtube>https://www.youtube.com/@mert_doganay</youtube>
+        <linkedin>https://linkedin.com/in/mert-doganay</linkedin>
     </sosyal>
+    
+    <!-- Proje Özellikleri -->
+    <ozellikler>
+        <ozellik>
+            <baslik>Responsive Tasarım</baslik>
+            <aciklama>Tüm cihazlarda mükemmel görünüm ve kullanıcı deneyimi</aciklama>
+            <icon>fas fa-mobile-alt</icon>
+        </ozellik>
+        <ozellik>
+            <baslik>Modern Tasarım</baslik>
+            <aciklama>Güncel tasarım trendleri ve kullanıcı dostu arayüz</aciklama>
+            <icon>fas fa-palette</icon>
+        </ozellik>
+        <ozellik>
+            <baslik>Hızlı Performans</baslik>
+            <aciklama>Optimize edilmiş kod ve hızlı yükleme süreleri</aciklama>
+            <icon>fas fa-bolt</icon>
+        </ozellik>
+        <ozellik>
+            <baslik>Güvenli</baslik>
+            <aciklama>Modern güvenlik standartları ve veri koruma</aciklama>
+            <icon>fas fa-shield-alt</icon>
+        </ozellik>
+    </ozellikler>
 </hakkinda> 

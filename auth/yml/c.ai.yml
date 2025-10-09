@@ -22,7 +22,7 @@ models:
     top_p: 0.95
     frequency_penalty: 0.0
     presence_penalty: 0.0
-  
+
   anthropic:
     default: "claude-3-opus-20240229"
     alternatives:
@@ -32,7 +32,7 @@ models:
     max_tokens: 4096
     temperature: 0.7
     top_p: 0.95
-  
+
   google:
     default: "gemini-pro"
     alternatives:
@@ -41,7 +41,7 @@ models:
     max_tokens: 2048
     temperature: 0.7
     top_p: 0.95
-  
+
   azure:
     default: "gpt-4"
     alternatives:
@@ -78,16 +78,16 @@ default_language: "tr"
 
 # Desteklenen diller
 supported_languages:
-  - "tr"  # Türkçe
-  - "en"  # İngilizce
-  - "de"  # Almanca
-  - "fr"  # Fransızca
-  - "es"  # İspanyolca
-  - "it"  # İtalyanca
-  - "ru"  # Rusça
-  - "ja"  # Japonca
-  - "ko"  # Korece
-  - "zh"  # Çince
+  - "tr" # Türkçe
+  - "en" # İngilizce
+  - "de" # Almanca
+  - "fr" # Fransızca
+  - "es" # İspanyolca
+  - "it" # İtalyanca
+  - "ru" # Rusça
+  - "ja" # Japonca
+  - "ko" # Korece
+  - "zh" # Çince
 
 # Dil özellikleri
 language_features:
@@ -116,25 +116,25 @@ security:
     requests_per_minute: 60
     requests_per_hour: 1000
     requests_per_day: 10000
-  
+
   # Content filtering
   content_filter:
     enabled: true
-    level: "moderate"  # low, moderate, high
+    level: "moderate" # low, moderate, high
     blocked_categories:
       - "hate"
       - "harassment"
       - "self_harm"
       - "sexual"
       - "violence"
-  
+
   # Input validation
   input_validation:
     max_input_length: 10000
     min_input_length: 1
     allowed_file_types: ["txt", "md", "json", "xml", "csv"]
     max_file_size: "10MB"
-  
+
   # Output sanitization
   output_sanitization:
     enabled: true
@@ -151,22 +151,22 @@ performance:
   # Caching
   caching:
     enabled: true
-    duration: 3600  # saniye
+    duration: 3600 # saniye
     max_cache_size: "100MB"
-    cache_strategy: "lru"  # lru, fifo, random
-  
+    cache_strategy: "lru" # lru, fifo, random
+
   # Connection pooling
   connection_pool:
     max_connections: 10
     connection_timeout: 30
     request_timeout: 60
-  
+
   # Retry logic
   retry:
     max_retries: 3
-    retry_delay: 1000  # ms
+    retry_delay: 1000 # ms
     exponential_backoff: true
-    max_retry_delay: 10000  # ms
+    max_retry_delay: 10000 # ms
 
 # ===========================================
 # Prompt Mühendisliği
@@ -178,19 +178,19 @@ prompt_templates:
     Sen bir Türkçe konuşan yardımcı yapay zekasın. 
     Kullanıcıya nazik, yardımsever ve bilgilendirici yanıtlar ver.
     Yanıtlarını Türkçe dilinde, açık ve anlaşılır şekilde yaz.
-  
+
   auth_assistant: |
     Sen bir güvenlik odaklı AI asistanısın. 
     Kullanıcı kimlik doğrulama işlemlerinde yardımcı ol.
     Güvenlik açıklarını tespit et ve öneriler sun.
     Şifre gücü, kullanıcı adı güvenliği ve genel güvenlik konularında rehberlik et.
-  
+
   code_assistant: |
     Sen bir programlama asistanısın.
     Kod yazma, hata ayıklama ve optimizasyon konularında yardım et.
     HTML, CSS, JavaScript, PHP, Python, C#, C++ dillerinde uzmanlaşmışsın.
     Kod örnekleri ver ve açıklamalar yap.
-  
+
   content_writer: |
     Sen bir içerik yazarısın.
     SEO uyumlu, ilgi çekici ve bilgilendirici içerikler oluştur.
@@ -205,15 +205,15 @@ prompt_templates:
 user_preferences:
   # Tema tercihleri
   theme:
-    default: "light"  # light, dark, auto
+    default: "light" # light, dark, auto
     auto_detect: true
-  
+
   # Yanıt stili
   response_style:
-    tone: "friendly"  # formal, casual, friendly, professional
-    length: "medium"  # short, medium, long
-    detail_level: "balanced"  # basic, balanced, detailed
-  
+    tone: "friendly" # formal, casual, friendly, professional
+    length: "medium" # short, medium, long
+    detail_level: "balanced" # basic, balanced, detailed
+
   # Özelleştirilmiş ayarlar
   custom_settings:
     enable_emojis: true
@@ -233,18 +233,18 @@ webhooks:
       events: ["completion", "error", "rate_limit"]
       headers:
         Authorization: "Bearer your-webhook-token"
-  
+
   # Event types
   events:
     completion:
       enabled: true
       include_response: true
       include_metadata: true
-    
+
     error:
       enabled: true
       include_error_details: true
-    
+
     rate_limit:
       enabled: true
       include_usage_info: true
@@ -255,23 +255,23 @@ webhooks:
 
 # Logging ayarları
 logging:
-  level: "info"  # debug, info, warn, error
-  format: "json"  # json, text, structured
-  
+  level: "info" # debug, info, warn, error
+  format: "json" # json, text, structured
+
   # Log destinations
   destinations:
     - type: "file"
       path: "./logs/ai.log"
       max_size: "100MB"
       max_files: 10
-    
+
     - type: "console"
       enabled: true
-    
+
     - type: "syslog"
       enabled: false
       facility: "local0"
-  
+
   # Log filters
   filters:
     include_requests: true
@@ -286,7 +286,7 @@ logging:
 # Analytics ayarları
 analytics:
   enabled: true
-  
+
   # Metrikler
   metrics:
     - "request_count"
@@ -294,11 +294,11 @@ analytics:
     - "token_usage"
     - "error_rate"
     - "user_satisfaction"
-  
+
   # Dashboard
   dashboard:
     enabled: true
-    refresh_interval: 60  # saniye
+    refresh_interval: 60 # saniye
     charts:
       - "requests_per_hour"
       - "average_response_time"
@@ -314,14 +314,14 @@ advanced_features:
   # Çoklu model desteği
   multi_model:
     enabled: true
-    fallback_strategy: "cascade"  # cascade, parallel, smart
-  
+    fallback_strategy: "cascade" # cascade, parallel, smart
+
   # Context management
   context:
     max_history: 10
-    memory_type: "sliding_window"  # sliding_window, fixed, adaptive
+    memory_type: "sliding_window" # sliding_window, fixed, adaptive
     context_compression: true
-  
+
   # Function calling
   function_calling:
     enabled: true
@@ -330,7 +330,7 @@ advanced_features:
       - "calculate"
       - "translate"
       - "search_web"
-  
+
   # Streaming responses
   streaming:
     enabled: true
@@ -348,17 +348,17 @@ testing:
     enabled: false
     mock_responses: true
     simulate_delays: true
-  
+
   # Test senaryoları
   test_scenarios:
     - name: "basic_conversation"
       input: "Merhaba, nasılsın?"
       expected_tone: "friendly"
-    
+
     - name: "code_assistance"
       input: "JavaScript'te async/await nasıl kullanılır?"
       expected_include: "code example"
-    
+
     - name: "security_check"
       input: "Şifrem güvenli mi?"
       expected_include: "security advice"
@@ -374,13 +374,13 @@ environments:
     log_level: "debug"
     cache_enabled: false
     rate_limit: false
-  
+
   staging:
     debug: false
     log_level: "info"
     cache_enabled: true
     rate_limit: true
-  
+
   production:
     debug: false
     log_level: "warn"

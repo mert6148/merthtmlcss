@@ -440,6 +440,26 @@ Route::get('/clear-logs', function () {
     }
 })->name('clear-logs');
 
+Route::get('/logs', function () {
+    try {
+        $logFiles = glob(storage_path('logs/*.log'));
+        $logs = [];
+        foreach ($logFiles as $file) {
+            $logs[basename($file)] = file_get_contents($file);
+        }
+        
+        return response()->json([
+            'success' => true,
+            'data' => $logs
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Log dosyaları getirilirken hata oluştu'
+        ], 500);
+    }
+})->name('view-logs');
+
 Route::get('/test', function () {
     return response()->json([
         'success' => true,

@@ -20,6 +20,19 @@
         --gray: #6c757d;
         --light-gray: #f8f9fa;
         --border: #e9ecef;
+
+        /* Modern CSS Variables */
+        --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        --gradient-dark: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+        --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+        --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.25);
+        --border-radius: 12px;
+        --border-radius-lg: 20px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-fast: all 0.15s ease;
+        --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
     * {
@@ -29,36 +42,71 @@
     }
 
     body {
-        background: linear-gradient(120deg, var(--primary) 0%, #f8fafc 100%);
-        font-family: 'Inter', sans-serif;
+        background: var(--gradient-primary);
+        font-family: var(--font-family);
         margin: 0;
         padding: 0;
         min-height: 100vh;
-        transition: all 0.3s ease;
+        transition: var(--transition);
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background:
+            radial-gradient(circle at 20% 80%, rgba(14, 160, 160, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(255, 179, 71, 0.1) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: -1;
     }
 
     body.dark {
-        background: linear-gradient(120deg, #1a1a1a 0%, #2d2d2d 100%);
+        background: var(--gradient-dark);
         color: var(--light);
+    }
+
+    body.dark::before {
+        background:
+            radial-gradient(circle at 20% 80%, rgba(14, 160, 160, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(255, 179, 71, 0.05) 0%, transparent 50%);
     }
 
     .bilgi-kutusu {
-        background: var(--light);
-        border-radius: 20px;
-        box-shadow: 0 8px 32px rgba(14, 160, 160, 0.15);
-        padding: 40px 32px;
-        margin: 60px auto 0 auto;
-        max-width: 600px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-xl);
+        padding: 48px 40px;
+        margin: 80px auto 0 auto;
+        max-width: 700px;
         text-align: left;
         position: relative;
-        animation: fadeIn 0.7s cubic-bezier(.4, 2, .6, 1);
-        border: 1px solid rgba(14, 160, 160, 0.1);
+        animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        overflow: hidden;
+    }
+
+    .bilgi-kutusu::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--gradient-primary);
     }
 
     body.dark .bilgi-kutusu {
-        background: #2d2d2d;
+        background: rgba(45, 45, 45, 0.95);
         color: var(--light);
-        border-color: rgba(14, 160, 160, 0.2);
+        border-color: rgba(14, 160, 160, 0.3);
+        backdrop-filter: blur(20px);
     }
 
     .bilgi-kutusu h2 {
@@ -560,11 +608,18 @@
     </div>
 
     <script>
-    // Tema değiştirme fonksiyonu
+    // Modern tema değiştirme fonksiyonu
     function toggleTheme() {
         const body = document.body;
         const iconMoon = document.querySelector('.icon-moon');
         const iconSun = document.querySelector('.icon-sun');
+        const themeToggle = document.querySelector('.theme-toggle');
+
+        // Animasyon efekti
+        themeToggle.style.transform = 'scale(0.9) rotate(180deg)';
+        setTimeout(() => {
+            themeToggle.style.transform = 'scale(1) rotate(0deg)';
+        }, 150);
 
         body.classList.toggle('dark');
 
@@ -572,25 +627,78 @@
             iconMoon.style.display = 'none';
             iconSun.style.display = 'block';
             localStorage.setItem('theme', 'dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+
+            // Karanlık tema için özel efektler
+            document.documentElement.style.setProperty('--scrollbar-color', '#4a4a4a #2d2d2d');
         } else {
             iconMoon.style.display = 'block';
             iconSun.style.display = 'none';
             localStorage.setItem('theme', 'light');
+            document.documentElement.setAttribute('data-theme', 'light');
+
+            // Aydınlık tema için özel efektler
+            document.documentElement.style.setProperty('--scrollbar-color', '#c1c1c1 #f1f1f1');
         }
+
+        // Tema değişikliği event'i
+        document.dispatchEvent(new CustomEvent('themeChanged', {
+            detail: {
+                theme: body.classList.contains('dark') ? 'dark' : 'light'
+            }
+        }));
     }
 
-    // Proje başlatma fonksiyonu
+    // Gelişmiş proje başlatma fonksiyonu
     function startProject() {
         const button = event.target.closest('.bilgi-btn');
         const originalText = button.innerHTML;
+        const originalClass = button.className;
 
+        // Loading durumu
         button.innerHTML = '<span class="loading"></span> Başlatılıyor...';
         button.disabled = true;
+        button.className = originalClass + ' loading-state';
+
+        // Progress bar ekle
+        const progressBar = document.createElement('div');
+        progressBar.className = 'progress-bar';
+        progressBar.innerHTML = '<div class="progress-fill"></div>';
+        button.parentNode.insertBefore(progressBar, button.nextSibling);
+
+        // Progress animasyonu
+        const progressFill = progressBar.querySelector('.progress-fill');
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress > 100) progress = 100;
+            progressFill.style.width = progress + '%';
+        }, 200);
 
         setTimeout(() => {
+            clearInterval(progressInterval);
+            progressFill.style.width = '100%';
+
+            // Başarı mesajı
+            showMessage('Proje başarıyla başlatıldı! 🎉', 'success');
+
+            // Button'u eski haline getir
             button.innerHTML = originalText;
             button.disabled = false;
-            showMessage('Proje başarıyla başlatıldı! 🎉', 'success');
+            button.className = originalClass;
+
+            // Progress bar'ı kaldır
+            setTimeout(() => {
+                progressBar.remove();
+            }, 1000);
+
+            // Başarı animasyonu
+            button.style.background = 'var(--success)';
+            button.classList.add('pulse');
+            setTimeout(() => {
+                button.style.background = '';
+                button.classList.remove('pulse');
+            }, 2000);
         }, 2000);
     }
 
@@ -622,17 +730,17 @@
         const messageDiv = document.createElement('div');
         messageDiv.className = `message-${type}`;
         messageDiv.style.cssText = `
-                position: fixed;
-                top: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                padding: 12px 24px;
-                border-radius: 8px;
-                color: white;
-                font-weight: 600;
-                z-index: 1001;
-                animation: slideIn 0.3s ease;
-            `;
+                        position: fixed;
+                        top: 20px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        padding: 12px 24px;
+                        border-radius: 8px;
+                        color: white;
+                        font-weight: 600;
+                        z-index: 1001;
+                        animation: slideIn 0.3s ease;
+                    `;
 
         if (type === 'success') {
             messageDiv.style.background = 'linear-gradient(45deg, #51cf66, #40c057)';

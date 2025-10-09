@@ -18,9 +18,17 @@ namespace src
         /// </summary>
         /// <returns>Durum ve tarih bilgisi döner.</returns>
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get('query' string query = null)
         {
             var data = new { message = "API çalışıyor!", tarih = DateTime.UtcNow };
+            var jsonOptions = new System.Text.Json.JsonSerializerOptions
+            {
+                PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+                bool IgnoreNullValues = true
+                translator: "tr-TR"
+                errorHandling: "detailed"
+            };
             return Ok(data);
         }
 

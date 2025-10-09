@@ -21,6 +21,8 @@ echo "<style>
 </style>";
 echo '<link rel="stylesheet" href="style-db.css">';
 echo '<script src="script-db.js"></script>';
+echo '<script src="database.js"></script>';
+echo '<script src="database_manager.js"></script>';
 
 $test_results = [];
 
@@ -201,6 +203,11 @@ try {
     echo "// İstatistikleri al\n";
     echo "\$stats = \$db_manager->getStats();\n";
     echo "echo 'Toplam kullanıcı: ' . \$stats['total_users'];\n";
+    echo "echo 'Toplam yazı: ' . \$stats['total_posts'];\n";
+    echo "echo 'Toplam yorum: ' . \$stats['total_comments'];\n";
+    echo "echo 'Toplam mesaj: ' . \$stats['total_messages'];\n";
+    echo "echo 'Toplam bildirim: ' . \$stats['total_notifications'];\n";
+    echo "echo 'Toplam ayar: ' . \$stats['total_settings'];\n";
     echo "</pre>";
     echo "</div>";
     
@@ -214,4 +221,4 @@ try {
     echo "<li>Veritabanı yetkilerini kontrol edin</li>";
     echo "</ul>";
 }
-?> 
+?>

@@ -41,9 +41,14 @@
             --border: #e9ecef;
             --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             --gradient-dark: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            --gradient-accent: linear-gradient(135deg, var(--accent) 0%, #ff8e8e 100%);
             --shadow-light: 0 8px 32px rgba(0,0,0,0.1);
             --shadow-dark: 0 8px 32px rgba(0,0,0,0.3);
+            --shadow-hover: 0 12px 40px rgba(0,0,0,0.15);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.15s ease;
+            --border-radius: 20px;
+            --border-radius-small: 12px;
         }
 
         * {
@@ -52,13 +57,20 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--gradient-primary);
             min-height: 100vh;
             color: var(--dark);
             transition: var(--transition);
             overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body.dark {
@@ -96,25 +108,28 @@
             background: var(--gradient-primary);
             border-radius: 2px;
             opacity: 0.7;
+            animation: pulse 2s infinite;
         }
 
         .header img {
             width: 100%;
             max-width: 480px;
-            border-radius: 18px;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow-light);
             margin-bottom: 2rem;
             transition: var(--transition);
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+            cursor: pointer;
         }
 
         .header img:hover {
             transform: translateY(-5px) scale(1.02);
-            box-shadow: var(--shadow-dark);
+            box-shadow: var(--shadow-hover);
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.15));
         }
 
         .header h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
+            font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: 800;
             margin-bottom: 1rem;
             background: linear-gradient(45deg, var(--primary), var(--accent));
@@ -122,20 +137,21 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: -0.02em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .header p {
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
             color: var(--gray);
             max-width: 600px;
             margin: 0 auto;
-            line-height: 1.6;
+            line-height: 1.7;
             opacity: 0.9;
         }
 
         .bilgi-kutusu {
             background: var(--light);
-            border-radius: 20px;
+            border-radius: var(--border-radius);
             padding: 2.5rem;
             margin-bottom: 2rem;
             box-shadow: var(--shadow-light);
@@ -144,6 +160,12 @@
             animation: fadeInUp 1s ease-out 0.2s both;
             position: relative;
             overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .bilgi-kutusu:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
         }
 
         .bilgi-kutusu::before {
@@ -170,6 +192,12 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .bilgi-kutusu h2:hover {
+            color: var(--accent);
+            transform: translateX(5px);
         }
 
         .bilgi-kutusu h2 i {
@@ -181,6 +209,7 @@
             margin-bottom: 1.5rem;
             line-height: 1.7;
             color: var(--gray);
+            transition: var(--transition);
         }
 
         body.dark .bilgi-kutusu p {
@@ -196,8 +225,26 @@
         .bilgi-kutusu ul li {
             background: var(--light-gray);
             padding: 1rem;
-            border-radius: 10px;
+            border-radius: var(--border-radius-small);
             transition: var(--transition);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bilgi-kutusu ul li::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .bilgi-kutusu ul li:hover::before {
+            left: 100%;
         }
 
         body.dark .bilgi-kutusu ul li {
@@ -205,9 +252,11 @@
         }
 
         .bilgi-kutusu ul li:hover {
-            transform: translateX(5px);
+            transform: translateX(5px) scale(1.02);
             background: var(--primary);
             color: var(--light);
+            border-color: var(--accent);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
         .bilgi-kutusu ul li a {
@@ -218,6 +267,8 @@
             gap: 0.5rem;
             transition: var(--transition);
             font-weight: 500;
+            position: relative;
+            z-index: 1;
         }
 
         .bilgi-kutusu ul li a:hover {
@@ -239,6 +290,8 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            font-family: inherit;
+            letter-spacing: 0.5px;
         }
 
         .btn::before {
@@ -267,6 +320,11 @@
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
         }
 
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
         .theme-toggle {
             position: fixed;
             top: 2rem;
@@ -284,40 +342,52 @@
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-light);
         }
 
         .theme-toggle:hover {
             background: var(--primary);
             color: var(--light);
             transform: scale(1.1) rotate(180deg);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.95);
         }
 
         body.dark .theme-toggle {
             background: #2d2d2d;
             color: var(--light);
             border-color: var(--accent);
+            box-shadow: var(--shadow-dark);
         }
 
         #js-mesaj {
             margin-top: 1rem;
             padding: 1rem;
-            border-radius: 12px;
+            border-radius: var(--border-radius-small);
             text-align: center;
             font-weight: 500;
             display: none;
             animation: slideInUp 0.3s ease-out;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .message-success {
             background: linear-gradient(135deg, var(--success), #a8e6cf);
             color: var(--light);
             border: 1px solid var(--success);
+            box-shadow: 0 4px 15px rgba(81, 207, 102, 0.3);
         }
 
         .message-error {
             background: linear-gradient(135deg, var(--error), #ff7675);
             color: var(--light);
             border: 1px solid var(--error);
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
         }
 
         .social-links {
@@ -328,20 +398,30 @@
             flex-wrap: wrap;
         }
 
-        .social-links a {
+        .social-links button {
+            background: none;
+            border: none;
             color: var(--primary);
             font-size: 1.5rem;
             transition: var(--transition);
-            padding: 0.5rem;
+            padding: 0.8rem;
             border-radius: 50%;
             background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
+            cursor: pointer;
+            border: 2px solid transparent;
         }
 
-        .social-links a:hover {
+        .social-links button:hover {
             color: var(--accent);
             transform: scale(1.2) rotate(5deg);
             background: rgba(255,255,255,0.2);
+            border-color: var(--accent);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .social-links button:active {
+            transform: scale(0.95);
         }
 
         /* Gelişmiş animasyonlar */
@@ -370,9 +450,11 @@
         @keyframes pulse {
             0%, 100% {
                 transform: scale(1);
+                opacity: 0.7;
             }
             50% {
-                transform: scale(1.05);
+                transform: scale(1.1);
+                opacity: 1;
             }
         }
 
@@ -385,12 +467,38 @@
             }
         }
 
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
         .pulse {
             animation: pulse 2s infinite;
         }
 
         .floating {
             animation: float 3s ease-in-out infinite;
+        }
+
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
         }
 
         /* Loading Animation */
@@ -406,6 +514,70 @@
 
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-accent);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark);
+            color: var(--light);
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow-dark);
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Sosyal medya butonları için özel tooltip */
+        .social-links .tooltip .tooltiptext {
+            width: auto;
+            min-width: 120px;
+            white-space: nowrap;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-left: 0;
+        }
+
+        body.dark .tooltip .tooltiptext {
+            background-color: var(--light);
+            color: var(--dark);
         }
 
         /* Responsive tasarım */
@@ -439,8 +611,30 @@
                 gap: 0.8rem;
             }
 
-            .social-links a {
+            .social-links button {
                 font-size: 1.3rem;
+                padding: 0.6rem;
+            }
+
+            .btn {
+                padding: 0.8rem 2rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .bilgi-kutusu {
+                padding: 1rem;
+                margin: 0.5rem;
+            }
+
+            .social-links button {
+                font-size: 1.2rem;
+                padding: 0.5rem;
             }
         }
 
@@ -456,9 +650,18 @@
         /* Erişilebilirlik iyileştirmeleri */
         .btn:focus,
         .theme-toggle:focus,
-        .social-links a:focus {
+        .social-links button:focus {
             outline: 2px solid var(--accent);
             outline-offset: 2px;
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
 
         /* Print styles */
@@ -472,54 +675,412 @@
                 background: white;
                 color: black;
             }
+
+            .bilgi-kutusu {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --primary: #0000ff;
+                --secondary: #800080;
+                --accent: #ff0000;
+            }
+        }
+
+        /* Dark mode preference support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --light: #2d2d2d;
+                --dark: #ffffff;
+                --gray: #cccccc;
+                --light-gray: #3a3a3a;
+            }
+        }
+
+        /* Scrollbar stilleri */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-gray);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        body.dark ::-webkit-scrollbar-track {
+            background: #3a3a3a;
+        }
+
+        body.dark ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+        }
+
+        /* Firefox scrollbar */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) var(--light-gray);
+        }
+
+        body.dark * {
+            scrollbar-color: var(--accent) #3a3a3a;
+        }
+
+        /* Selection stilleri */
+        ::selection {
+            background: var(--primary);
+            color: var(--light);
+        }
+
+        ::-moz-selection {
+            background: var(--primary);
+            color: var(--light);
+        }
+
+        /* Focus stilleri */
+        *:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* Placeholder stilleri */
+        ::placeholder {
+            color: var(--gray);
+            opacity: 0.7;
+        }
+
+        /* Input stilleri */
+        input, textarea, select {
+            font-family: inherit;
+            border: 2px solid var(--border);
+            border-radius: var(--border-radius-small);
+            padding: 0.8rem;
+            transition: var(--transition);
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+
+        body.dark input, body.dark textarea, body.dark select {
+            background: #3a3a3a;
+            color: var(--light);
+            border-color: #4a4a4a;
         }
     </style>
 </head>
 <body>
+    <div id="header"></div>
+    <div id="aside"></div>
     <button class="theme-toggle" aria-label="Tema Değiştir" onclick="toggleTheme()">
         <span class="icon-moon">🌙</span>
         <span class="icon-sun" style="display:none;">☀️</span>
     </button>
     
     <div class="container">
+        <!-- Hero Section -->
         <div class="header">
-            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=cover&w=480&q=80" 
-                 alt="Web Geliştirme" 
-                 class="floating"
-                 loading="lazy">
-            <h1 id="xml-baslik">Merthtmlcss'e Hoş Geldiniz</h1>
-            <p id="xml-aciklama">Bu projede, temel web teknolojilerini öğrenebilir ve kendi projelerinize ilham alabilirsiniz.</p>
-            <div class="social-links">
-                <button type="button" onclick="showSocial('github')" aria-label="GitHub"><i class="fab fa-github"></i></button>
-                <button type="button" onclick="showSocial('twitter')" aria-label="Twitter"><i class="fab fa-twitter"></i></button>
-                <button type="button" onclick="showSocial('linkedin')" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></button>
-                <button type="button" onclick="showSocial('instagram')" aria-label="Instagram"><i class="fab fa-instagram"></i></button>
+            <div class="hero-image-container">
+                <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=cover&w=480&q=80" 
+                     alt="Web Geliştirme" 
+                     class="floating hero-image"
+                     loading="lazy">
+                <div class="hero-overlay">
+                    <div class="hero-badge">
+                        <i class="fas fa-code"></i>
+                        <span>Modern Web Geliştirme</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-content">
+                <h1 id="xml-baslik" class="hero-title">Merthtmlcss'e Hoş Geldiniz</h1>
+                <p id="xml-aciklama" class="hero-description">Bu projede, temel web teknolojilerini öğrenebilir ve kendi projelerinize ilham alabilirsiniz.</p>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-code"></i>
+                        <span class="stat-number" id="xml-proje-sayisi">50+</span>
+                        <span class="stat-label">Proje</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-users"></i>
+                        <span class="stat-number" id="xml-kullanici-sayisi">1000+</span>
+                        <span class="stat-label">Kullanıcı</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-star"></i>
+                        <span class="stat-number" id="xml-yildiz-sayisi">4.9</span>
+                        <span class="stat-label">Puan</span>
+                    </div>
+                </div>
+                
+                <div class="social-links">
+                    <button type="button" onclick="showSocial('github')" aria-label="GitHub" class="tooltip social-btn">
+                        <i class="fab fa-github"></i>
+                        <span class="tooltiptext">GitHub profiline git</span>
+                    </button>
+                    <button type="button" onclick="showSocial('twitter')" aria-label="Twitter" class="tooltip social-btn">
+                        <i class="fab fa-twitter"></i>
+                        <span class="tooltiptext">Twitter hesabına git</span>
+                    </button>
+                    <button type="button" onclick="showSocial('youtube')" aria-label="YouTube" class="tooltip social-btn">
+                        <i class="fab fa-youtube"></i>
+                        <span class="tooltiptext">YouTube kanalına git</span>
+                    </button>
+                    <button type="button" onclick="showSocial('linkedin')" aria-label="LinkedIn" class="tooltip social-btn">
+                        <i class="fab fa-linkedin"></i>
+                        <span class="tooltiptext">LinkedIn profiline git</span>
+                    </button>
+                </div>
             </div>
         </div>
         
-        <div class="bilgi-kutusu" id="xml-bilgi">
-            <h2><i class="fas fa-user"></i> Geliştirici</h2>
-            <p id="xml-gelistirici"></p>
-            <h2><i class="fas fa-envelope"></i> İletişim</h2>
-            <p id="xml-iletisim"></p>
-            <h2><i class="fas fa-share-alt"></i> Sosyal Medya</h2>
-            <ul id="xml-sosyal"></ul>
+        <!-- Hakkında Bilgileri -->
+        <div class="about-section">
+            <div class="about-card" id="xml-bilgi">
+                <div class="about-header">
+                    <h2><i class="fas fa-user-circle"></i> Geliştirici Hakkında</h2>
+                    <div class="about-badge">
+                        <i class="fas fa-code"></i>
+                        <span>Full Stack Developer</span>
+                    </div>
+                </div>
+                
+                <div class="about-content">
+                    <div class="developer-info">
+                        <div class="developer-avatar">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=cover&w=150&q=80" 
+                                 alt="Geliştirici" 
+                                 class="avatar-image"
+                                 loading="lazy">
+                            <div class="avatar-status">
+                                <span class="status-dot"></span>
+                                <span class="status-text">Aktif</span>
+                            </div>
+                        </div>
+                        
+                        <div class="developer-details">
+                            <h3 id="xml-gelistirici" class="developer-name">Mert Doğanay</h3>
+                            <p class="developer-title">Web Geliştirici & Tasarımcı</p>
+                            <p class="developer-bio">
+                                Modern web teknolojileri ile kullanıcı dostu ve performanslı uygulamalar geliştiren 
+                                deneyimli bir yazılım geliştiricisiyim. HTML, CSS, JavaScript, PHP, Python ve 
+                                çeşitli framework'ler konusunda uzmanım.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <h4><i class="fas fa-envelope"></i> İletişim Bilgileri</h4>
+                        <div class="contact-item">
+                            <i class="fas fa-at"></i>
+                            <span id="xml-iletisim" class="contact-value">mertdoganay437@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="contact-value">Türkiye</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span class="contact-value">7/24 Destek</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skills-section">
+                        <h4><i class="fas fa-tools"></i> Teknik Yetenekler</h4>
+                        <div class="skills-grid">
+                            <div class="skill-item">
+                                <i class="fab fa-html5"></i>
+                                <span>HTML5</span>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-css3-alt"></i>
+                                <span>CSS3</span>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-js-square"></i>
+                                <span>JavaScript</span>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-php"></i>
+                                <span>PHP</span>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 80%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-python"></i>
+                                <span>Python</span>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-database"></i>
+                                <span>MySQL</span>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 70%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-section">
+                        <h4><i class="fas fa-share-alt"></i> Sosyal Medya Hesapları</h4>
+                        <div class="social-grid" id="xml-sosyal">
+                            <!-- XML'den yüklenecek -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         
-        <button class="btn btn-primary pulse" id="js-buton" onclick="contactUs()">
-            <i class="fas fa-paper-plane"></i> Bize Ulaşın
-        </button>
+        <!-- Proje Özellikleri -->
+        <div class="features-section">
+            <h2 class="section-title">
+                <i class="fas fa-rocket"></i>
+                Proje Özellikleri
+            </h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Responsive Tasarım</h3>
+                    <p>Tüm cihazlarda mükemmel görünüm ve kullanıcı deneyimi</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Modern Tasarım</h3>
+                    <p>Güncel tasarım trendleri ve kullanıcı dostu arayüz</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Hızlı Performans</h3>
+                    <p>Optimize edilmiş kod ve hızlı yükleme süreleri</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Güvenli</h3>
+                    <p>Modern güvenlik standartları ve veri koruma</p>
+                </div>
+            </div>
+        </div>
         
-        <div id="js-mesaj"></div>
+        <!-- İletişim Butonu -->
+        <div class="contact-section">
+            <button class="btn btn-primary pulse contact-btn" id="js-buton" onclick="contactUs()">
+                <i class="fas fa-paper-plane"></i> 
+                <span>Bize Ulaşın</span>
+                <div class="btn-ripple"></div>
+            </button>
+            
+            <div class="contact-options">
+                <button class="contact-option" onclick="showContactOption('email')">
+                    <i class="fas fa-envelope"></i>
+                    <span>E-posta</span>
+                </button>
+                <button class="contact-option" onclick="showContactOption('phone')">
+                    <i class="fas fa-phone"></i>
+                    <span>Telefon</span>
+                </button>
+                <button class="contact-option" onclick="showContactOption('whatsapp')">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mesaj Alanı -->
+        <div id="js-mesaj" class="message-container"></div>
+    </div>
+    <div id="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Merthtmlcss. Tüm hakları saklıdır.</p>
+            <div class="footer-links">
+                <a href="#" aria-label="Gizlilik Politikası">Gizlilik Politikası</a>
+                <a href="#" aria-label="Kullanım Şartları">Kullanım Şartları</a>
+                <a href="#" aria-label="İletişim">İletişim</a>
+            </div>
+        </div>
+    </div>
+    <div class="api_page_content" id="title">
+        <div class="content" id="title">
+            <p>This is the API page content.</p>
+        </div>
+        <div class="footer" id="footer" aria-flowto="#footer">
+            <p translate="yes" aria-atomic="true" itemid="#check-results">Footer content here.</p>
+            /* This is a comment that should not be visible in the rendered HTML */
+            <p class="container" style="background-color: var(--gray-100);">This is another paragraph in the footer.</p>
+            <div class="footer-links">
+                <a href="#" aria-label="Gizlilik Politikası">Gizlilik Politikası</a>
+                <a href="#" aria-label="Kullanım Şartları">Kullanım Şartları</a>
+                <a href="#" aria-label="İletişim">İletişim</a>
+                <a href="#" aria-label="API">API</a>
+                <a href="#" aria-label="Blog">Blog</div>
+            </div>
+        </div>
     </div>
 
-    <script src="script.js"></script>
-    <script>
+    <div class="content" id="title">
+        <footer class="footer" id="footer" aria-flowto="#footer">
+            <p translate="yes" aria-atomic="true" itemid="#check-results">Footer content here.</p>
+            /* This is a comment that should not be visible in the rendered HTML */
+            <p class="container" style="background-color: var(--gray-100);">This is another paragraph in the footer.</p>
+            <div class="footer-links">
+                <a href="#" aria-label="Gizlilik Politikası">Gizlilik Politikası</a>
+                <a href="#" aria-label="Kullanım Şartları">Kullanım Şartları</a>
+                <a href="#" aria-label="İletişim">İletişim</a>
+                <a href="#" aria-label="API">API</a>
+                <a href="#" aria-label="Blog">Blog</div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js" type="module" defer="sans-serif" id="js-script">
         // Gelişmiş tema değiştirme fonksiyonu
         function toggleTheme() {
             const body = document.body;
             const iconMoon = document.querySelector('.icon-moon');
             const iconSun = document.querySelector('.icon-sun');
+            const themeToggle = document.querySelector('.theme-toggle');
+            
+            // Tema değiştirme animasyonu
+            themeToggle.classList.add('shake');
+            setTimeout(() => themeToggle.classList.remove('shake'), 500);
             
             body.classList.toggle('dark');
             
@@ -528,43 +1089,109 @@
                 iconSun.style.display = 'block';
                 localStorage.setItem('theme', 'dark');
                 document.documentElement.setAttribute('data-theme', 'dark');
+                
+                // Karanlık tema için özel efektler
+                document.documentElement.style.setProperty('--scrollbar-color', '#4a4a4a #2d2d2d');
             } else {
                 iconMoon.style.display = 'block';
                 iconSun.style.display = 'none';
                 localStorage.setItem('theme', 'light');
                 document.documentElement.setAttribute('data-theme', 'light');
+                
+                // Aydınlık tema için özel efektler
+                document.documentElement.style.setProperty('--scrollbar-color', '#c1c1c1 #f1f1f1');
             }
+
+            // Tema değişikliği log'u
+            console.log('Tema değiştirildi:', body.classList.contains('dark') ? 'Karanlık' : 'Aydınlık');
+            
+            // Tema değişikliği event'i
+            document.dispatchEvent(new CustomEvent('themeChanged', {
+                detail: { theme: body.classList.contains('dark') ? 'dark' : 'light' }
+            }));
         }
 
         // Sayfa yüklendiğinde tema kontrolü
         document.addEventListener('DOMContentLoaded', function() {
             const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // Kaydedilmiş tema varsa onu kullan, yoksa sistem tercihini kullan
+            const themeToApply = savedTheme || (prefersDark ? 'dark' : 'light');
+            
+            if (themeToApply === 'dark') {
                 document.body.classList.add('dark');
                 document.querySelector('.icon-moon').style.display = 'none';
                 document.querySelector('.icon-sun').style.display = 'block';
                 document.documentElement.setAttribute('data-theme', 'dark');
             }
+            
+            // Sistem tema değişikliğini dinle
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (!localStorage.getItem('theme')) {
+                    if (e.matches) {
+                        document.body.classList.add('dark');
+                        document.querySelector('.icon-moon').style.display = 'none';
+                        document.querySelector('.icon-sun').style.display = 'block';
+                    } else {
+                        document.body.classList.remove('dark');
+                        document.querySelector('.icon-moon').style.display = 'block';
+                        document.querySelector('.icon-sun').style.display = 'none';
+                    }
+                }
+            });
         });
 
         // Gelişmiş iletişim fonksiyonu
         function contactUs() {
             const button = document.getElementById('js-buton');
             const originalText = button.innerHTML;
+            const originalClass = button.className;
             
+            // Loading durumu
             button.innerHTML = '<span class="loading"></span> Gönderiliyor...';
             button.disabled = true;
+            button.className = originalClass + ' bounce';
+            
+            // Progress bar ekle
+            const progressBar = document.createElement('div');
+            progressBar.className = 'progress-bar';
+            progressBar.innerHTML = '<div class="progress-fill"></div>';
+            button.parentNode.insertBefore(progressBar, button.nextSibling);
+            
+            // Progress animasyonu
+            const progressFill = progressBar.querySelector('.progress-fill');
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 100) progress = 100;
+                progressFill.style.width = progress + '%';
+            }, 200);
             
             // Simüle edilmiş API çağrısı
             setTimeout(() => {
+                clearInterval(progressInterval);
+                progressFill.style.width = '100%';
+                
+                // Başarı mesajı
                 showMessage('Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.', 'success');
+                
+                // Button'u eski haline getir
                 button.innerHTML = originalText;
                 button.disabled = false;
+                button.className = originalClass;
+                
+                // Progress bar'ı kaldır
+                setTimeout(() => {
+                    progressBar.remove();
+                }, 1000);
                 
                 // Başarı animasyonu
                 button.style.background = 'var(--success)';
+                button.classList.add('pulse');
                 setTimeout(() => {
                     button.style.background = '';
+                    button.classList.remove('pulse');
                 }, 2000);
             }, 2000);
         }
@@ -572,107 +1199,355 @@
         // Gelişmiş sosyal medya fonksiyonu
         function showSocial(platform) {
             const platforms = {
-                github: { message: 'GitHub profilinizi görüntülemek için tıklayın', url: 'https://github.com/mert6148' },
-                twitter: { message: 'Twitter hesabınızı görüntülemek için tıklayın', url: 'https://x.com/MertDoganay61' },
-                linkedin: { message: 'LinkedIn profilinizi görüntülemek için tıklayın', url: '#' },
-                instagram: { message: 'Instagram hesabınızı görüntülemek için tıklayın', url: '#' }
+                github: { 
+                    message: 'GitHub profilinizi görüntülemek için tıklayın', 
+                    url: 'https://github.com/mert6148',
+                    icon: 'fab fa-github'
+                },
+                twitter: { 
+                    message: 'Twitter hesabınızı görüntülemek için tıklayın', 
+                    url: 'https://x.com/MertDoganay61',
+                    icon: 'fab fa-twitter'
+                },
+                youtube: { 
+                    message: 'YouTube kanalınızı görüntülemek için tıklayın', 
+                    url: 'https://www.youtube.com/@mert_doganay',
+                    icon: 'fab fa-youtube'
+                },
+                linkedin: { 
+                    message: 'LinkedIn profilinizi görüntülemek için tıklayın', 
+                    url: '#',
+                    icon: 'fab fa-linkedin'
+                }
             };
             
             const platformInfo = platforms[platform];
+            const button = event.target.closest('button');
+            
+            // Button animasyonu
+            button.classList.add('bounce');
+            setTimeout(() => button.classList.remove('bounce'), 1000);
+            
+            // Mesaj göster
             showMessage(platformInfo.message, 'success');
             
             // Eğer URL varsa yeni sekmede aç
             if (platformInfo.url && platformInfo.url !== '#') {
                 setTimeout(() => {
-                    window.open(platformInfo.url, '_blank');
+                    window.open(platformInfo.url, '_blank', 'noopener,noreferrer');
+                }, 1000);
+            }
+        }
+
+        // İletişim seçenekleri fonksiyonu
+        function showContactOption(option) {
+            const options = {
+                email: {
+                    message: 'E-posta göndermek için tıklayın',
+                    action: () => {
+                        const email = 'mertdoganay437@gmail.com';
+                        const subject = 'Merthtmlcss Projesi Hakkında';
+                        const body = 'Merhaba,\n\nMerthtmlcss projeniz hakkında bilgi almak istiyorum.\n\nSaygılarımla';
+                        window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                    }
+                },
+                phone: {
+                    message: 'Telefon numarası: +90 555 123 45 67',
+                    action: () => {
+                        showMessage('Telefon numarası kopyalandı!', 'success');
+                        navigator.clipboard.writeText('+90 555 123 45 67');
+                    }
+                },
+                whatsapp: {
+                    message: 'WhatsApp ile iletişime geçin',
+                    action: () => {
+                        const phone = '905551234567';
+                        const message = 'Merhaba, Merthtmlcss projesi hakkında bilgi almak istiyorum.';
+                        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+                    }
+                }
+            };
+            
+            const optionInfo = options[option];
+            if (optionInfo) {
+                showMessage(optionInfo.message, 'info');
+                setTimeout(() => {
+                    optionInfo.action();
                 }, 1000);
             }
         }
 
         // Gelişmiş mesaj gösterme fonksiyonu
-        function showMessage(text, type) {
+        function showMessage(text, type, duration = 4000) {
             const messageDiv = document.getElementById('js-mesaj');
+            
+            // Önceki mesajı temizle
+            messageDiv.style.display = 'none';
+            messageDiv.className = '';
+            
+            // Yeni mesajı ayarla
             messageDiv.textContent = text;
             messageDiv.className = `message-${type}`;
             messageDiv.style.display = 'block';
             
+            // Mesaj animasyonu
+            messageDiv.style.animation = 'none';
+            messageDiv.offsetHeight; // Reflow
+            messageDiv.style.animation = 'slideInUp 0.3s ease-out';
+            
             // Otomatik kapatma
-            setTimeout(() => {
-                messageDiv.style.display = 'none';
-            }, 4000);
+            const timeoutId = setTimeout(() => {
+                messageDiv.style.animation = 'slideInUp 0.3s ease-out reverse';
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 300);
+            }, duration);
+            
+            // Mesaj üzerine gelince kapatmayı durdur
+            messageDiv.addEventListener('mouseenter', () => clearTimeout(timeoutId));
+            
+            // Mesaj üzerinden ayrılınca tekrar zamanlayıcıyı başlat
+            messageDiv.addEventListener('mouseleave', () => {
+                setTimeout(() => {
+                    messageDiv.style.animation = 'slideInUp 0.3s ease-out reverse';
+                    setTimeout(() => {
+                        messageDiv.style.display = 'none';
+                    }, 300);
+                }, 1000);
+            });
         }
 
         // XML'den dinamik veri çekme ve sayfaya yerleştirme
-        fetch('blade/hakkinda.xml')
-            .then(response => {
+        async function loadXMLData() {
+            try {
+                const response = await fetch('blade/hakkinda.xml');
                 if (!response.ok) throw new Error('XML dosyası bulunamadı veya erişilemiyor.');
-                return response.text();
-            })
-            .then(str => (new window.DOMParser()).parseFromString(str, 'text/xml'))
-            .then(xml => {
-                document.getElementById('xml-baslik').textContent = xml.querySelector('baslik')?.textContent || '';
-                document.getElementById('xml-aciklama').textContent = xml.querySelector('aciklama')?.textContent || '';
-                document.getElementById('xml-gelistirici').textContent = xml.querySelector('gelistirici')?.textContent || '';
-                const iletisim = xml.querySelector('iletisim')?.textContent || '';
+                
+                const xmlText = await response.text();
+                const xml = new DOMParser().parseFromString(xmlText, 'text/xml');
+                
+                // XML parsing hatalarını kontrol et
+                const parserError = xml.querySelector('parsererror');
+                if (parserError) {
+                    throw new Error('XML parsing hatası: ' + parserError.textContent);
+                }
+                
+                // Verileri güvenli şekilde çek
+                const baslik = xml.querySelector('baslik')?.textContent?.trim() || 'Merthtmlcss\'e Hoş Geldiniz';
+                const aciklama = xml.querySelector('aciklama')?.textContent?.trim() || 'Bu projede, temel web teknolojilerini öğrenebilir ve kendi projelerinize ilham alabilirsiniz.';
+                const gelistirici = xml.querySelector('gelistirici')?.textContent?.trim() || 'Mert Doğanay';
+                const iletisim = xml.querySelector('iletisim')?.textContent?.trim() || 'mertdoganay437@gmail.com';
+                
+                // İstatistik verileri (XML'de yoksa varsayılan değerler)
+                const projeSayisi = xml.querySelector('proje-sayisi')?.textContent?.trim() || '50+';
+                const kullaniciSayisi = xml.querySelector('kullanici-sayisi')?.textContent?.trim() || '1000+';
+                const yildizSayisi = xml.querySelector('yildiz-sayisi')?.textContent?.trim() || '4.9';
+                
+                // DOM'a yerleştir
+                document.getElementById('xml-baslik').textContent = baslik;
+                document.getElementById('xml-aciklama').textContent = aciklama;
+                document.getElementById('xml-gelistirici').textContent = gelistirici;
+                
+                // İstatistikleri güncelle
+                document.getElementById('xml-proje-sayisi').textContent = projeSayisi;
+                document.getElementById('xml-kullanici-sayisi').textContent = kullaniciSayisi;
+                document.getElementById('xml-yildiz-sayisi').textContent = yildizSayisi;
+                
                 document.getElementById('xml-iletisim').innerHTML = iletisim
-                    ? `<a href="mailto:${iletisim}">${iletisim}</a>`
+                    ? `<a href="mailto:${iletisim}" class="tooltip contact-link">${iletisim}<span class="tooltiptext">E-posta göndermek için tıklayın</span></a>`
                     : '';
 
                 // Sosyal medya
                 const sosyal = xml.querySelector('sosyal');
                 let sosyalHTML = '';
                 if (sosyal) {
-                    if (sosyal.querySelector('twitter')) {
-                        sosyalHTML += `<li><a href="${sosyal.querySelector('twitter').textContent}" target="_blank" rel="noopener"><i class="fab fa-twitter"></i> Twitter</a></li>`;
-                    }
-                    if (sosyal.querySelector('github')) {
-                        sosyalHTML += `<li><a href="${sosyal.querySelector('github').textContent}" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a></li>`;
-                    }
-                    if (sosyal.querySelector('youtube')) {
-                        sosyalHTML += `<li><a href="${sosyal.querySelector('youtube').textContent}" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> YouTube</a></li>`;
-                    }
+                    const socialPlatforms = [
+                        { tag: 'twitter', icon: 'fab fa-twitter', name: 'Twitter', color: '#1DA1F2' },
+                        { tag: 'github', icon: 'fab fa-github', name: 'GitHub', color: '#333' },
+                        { tag: 'youtube', icon: 'fab fa-youtube', name: 'YouTube', color: '#FF0000' },
+                        { tag: 'linkedin', icon: 'fab fa-linkedin', name: 'LinkedIn', color: '#0077B5' }
+                    ];
+                    
+                    socialPlatforms.forEach(platform => {
+                        const url = sosyal.querySelector(platform.tag)?.textContent?.trim();
+                        if (url && url !== '#') {
+                            sosyalHTML += `
+                                <div class="social-card" style="--social-color: ${platform.color}">
+                                    <div class="social-icon">
+                                        <i class="${platform.icon}"></i>
+                                    </div>
+                                    <div class="social-info">
+                                        <h5>${platform.name}</h5>
+                                        <a href="${url}" target="_blank" rel="noopener" class="social-link">
+                                            Profili Görüntüle
+                                        </a>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    });
                 }
-                document.getElementById('xml-sosyal').innerHTML = sosyalHTML;
-            })
-            .catch(e => {
-                console.warn('XML yüklenemedi:', e);
+                
+                if (sosyalHTML) {
+                    document.getElementById('xml-sosyal').innerHTML = sosyalHTML;
+                } else {
+                    document.getElementById('xml-sosyal').innerHTML = `
+                        <div class="no-social">
+                            <i class="fas fa-info-circle"></i>
+                            <p>Henüz sosyal medya linki eklenmemiş</p>
+                        </div>
+                    `;
+                }
+                
+                // Başarı mesajı
+                console.log('XML verisi başarıyla yüklendi');
+                
+            } catch (error) {
+                console.warn('XML yüklenemedi:', error);
                 document.getElementById('xml-bilgi').innerHTML = `
-                  <div class="message-error" style="text-align:center;">
-                    <strong>Hakkında bilgisi yüklenemedi.</strong><br>
-                    <span style="font-size:0.98em;">Lütfen bağlantınızı ve <code>blade/hakkinda.xml</code> dosyasının varlığını kontrol edin.<br>
-                    Hata: ${e.message}</span>
-                  </div>
+                    <div class="message-error" style="text-align:center;">
+                        <strong>Hakkında bilgisi yüklenemedi.</strong><br>
+                        <span style="font-size:0.98em;">
+                            Lütfen bağlantınızı ve <code>blade/hakkinda.xml</code> dosyasının varlığını kontrol edin.<br>
+                            Hata: ${error.message}
+                        </span>
+                        <button onclick="loadXMLData()" class="btn btn-primary" style="margin-top:1rem;">
+                            <i class="fas fa-redo"></i> Tekrar Dene
+                        </button>
+                    </div>
                 `;
-            });
+            }
+        }
 
         // Sayfa yüklendiğinde animasyon
         window.addEventListener('load', function() {
+            // Sayfa yükleme animasyonu
             document.body.style.opacity = '0';
             document.body.style.transition = 'opacity 0.5s ease';
             
             setTimeout(() => {
                 document.body.style.opacity = '1';
             }, 100);
+            
+            // XML verisini yükle
+            loadXMLData();
+            
+            // Performans metrikleri
+            if ('performance' in window) {
+                const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+                console.log(`Sayfa yükleme süresi: ${loadTime}ms`);
+            }
         });
 
         // Intersection Observer ile performans optimizasyonu
-        if ('IntersectionObserver' in window) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
+        function initializeIntersectionObserver() {
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                            
+                            // Animasyon sınıflarını ekle
+                            if (entry.target.classList.contains('bilgi-kutusu')) {
+                                entry.target.classList.add('fadeInUp');
+                            }
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
                 });
-            });
 
-            document.querySelectorAll('.bilgi-kutusu, .btn').forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(el);
+                document.querySelectorAll('.bilgi-kutusu, .btn, .header').forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(20px)';
+                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    observer.observe(el);
+                });
+            }
+        }
+
+        // Sayfa hazır olduğunda observer'ı başlat
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeIntersectionObserver);
+        } else {
+            initializeIntersectionObserver();
+        }
+
+        // Klavye kısayolları
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + K ile tema değiştir
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                toggleTheme();
+            }
+            
+            // Escape ile mesajları kapat
+            if (e.key === 'Escape') {
+                const messageDiv = document.getElementById('js-mesaj');
+                if (messageDiv.style.display === 'block') {
+                    messageDiv.style.display = 'none';
+                }
+            }
+        });
+
+        // Service Worker kaydı (PWA desteği için)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker başarıyla kaydedildi:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker kaydı başarısız:', error);
+                    });
             });
         }
+
+        // Offline/Online durumu
+        window.addEventListener('online', () => {
+            showMessage('İnternet bağlantısı yeniden kuruldu!', 'success');
+        });
+
+        window.addEventListener('offline', () => {
+            showMessage('İnternet bağlantısı kesildi. Lütfen bağlantınızı kontrol edin.', 'error');
+        });
+
+        // Sayfa görünürlük API'si
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                document.title = '👋 Merthtmlcss | Geri dön!';
+            } else {
+                document.title = 'Merthtmlcss | Modern Web Geliştirme Platformu';
+            }
+        });
+
+        // Smooth scroll için
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Error handling
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript hatası:', e.error);
+            showMessage('Bir hata oluştu. Lütfen sayfayı yenileyin.', 'error');
+        });
+
+        // Unhandled promise rejection
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Promise hatası:', e.reason);
+            showMessage('Bir işlem başarısız oldu. Lütfen tekrar deneyin.', 'error');
+        });
     </script>
 </body>
 </html>

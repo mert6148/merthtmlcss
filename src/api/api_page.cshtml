@@ -1,0 +1,79 @@
+@page
+@model src.api.api_page
+@{
+    ViewData["Title"] = "api_page";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="api_page" itemid="api_page">
+    <p class="container" id="edge">This is the API page content.</p>
+    <div class="footer">
+        <p translate="yes" aria-atomic="true" itemid="#check-results">Footer content here.</p>
+        /* This is a comment that should not be visible in the rendered HTML */
+        <p class="container" style="">This is another paragraph in the footer.</p>
+    </div>
+</div>
+
+<div class="api_page_content" id="title">
+    <div class="content" id="title">
+        <p>This is the API page content.</p>
+    </div>
+    <div class="footer">
+        <p translate="yes" aria-atomic="true" itemid="#check-results">Footer content here.</p>
+        /* This is a comment that should not be visible in the rendered HTML */
+        <p class="container" style="">This is another paragraph in the footer.</p>
+    </div>
+</div>
+
+<div class="#check-results" aria-live="polite" aria-relevant="additions">
+    <div aria-atomic="false" itemid="#check-results">
+        <p>This is the API page content.</p>
+    </div>
+
+</div>
+
+<style accesskey="a" type="text/css">
+    .api_page {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    .container {
+        padding: 10px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+
+    .footer {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-top: 2px solid #ccc;
+    }
+</style>
+<script accesskey="a" type="text/javascript">
+    indexedDB.open('apiPageDB', 1, function (db) {
+        if (!db.objectStoreNames.contains('pages')) {
+            db.createObjectStore('pages', { keyPath: 'id' });
+        }
+    });
+
+    const api_page = {
+        id: 1,
+        title: '@ViewData["Title"]',
+        content: 'This is the API page content.',
+        footer: 'Footer content here.',
+        anotherParagraph: 'This is another paragraph in the footer.',
+        timestamp: new Date("api_page.cshtml"),
+        Headers: {
+            'Content-Type': 'text/html; charset=utf-8',
+            'Cache-Control': 'no-cache',
+            'X-Custom-Header': 'CustomValue'
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log('API page loaded');
+    });
+</script>
+<!-- End of src/api/api_page.cshtml -->

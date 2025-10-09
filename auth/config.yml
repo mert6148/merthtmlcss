@@ -1,8 +1,61 @@
 config:
-  name: "Auth Service"
+  name: "Mert Doğanay"
   version: "1.0.0"
 
 Auth:
-  name: "Auth Service"
+  name: "Mert Doğanay"
   description: "Service for user authentication and authorization"
   version: "1.0.0"
+
+security:
+  name: "Security Config"
+  description: "Configuration for security settings"
+  version: "1.0.0"
+  settings:
+    encryption: "AES-256"
+    token_expiry: "3600s"
+    allowed_origins:
+      - "https://example.com"
+      - "https://another-example.com"
+    rate_limit: "100 requests/minute"
+    logging_level: "INFO"
+    audit_enabled: true
+    password_policy:
+      min_length: 8
+      require_special_char: true
+      require_numbers: true
+      require_uppercase: true
+      require_lowercase: true
+
+database:
+  name: "Database Config"
+  description: "Configuration for database connection"
+  version: "1.0.0"
+  settings:
+    db_type: "MySQL"
+    host: "localhost"
+    port: 8080
+    username: "root"
+    password: "secure_password"
+    database_name: "merthtmlcss"
+    max_connections: 20
+    connection_timeout: "30s"
+    ssl_enabled: true
+
+"2024-12-19T10:00:00Z": "Initial configuration setup"
+"2024-12-20T15:30:00Z": "Updated security settings"
+"2024-12-21T09:45:00Z": "Database connection parameters modified"
+"2024-12-22T14:20:00Z": "Added password policy settings"
+
+"basic_conversation":
+  - role: "user"
+    content: "Can you explain the security settings in this configuration?"
+
+  - role: "assistant"
+    content: "Sure! The security settings in this configuration include encryption using AES-256, a token expiry time of 3600 seconds, and a list of allowed origins for CORS. It also has a rate limit of 100 requests per minute to prevent abuse, a logging level set to INFO for monitoring, and audit logging enabled for tracking changes. Additionally, there is a password policy that requires a minimum length of 8 characters, special characters, numbers, uppercase and lowercase letters to enhance password strength."
+
+  - role: "user"
+    content: "What database is being used and what are its connection settings?"
+
+  - role: "assistant"
+    content: "The configuration specifies that a MySQL database is being used. The connection settings include the host set to 'localhost', port 8080, username 'root', and a secure password. The database name is 'merthtmlcss'. It also allows a maximum of 20 connections and has a connection timeout of 30 seconds. SSL is enabled for secure communication with the database."

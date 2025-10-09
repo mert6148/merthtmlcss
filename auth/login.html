@@ -207,12 +207,35 @@
         <div id="message" class="auth-message"></div>
     </div>
     <script>
-        function showMessage(text, type) {
+        (function(){
             const messageDiv = document.getElementById('message');
-            messageDiv.textContent = text;
-            messageDiv.className = 'auth-message ' + type;
-            messageDiv.style.display = 'block';
-        }
+            let hideTimer = null;
+            function showMessage(text, type = 'info', duration = 2500) {
+                if (!messageDiv) return;
+                // erişilebilirlik
+                messageDiv.setAttribute('role', 'alert');
+                messageDiv.setAttribute('aria-live', 'polite');
+                // sınıf ve içerik
+                messageDiv.className = 'auth-message ' + (type || 'info');
+                messageDiv.textContent = text;
+                messageDiv.style.display = 'block';
+                messageDiv.style.opacity = '1';
+                // eski zamanlayıcıyı sıfırla
+                if (hideTimer) clearTimeout(hideTimer);
+                hideTimer = setTimeout(() => {
+                    messageDiv.style.opacity = '0';
+                    setTimeout(() => { messageDiv.style.display = 'none'; }, 200);
+                }, duration);
+            }
+            // global erişim
+            window.showMessage = showMessage;
+            // ESC ile kapatma
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && messageDiv && messageDiv.style.display === 'block') {
+                    messageDiv.style.display = 'none';
+                }
+            });
+        })();
         
         function showRegister() {
             showMessage('Kayıt sayfasına yönlendiriliyorsunuz...', 'warning');
@@ -236,7 +259,7 @@
                 return;
             }
             
-            showMessage('Giriş başarılı! Yönlendiriliyorsunuz...', 'success');
+            showMessage('Giriş başarılı! Yönlendiriliyorsunuz...', 'success', 1500);
             setTimeout(() => {
                 window.location.href = '/dashboard';
             }, 1500);

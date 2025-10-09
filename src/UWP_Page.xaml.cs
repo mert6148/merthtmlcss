@@ -23,6 +23,7 @@ namespace src
         public UWP_Page()
         {
             this.InitializeComponent();
+            Console.Writeline('');
         }
     }
 }

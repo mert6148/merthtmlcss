@@ -14,10 +14,10 @@ class ThemeManager {
     applyTheme() {
         document.documentElement.setAttribute('data-theme', this.currentTheme);
         document.body.className = this.currentTheme;
-        
+
         // Tema değişikliği animasyonu
         document.body.style.transition = 'all 0.3s ease-in-out';
-        
+
         if (this.currentTheme === 'dark') {
             document.body.style.backgroundColor = '#1a1a1a';
             document.body.style.color = '#ffffff';
@@ -31,7 +31,7 @@ class ThemeManager {
         this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
         localStorage.setItem('theme', this.currentTheme);
         this.applyTheme();
-        
+
         // Tema değişikliği bildirimi
         this.showNotification(`Tema ${this.currentTheme === 'dark' ? 'karanlık' : 'aydınlık'} moda geçirildi`);
     }
@@ -56,7 +56,7 @@ class ThemeManager {
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         `;
-        
+
         toggle.addEventListener('click', () => this.toggleTheme());
         toggle.addEventListener('mouseenter', () => {
             toggle.style.transform = 'scale(1.1) rotate(180deg)';
@@ -64,7 +64,7 @@ class ThemeManager {
         toggle.addEventListener('mouseleave', () => {
             toggle.style.transform = 'scale(1) rotate(0deg)';
         });
-        
+
         document.body.appendChild(toggle);
     }
 
@@ -83,9 +83,9 @@ class ThemeManager {
             animation: slideIn 0.5s ease-out;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         `;
-        
+
         document.body.appendChild(notification);
-        
+
         setTimeout(() => {
             notification.style.animation = 'slideOut 0.5s ease-in';
             setTimeout(() => notification.remove(), 500);

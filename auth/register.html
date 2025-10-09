@@ -208,12 +208,30 @@
         <div id="message" class="auth-message"></div>
     </div>
     <script>
-    function showMessage(text, type) {
+    (function(){
         const messageDiv = document.getElementById('message');
-        messageDiv.textContent = text;
-        messageDiv.className = 'auth-message ' + type;
-        messageDiv.style.display = 'block';
-    }
+        let hideTimer = null;
+        function showMessage(text, type = 'info', duration = 2500) {
+            if (!messageDiv) return;
+            messageDiv.setAttribute('role', 'alert');
+            messageDiv.setAttribute('aria-live', 'polite');
+            messageDiv.className = 'auth-message ' + (type || 'info');
+            messageDiv.textContent = text;
+            messageDiv.style.display = 'block';
+            messageDiv.style.opacity = '1';
+            if (hideTimer) clearTimeout(hideTimer);
+            hideTimer = setTimeout(() => {
+                messageDiv.style.opacity = '0';
+                setTimeout(() => { messageDiv.style.display = 'none'; }, 200);
+            }, duration);
+        }
+        window.showMessage = showMessage;
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && messageDiv && messageDiv.style.display === 'block') {
+                messageDiv.style.display = 'none';
+            }
+        });
+    })();
     function showLogin() {
         showMessage('Giriş sayfasına yönlendiriliyorsunuz...', 'success');
     }
@@ -231,10 +249,8 @@
             showMessage('Şifreler eşleşmiyor!', 'error');
             return;
         }
-        showMessage('Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz...', 'success');
-        setTimeout(() => {
-            showLogin();
-        }, 1500);
+        showMessage('Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz...', 'success', 1500);
+        setTimeout(() => { showLogin(); }, 1500);
     });
     function toggleTheme() {
         document.body.classList.toggle('dark');
