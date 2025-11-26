@@ -793,6 +793,219 @@
             color: var(--light);
             border-color: #4a4a4a;
         }
+
+        /* ============================================
+           API Page Content Stilleri
+           ============================================ */
+        .api-page-content {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+        }
+
+        .api-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .api-container h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .api-intro {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-small);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        body.dark .api-intro {
+            background: #2d2d2d;
+        }
+
+        .api-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .api-features .feature {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-small);
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow-light);
+        }
+
+        .api-features .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            background: var(--primary);
+            color: var(--light);
+        }
+
+        body.dark .api-features .feature {
+            background: #2d2d2d;
+            box-shadow: var(--shadow-dark);
+        }
+
+        .api-features .feature i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .api-features .feature:hover i {
+            color: var(--light);
+        }
+
+        .api-features .feature h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ============================================
+           Footer Stilleri
+           ============================================ */
+        .main-footer {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--light);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark .main-footer {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .footer-section h3:hover {
+            transform: translateX(5px);
+        }
+
+        .footer-section p {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+        }
+
+        .footer-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(3px);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .footer-social a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.2) rotate(5deg);
+            border-color: var(--light);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 2rem;
+        }
+
+        .footer-bottom p {
+            margin: 0.5rem 0;
+            opacity: 0.9;
+        }
+
+        .footer-version {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .main-footer {
+                padding: 2rem 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .api-container h2 {
+                font-size: 1.5rem;
+            }
+
+            .api-features {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1036,51 +1249,81 @@
         <!-- Mesaj Alanı -->
         <div id="js-mesaj" class="message-container"></div>
     </div>
-    <div id="footer">
-        <div class="footer-content">
-            <p>&copy; 2024 Merthtmlcss. Tüm hakları saklıdır.</p>
-            <div class="footer-links">
-                <a href="#" aria-label="Gizlilik Politikası">Gizlilik Politikası</a>
-                <a href="#" aria-label="Kullanım Şartları">Kullanım Şartları</a>
-                <a href="#" aria-label="İletişim">İletişim</a>
+    <!-- Footer Section -->
+    <footer class="main-footer" id="main-footer" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-info-circle"></i> Hakkında</h3>
+                    <p>Merthtmlcss, modern web geliştirme teknolojilerini öğrenmek ve uygulamak için oluşturulmuş kapsamlı bir projedir. HTML5, CSS3, JavaScript ve backend teknolojileri ile geliştirilmiştir.</p>
+                </div>
+                <div class="footer-section">
+                    <h3><i class="fas fa-link"></i> Bağlantılar</h3>
+                    <ul class="footer-links">
+                        <li><a href="/" aria-label="Anasayfa">Anasayfa</a></li>
+                        <li><a href="#giris" aria-label="Giriş Yap">Giriş Yap</a></li>
+                        <li><a href="#kayit" aria-label="Kayıt Ol">Kayıt Ol</a></li>
+                        <li><a href="#api">API Belgeleri</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3><i class="fas fa-file-alt"></i> Yasal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#privacy" aria-label="Gizlilik Politikası">Gizlilik Politikası</a></li>
+                        <li><a href="#terms" aria-label="Kullanım Şartları">Kullanım Şartları</a></li>
+                        <li><a href="#contact" aria-label="İletişim">İletişim</a></li>
+                        <li><a href="#cookies" aria-label="Çerez Politikası">Çerez Politikası</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3><i class="fas fa-share-alt"></i> Sosyal Medya</h3>
+                    <div class="footer-social">
+                        <a href="https://github.com/mert6148" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://x.com/MertDoganay61" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.youtube.com/@mert_doganay" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/doganay_mert_5092" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Merthtmlcss. Tüm hakları saklıdır. | Geliştirici: <strong>Mert Doğanay</strong></p>
+                <p class="footer-version">v1.0.0</p>
             </div>
         </div>
-    </div>
-    <div class="api_page_content" id="title">
-        <div class="content" id="title">
-            <p>This is the API page content.</p>
-        </div>
-        <div class="footer" id="footer" aria-flowto="#footer">
-            <p translate="yes" aria-atomic="true" itemid="#check-results">Footer content here.</p>
-            /* This is a comment that should not be visible in the rendered HTML */
-            <p class="container" style="background-color: var(--gray-100);">This is another paragraph in the footer.</p>
-            <div class="footer-links">
-                <a href="#" aria-label="Gizlilik Politikası">Gizlilik Politikası</a>
-                <a href="#" aria-label="Kullanım Şartları">Kullanım Şartları</a>
-                <a href="#" aria-label="İletişim">İletişim</a>
-                <a href="#" aria-label="API">API</a>
-                <a href="#" aria-label="Blog">Blog</div>
+    </footer>
+    <!-- API Page Content Section -->
+    <section class="api-page-content" id="api-section" aria-label="API İçeriği">
+        <div class="api-container">
+            <h2><i class="fas fa-code"></i> API Belgeleri</h2>
+            <div class="api-content">
+                <div class="api-intro">
+                    <p>Merthtmlcss projesi için kapsamlı API belgelendirmesi ve entegrasyon kılavuzu. RESTful API'miz ile kolayca haberleşebilirsiniz.</p>
+                </div>
+                <div class="api-features">
+                    <div class="feature">
+                        <i class="fas fa-plug"></i>
+                        <h3>Kolay Entegrasyon</h3>
+                        <p>Basit HTTP istekleri ile API'ye erişim sağlayın</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-lock"></i>
+                        <h3>Güvenli İletişim</h3>
+                        <p>OAuth 2.0 ve API anahtarı ile korunan endpoints</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <h3>Yüksek Performans</h3>
+                        <p>Hızlı yanıt süreleri ve cache optimizasyonu</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="content" id="title">
-        <footer class="footer" id="footer" aria-flowto="#footer">
-            <p translate="yes" aria-atomic="true" itemid="#check-results">Footer content here.</p>
-            /* This is a comment that should not be visible in the rendered HTML */
-            <p class="container" style="background-color: var(--gray-100);">This is another paragraph in the footer.</p>
-            <div class="footer-links">
-                <a href="#" aria-label="Gizlilik Politikası">Gizlilik Politikası</a>
-                <a href="#" aria-label="Kullanım Şartları">Kullanım Şartları</a>
-                <a href="#" aria-label="İletişim">İletişim</a>
-                <a href="#" aria-label="API">API</a>
-                <a href="#" aria-label="Blog">Blog</div>
-            </div>
-        </footer>
-    </div>
-
-    <script src="script.js" type="module" defer="sans-serif" id="js-script">
-        // Gelişmiş tema değiştirme fonksiyonu
+    <script src="script.js" type="module" defer id="js-script">
+        // ============================================
+        // Gelişmiş Tema Yönetim Sistemi
+        // ============================================
         function toggleTheme() {
             const body = document.body;
             const iconMoon = document.querySelector('.icon-moon');
@@ -1120,7 +1363,7 @@
             }));
         }
 
-        // Sayfa yüklendiğinde tema kontrolü
+        // Tema başlangıç kontrolü
         document.addEventListener('DOMContentLoaded', function() {
             const savedTheme = localStorage.getItem('theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -1151,7 +1394,9 @@
             });
         });
 
-        // Gelişmiş iletişim fonksiyonu
+        // ============================================
+        // İletişim Form İşleme Sistemi
+        // ============================================
         function contactUs() {
             const button = document.getElementById('js-buton');
             const originalText = button.innerHTML;
@@ -1205,7 +1450,9 @@
             }, 2000);
         }
 
-        // Gelişmiş sosyal medya fonksiyonu
+        // ============================================
+        // Sosyal Medya İntegrasyon Sistemi
+        // ============================================
         function showSocial(platform) {
             const platforms = {
                 github: { 
@@ -1248,7 +1495,7 @@
             }
         }
 
-        // İletişim seçenekleri fonksiyonu
+        // İletişim kanalı seçimleri
         function showContactOption(option) {
             const options = {
                 email: {
@@ -1286,7 +1533,9 @@
             }
         }
 
-        // Gelişmiş mesaj gösterme fonksiyonu
+        // ============================================
+        // Bildirim Sistemi
+        // ============================================
         function showMessage(text, type, duration = 4000) {
             const messageDiv = document.getElementById('js-mesaj');
             
@@ -1326,7 +1575,9 @@
             });
         }
 
-        // XML'den dinamik veri çekme ve sayfaya yerleştirme
+        // ============================================
+        // XML Veri Yükleme Sistemi
+        // ============================================
         async function loadXMLData() {
             try {
                 const response = await fetch('blade/hakkinda.xml');
@@ -1428,7 +1679,9 @@
             }
         }
 
-        // Sayfa yüklendiğinde animasyon
+        // ============================================
+        // Sayfa Yükleme ve Animasyonları
+        // ============================================
         window.addEventListener('load', function() {
             // Sayfa yükleme animasyonu
             document.body.style.opacity = '0';
@@ -1448,7 +1701,9 @@
             }
         });
 
-        // Intersection Observer ile performans optimizasyonu
+        // ============================================
+        // Performans Optimizasyonu (Lazy Loading)
+        // ============================================
         function initializeIntersectionObserver() {
             if ('IntersectionObserver' in window) {
                 const observer = new IntersectionObserver((entries) => {
@@ -1484,7 +1739,9 @@
             initializeIntersectionObserver();
         }
 
-        // Klavye kısayolları
+        // ============================================
+        // Klavye Kısayolları
+        // ============================================
         document.addEventListener('keydown', function(e) {
             // Ctrl/Cmd + K ile tema değiştir
             if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
@@ -1501,7 +1758,9 @@
             }
         });
 
-        // Service Worker kaydı (PWA desteği için)
+        // ============================================
+        // Progressive Web App (PWA) Desteği
+        // ============================================
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
@@ -1514,7 +1773,9 @@
             });
         }
 
-        // Offline/Online durumu
+        // ============================================
+        // Bağlantı Durumu Yönetimi
+        // ============================================
         window.addEventListener('online', () => {
             showMessage('İnternet bağlantısı yeniden kuruldu!', 'success');
         });
@@ -1523,7 +1784,7 @@
             showMessage('İnternet bağlantısı kesildi. Lütfen bağlantınızı kontrol edin.', 'error');
         });
 
-        // Sayfa görünürlük API'si
+        // Sayfa görünürlüğü kontrolü
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 document.title = '👋 Merthtmlcss | Geri dön!';
@@ -1532,7 +1793,7 @@
             }
         });
 
-        // Smooth scroll için
+        // Smooth scroll navigasyon
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1546,7 +1807,9 @@
             });
         });
 
-        // Error handling
+        // ============================================
+        // Hata İşleme Sistemi
+        // ============================================
         window.addEventListener('error', function(e) {
             console.error('JavaScript hatası:', e.error);
             showMessage('Bir hata oluştu. Lütfen sayfayı yenileyin.', 'error');
@@ -1558,28 +1821,44 @@
             showMessage('Bir işlem başarısız oldu. Lütfen tekrar deneyin.', 'error');
         });
 
-        // NodeList için forEach polyfill
+        // ============================================
+        // Tarayıcı Uyumluluğu ve Polyfill'ler
+        // ============================================
         window.addEventListener('load', () => {
-            window.NodeList && !NodeList.prototype.forEach && (NodeList.prototype.forEach = Array.prototype.forEach);
-            window.addEventListener && !Element.prototype.matches && (Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector || ElementInternals.prototype.matches);
-            window.addEventListener && !Element.prototype.closest && (Element.prototype.closest = function(s) {
-                let el = this;
-                do {
-                    if (el.matches(s)) return el;
-                    el = el.parentElement || el.parentNode;
-                    el = el.nodeType === 11 ? el.host : el;
-                    
-                    /** @type {Element | null} 
-                     * @param {string} Elemet || null
-                    */
-
-                } while (el !== null && el.nodeType === 1);
-                return null;
-            });
-            webkitURL = window.URL || window.webkitURL || window.mozURL || window.msURL || WebGLUniformLocation; 
+            // NodeList forEach polyfill
+            if (window.NodeList && !NodeList.prototype.forEach) {
+                NodeList.prototype.forEach = Array.prototype.forEach;
+            }
             
-            let lastScrollTop = 0;
+            // Element.matches polyfill
+            if (window.Element && !Element.prototype.matches) {
+                Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+            }
+            
+            // Element.closest polyfill
+            if (window.Element && !Element.prototype.closest) {
+                Element.prototype.closest = function(s) {
+                    let el = this;
+                    while (el && el.nodeType === 1) {
+                        if (el.matches(s)) return el;
+                        el = el.parentElement || el.parentNode;
+                    }
+                    return null;
+                };
+            }
+            
+            // URL API uyumluluğu
+            if (!window.URL) {
+                window.URL = window.webkitURL || window.mozURL || window.msURL;
+            }
+            
+            console.log('Polyfill\'ler başarıyla yüklendi');
         });
+        
+        // ============================================
+        // Uygulamayı başlat
+        // ============================================
+        console.log('Merthtmlcss uygulaması başlatılıyor...');
     </script>
 </body>
 </html>
