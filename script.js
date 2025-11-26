@@ -476,145 +476,6 @@ const Merthtmlcss = (() => {
         }
     };
 
-    // XML veri yöneticisi
-    const xmlManager = {
-        async loadXMLData() {
-            try {
-                const response = await utils.fetch('blade/hakkinda.xml');
-                const xmlText = await response.text();
-                const xmlDoc = new DOMParser().parseFromString(xmlText, 'text/xml');
-
-                this.updatePageContent(xmlDoc);
-            } catch (error) {
-                console.warn('XML yüklenemedi:', error);
-                this.showXMLError();
-            }
-        },
-
-        updatePageContent(xmlDoc) {
-            const mappings = {
-                'xml-baslik': 'baslik',
-                'xml-aciklama': 'aciklama',
-                'xml-gelistirici': 'gelistirici',
-                'xml-iletisim': 'iletisim'
-            };
-
-            Object.entries(mappings).forEach(([elementId, xmlTag]) => {
-                const element = utils.$(`#${elementId}`);
-                const xmlElement = xmlDoc.querySelector(xmlTag);
-
-                if (element && xmlElement) {
-                    if (elementId === 'xml-iletisim') {
-                        element.innerHTML = `<a href="mailto:${xmlElement.textContent}">${xmlElement.textContent}</a>`;
-                    } else {
-                        element.textContent = xmlElement.textContent;
-                    }
-                }
-            });
-
-            // Sosyal medya linklerini güncelle
-            this.updateSocialLinks(xmlDoc);
-        },
-
-        updateSocialLinks(xmlDoc) {
-            const sosyal = xmlDoc.querySelector('sosyal');
-            if (!sosyal) return;
-
-            const socialContainer = utils.$('#xml-sosyal');
-            if (!socialContainer) return;
-
-            let socialHTML = '';
-            const socialPlatforms = ['twitter', 'github', 'youtube', 'linkedin', 'instagram'];
-
-            socialPlatforms.forEach(platform => {
-                const platformElement = sosyal.querySelector(platform);
-                if (platformElement) {
-                    const iconClass = this.getSocialIconClass(platform);
-                    socialHTML += `
-                        <li>
-                            <a href="${platformElement.textContent}" target="_blank" rel="noopener noreferrer">
-                                <i class="${iconClass}"></i> ${platform.charAt(0).toUpperCase() + platform.slice(1)}
-                            </a>
-                        </li>
-                    `;
-                }
-            });
-
-            socialContainer.innerHTML = socialHTML;
-        },
-
-        getSocialIconClass(platform) {
-            const iconMap = {
-                twitter: 'fab fa-twitter',
-                github: 'fab fa-github',
-                youtube: 'fab fa-youtube',
-                linkedin: 'fab fa-linkedin',
-                instagram: 'fab fa-instagram'
-            };
-            return iconMap[platform] || 'fas fa-link';
-        },
-
-        showXMLError() {
-            const xmlBilgi = utils.$('#xml-bilgi');
-            if (xmlBilgi) {
-                xmlBilgi.innerHTML = `
-                    <div class="message-error" style="text-align:center;">
-                        <strong>Hakkında bilgisi yüklenemedi.</strong><br>
-                        <span style="font-size:0.98em;">Lütfen bağlantınızı ve <code>blade/hakkinda.xml</code> dosyasının varlığını kontrol edin.</span>
-                    </div>
-                `;
-            }
-        }
-    };
-
-    // Performans izleyici
-    const performanceMonitor = {
-        init() {
-            this.measurePageLoad();
-            this.observeIntersections();
-        },
-
-        measurePageLoad() {
-            window.addEventListener('load', () => {
-                const loadTime = performance.now();
-                console.log(`Sayfa yükleme süresi: ${loadTime.toFixed(2)}ms`);
-
-                // Analytics'e gönder
-                this.sendAnalytics('page_load', { loadTime });
-            });
-        },
-
-        observeIntersections() {
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                        }
-                    });
-                }, {
-                    threshold: 0.1,
-                    rootMargin: '0px 0px -50px 0px'
-                });
-
-                const style = field.style || field.id || 'field';
-                const elements = utils.$$('.bilgi-kutusu, .btn, .social-links');
-                elements.forEach(el => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(20px)';
-                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    observer.observe(el);
-                });
-            }
-        },
-
-        sendAnalytics(event, data) {
-            // Analytics verilerini gönder
-            console.log('Analytics:', event, data);
-        }
-    };
-
     // Ana uygulama sınıfı
     class App {
         constructor() {
@@ -648,6 +509,9 @@ const Merthtmlcss = (() => {
                     }
                 });
 
+                // Footer yöneticisini başlat
+                this.footerManager();
+
                 // Sayfa animasyonu
                 this.animatePageLoad();
 
@@ -662,29 +526,15 @@ const Merthtmlcss = (() => {
         }
 
         footerManager() {
-            const footer = utils.$('#footer');
-            if (footer) {
-                footer.addEventListener('click', (e) => this.handleFooterClick(e));
-                document.addEvenListener('click', (e) => this.handleFooterLinkClick(e));
-            }
-        }
-
-        handleFooterClick(e) {
-            e.preventDefault();
-            const footer = e.target;
-            const footerLinks = footer.querySelectorAll('.footer-links a');
-            const footerLinkHref = footerLinks.href;
-            this.handleFooterLinkHref(footerLinkHref);
-        }
-
-        handleFooterLinkClick(e) {
-            e.preventDefault();
-            const footerLink = e.target;
-            const footerLinkHref = footerLink.href;
-        }
-
-        handleFooterLinkHref(href) {
-            window.location.href = href;
+            const footerLinks = utils.$$('#main-footer a');
+            footerLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    if (link.href.startsWith('http')) {
+                        e.preventDefault();
+                        window.open(link.href, '_blank', 'noopener,noreferrer');
+                    }
+                });
+            });
         }
 
         animatePageLoad() {
@@ -849,3 +699,269 @@ function enableAccessibleLabels() {
         }
     });
 }
+
+// ============================================
+// Focus Management ve Keyboard Navigation
+// ============================================
+function enableFocusManagement() {
+    const focusableElements = document.querySelectorAll(
+        'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+    );
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Tab') return;
+
+        if (e.shiftKey) {
+            if (document.activeElement === firstElement) {
+                lastElement.focus();
+                e.preventDefault();
+            }
+        } else {
+            if (document.activeElement === lastElement) {
+                firstElement.focus();
+                e.preventDefault();
+            }
+        }
+    });
+}
+
+// Skip to main content link
+function enableSkipLinks() {
+    const skipLink = document.createElement('a');
+    skipLink.href = '#main-content';
+    skipLink.className = 'skip-link';
+    skipLink.textContent = 'Ana içeriğe atla';
+    skipLink.style.cssText = `
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: var(--primary);
+        color: white;
+        padding: 8px;
+        text-decoration: none;
+        z-index: 100;
+    `;
+
+    skipLink.addEventListener('focus', function () {
+        this.style.top = '0';
+    });
+
+    skipLink.addEventListener('blur', function () {
+        this.style.top = '-40px';
+    });
+
+    document.body.insertBefore(skipLink, document.body.firstChild);
+}
+
+// Live region announcements
+function announceToScreenReader(message, polite = false) {
+    const announcement = document.createElement('div');
+    announcement.setAttribute('role', 'status');
+    announcement.setAttribute('aria-live', polite ? 'polite' : 'assertive');
+    announcement.setAttribute('aria-atomic', 'true');
+    announcement.className = 'sr-only';
+    announcement.textContent = message;
+    document.body.appendChild(announcement);
+
+    setTimeout(() => announcement.remove(), 1000);
+}
+
+// Keyboard shortcuts help
+function enableKeyboardShortcutsHelp() {
+    const shortcuts = {
+        '?': 'Yardım göster',
+        'Ctrl+/': 'Arama aç',
+        'Ctrl+T': 'Temayı değiştir',
+        'Escape': 'Dialog kapat'
+    };
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === '?') {
+            e.preventDefault();
+            showKeyboardShortcuts(shortcuts);
+        }
+    });
+}
+
+function showKeyboardShortcuts(shortcuts) {
+    const helpText = Object.entries(shortcuts)
+        .map(([key, desc]) => `${key}: ${desc}`)
+        .join('\n');
+
+    announceToScreenReader(`Klavye kısayolları: ${helpText}`);
+}
+
+// Initialize all accessibility features
+window.addEventListener('DOMContentLoaded', () => {
+    enableAccessibleLabels();
+    enableFocusManagement();
+    enableSkipLinks();
+    enableKeyboardShortcutsHelp();
+});
+
+// ============================================
+// Performance Optimization
+// ============================================
+
+// Lazy Load Images
+function enableLazyLoading() {
+    if ('IntersectionObserver' in window) {
+        const images = document.querySelectorAll('img[data-src]');
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.add('loaded');
+                    observer.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '50px'
+        });
+
+        images.forEach(img => imageObserver.observe(img));
+    } else {
+        // Fallback for older browsers
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            img.src = img.dataset.src;
+        });
+    }
+}
+
+// Request Animation Frame wrapper for smooth animations
+function smoothScroll(element, duration = 500) {
+    const start = window.pageYOffset || document.documentElement.scrollTop;
+    const target = element.getBoundingClientRect().top + start;
+    const distance = target - start;
+    let startTime = null;
+
+    function easeInOutQuad(t) {
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    }
+
+    function scroll(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const ease = easeInOutQuad(progress);
+
+        window.scrollTo(0, start + distance * ease);
+
+        if (elapsed < duration) {
+            requestAnimationFrame(scroll);
+        }
+    }
+
+    requestAnimationFrame(scroll);
+}
+
+// Debounce with requestAnimationFrame
+function rafDebounce(func) {
+    let rafId = null;
+    return function (...args) {
+        if (rafId !== null) {
+            cancelAnimationFrame(rafId);
+        }
+        rafId = requestAnimationFrame(() => {
+            func(...args);
+            rafId = null;
+        });
+    };
+}
+
+// Resource hints for performance
+function enableResourceHints() {
+    // DNS prefetch
+    const links = [
+        { rel: 'dns-prefetch', href: '//fonts.googleapis.com' },
+        { rel: 'dns-prefetch', href: '//cdnjs.cloudflare.com' },
+        { rel: 'preconnect', href: '//fonts.googleapis.com' },
+        { rel: 'preconnect', href: '//fonts.gstatic.com' }
+    ];
+
+    links.forEach(link => {
+        const linkEl = document.createElement('link');
+        linkEl.rel = link.rel;
+        linkEl.href = link.href;
+        if (link.rel === 'preconnect') {
+            linkEl.crossOrigin = 'anonymous';
+        }
+        document.head.appendChild(linkEl);
+    });
+}
+
+// Optimize event listeners with event delegation
+function enableEventDelegation() {
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a[data-smooth-scroll]');
+        if (link && link.hash) {
+            e.preventDefault();
+            const target = document.querySelector(link.hash);
+            if (target) {
+                smoothScroll(target);
+            }
+        }
+    });
+}
+
+// Memory leak prevention
+function preventMemoryLeaks() {
+    window.addEventListener('beforeunload', () => {
+        // Clear event listeners
+        document.removeEventListener('click', null);
+        document.removeEventListener('scroll', null);
+
+        // Clear timers
+        clearTimeout();
+
+        // Clear intervals
+        clearInterval();
+    });
+}
+
+// Initialize performance features
+window.addEventListener('load', () => {
+    enableLazyLoading();
+    enableResourceHints();
+    enableEventDelegation();
+    preventMemoryLeaks();
+
+    // Monitor Core Web Vitals
+    if ('PerformanceObserver' in window) {
+        try {
+            // LCP (Largest Contentful Paint)
+            const lcpObserver = new PerformanceObserver((list) => {
+                const entries = list.getEntries();
+                const lastEntry = entries[entries.length - 1];
+                console.log('LCP:', lastEntry.renderTime || lastEntry.loadTime);
+            });
+            lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+
+            // FID (First Input Delay)
+            const fidObserver = new PerformanceObserver((list) => {
+                list.getEntries().forEach((entry) => {
+                    console.log('FID:', entry.processingDuration);
+                });
+            });
+            fidObserver.observe({ entryTypes: ['first-input'] });
+
+            // CLS (Cumulative Layout Shift)
+            let cls = 0;
+            const clsObserver = new PerformanceObserver((list) => {
+                list.getEntries().forEach((entry) => {
+                    if (!entry.hadRecentInput) {
+                        cls += entry.value;
+                        console.log('CLS:', cls);
+                    }
+                });
+            });
+            clsObserver.observe({ entryTypes: ['layout-shift'] });
+        } catch (e) {
+            console.log('Performance Observer not fully supported');
+        }
+    }
+});
