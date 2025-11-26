@@ -965,3 +965,76 @@ window.addEventListener('load', () => {
         }
     }
 });
+
+// ============================================
+// XML Manager Module
+// ============================================
+const xmlManager = {
+    async loadXMLData() {
+        try {
+            const response = await fetch('blade/hakkinda.xml');
+            if (!response.ok) throw new Error('XML not found');
+
+            const xmlText = await response.text();
+            const xml = new DOMParser().parseFromString(xmlText, 'text/xml');
+
+            if (xml.querySelector('parsererror')) {
+                throw new Error('XML parsing error');
+            }
+
+            // Extract data
+            const data = {
+                title: xml.querySelector('baslik')?.textContent || 'Default Title',
+                description: xml.querySelector('aciklama')?.textContent || '',
+                developer: xml.querySelector('gelistirici')?.textContent || '',
+                email: xml.querySelector('iletisim')?.textContent || ''
+            };
+
+            this.updateDOM(data);
+        } catch (error) {
+            console.warn('XML loading failed:', error);
+        }
+    },
+
+    updateDOM(data) {
+        const titleEl = document.getElementById('xml-baslik');
+        const descEl = document.getElementById('xml-aciklama');
+
+        if (titleEl) titleEl.textContent = data.title;
+        if (descEl) descEl.textContent = data.description;
+    }
+};
+
+// ============================================
+// Performance Monitor Module
+// ============================================
+const performanceMonitor = {
+    init() {
+        this.observeIntersections();
+        this.measureLoadTime();
+    },
+
+    observeIntersections() {
+        if (!('IntersectionObserver' in window)) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { rootMargin: '50px' });
+
+        document.querySelectorAll('[data-animate]').forEach(el => {
+            observer.observe(el);
+        });
+    },
+
+    measureLoadTime() {
+        if ('performance' in window) {
+            const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+            console.log(`Page load time: ${loadTime}ms`);
+        }
+    }
+};
