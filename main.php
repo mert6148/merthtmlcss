@@ -180,6 +180,11 @@ function getCache($key) {
     $content = @file_get_contents($file);
     if ($content === false) return false;
     $cache = @unserialize($content);
+    if ($cache === false) {
+        @link($file);
+        @unlink($file);
+        return false;
+    }
     if (!$cache || !isset($cache['expire']) || time() > $cache['expire']) {
         @unlink($file);
         return false;

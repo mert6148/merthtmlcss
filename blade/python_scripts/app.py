@@ -339,7 +339,7 @@ body {{
     background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
     color: var(--light-color);
     text-decoration: none;
-    border: none;
+    border: none; 
     border-radius: var(--border-radius);
     font-size: 16px;
     font-weight: 600;
@@ -589,6 +589,32 @@ if ('serviceWorker' in navigator) {{
 
 def main():
     """Ana fonksiyon"""
+    config = AppConfig()
+    
+    print(f"🚀 Merthtmlcss Framework v{config.version}")
+    print(f"👨‍💻 Geliştirici: {config.author}")
+    print(f"🐍 Python sürümü: {sys.version}")
+    print(f"📁 Çalışma dizini: {os.getcwd()}")
+    
+    # Uygulama yöneticisini oluştur
+    app_manager = AppManager(config)
+    
+    # Türkçe framework oluştur
+    result_tr = app_manager.create_framework('tr')
+    
+    if result_tr['success']:
+        print(f"\n🎉 Framework başarıyla oluşturuldu!")
+        print(f"📁 Çıktı dizini: {config.output_dir}")
+        
+        # İngilizce framework de oluştur
+        result_en = app_manager.create_framework('en')
+        if result_en['success']:
+            print("🌍 İngilizce versiyon da oluşturuldu!")
+    else:
+        print(f"❌ Framework oluşturulamadı: {result_tr.get('error', 'Bilinmeyen hata')}")
+
+def main():
+    """Yan fonksiyon"""
     config = AppConfig()
     
     print(f"🚀 Merthtmlcss Framework v{config.version}")

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Veritabanı Yönetimi</title>
+    <meta name="description" content="Gelişmiş veritabanı yönetim ve izleme arayüzü">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.css">
+    <link rel="stylesheet" href="../database dashboard/dashboard.css">
+    <link rel="stylesheet" href="admin.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-theme">
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1 class="admin-title">
+                        <i class="fas fa-shield-alt"></i>
+                        Admin Panel
+                    </h1>
+                    <p class="admin-subtitle">Gelişmiş Veritabanı Yönetimi</p>
+                </div>
+                <div class="header-right">
+                    <div class="admin-status">
+                        <div class="status-badge admin-badge">
+                            <i class="fas fa-crown"></i>
+                            <span>Admin</span>
+                        </div>
+                        <div class="connection-status" id="connection-status">
+                            <div class="status-indicator"></div>
+                            <span id="connection-text">Bağlantı Kontrol Ediliyor...</span>
+                        </div>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-warning admin-btn" id="backup-db" title="Veritabanı Yedekle">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="btn btn-error admin-btn" id="restore-db" title="Veritabanı Geri Yükle">
+                            <i class="fas fa-upload"></i>
+                        </button>
+                        <button class="btn btn-secondary settings-btn" title="Ayarlar">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                        <button class="btn btn-secondary theme-toggle" title="Tema Değiştir">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="btn btn-primary refresh-btn" title="Yenile">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Admin Navigation -->
+    <nav class="admin-nav">
+        <div class="container">
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="#overview" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Genel Bakış
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#tables" class="nav-link">
+                        <i class="fas fa-table"></i>
+                        Tablo Yönetimi
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#users" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        Kullanıcı Yönetimi
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#security" class="nav-link">
+                        <i class="fas fa-shield-alt"></i>
+                        Güvenlik
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#backup" class="nav-link">
+                        <i class="fas fa-database"></i>
+                        Yedekleme
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#logs" class="nav-link">
+                        <i class="fas fa-file-alt"></i>
+                        Loglar
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <div class="container">
+            <!-- Overview Section -->
+            <section id="overview" class="admin-section">
+                <!-- Admin Stats -->
+                <div class="admin-stats">
+                    <div class="stat-card admin-stat">
+                        <div class="stat-icon admin-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-databases">0</h3>
+                            <p>Aktif Veritabanı</p>
+                        </div>
+                        <div class="stat-action">
+                            <button class="btn btn-sm btn-primary" onclick="adminDashboard.createDatabase()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="stat-card admin-stat">
+                        <div class="stat-icon admin-icon">
+                            <i class="fas fa-table"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-tables">0</h3>
+                            <p>Toplam Tablo</p>
+                        </div>
+                        <div class="stat-action">
+                            <button class="btn btn-sm btn-primary" onclick="adminDashboard.createTable()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="stat-card admin-stat">
+                        <div class="stat-icon admin-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-users">0</h3>
+                            <p>Aktif Kullanıcı</p>
+                        </div>
+                        <div class="stat-action">
+                            <button class="btn btn-sm btn-primary" onclick="adminDashboard.createUser()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="stat-card admin-stat">
+                        <div class="stat-icon admin-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="security-alerts">0</h3>
+                            <p>Güvenlik Uyarısı</p>
+                        </div>
+                        <div class="stat-action">
+                            <button class="btn btn-sm btn-warning" onclick="adminDashboard.viewSecurityAlerts()">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Health -->
+                <div class="system-health">
+                    <div class="health-card">
+                        <div class="health-header">
+                            <h3>Sistem Sağlığı</h3>
+                            <div class="health-status" id="system-health-status">
+                                <span class="status-text">Kontrol Ediliyor...</span>
+                                <div class="status-indicator"></div>
+                            </div>
+                        </div>
+                        <div class="health-metrics">
+                            <div class="metric-item">
+                                <span class="metric-label">CPU Kullanımı</span>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" id="cpu-metric" style="width: 0%"></div>
+                                </div>
+                                <span class="metric-value" id="cpu-value">0%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Bellek Kullanımı</span>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" id="memory-metric" style="width: 0%"></div>
+                                </div>
+                                <span class="metric-value" id="memory-value">0%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Disk Kullanımı</span>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" id="disk-metric" style="width: 0%"></div>
+                                </div>
+                                <span class="metric-value" id="disk-value">0%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Ağ Trafiği</span>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" id="network-metric" style="width: 0%"></div>
+                                </div>
+                                <span class="metric-value" id="network-value">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3>Hızlı İşlemler</h3>
+                    <div class="actions-grid">
+                        <button class="action-btn" onclick="adminDashboard.optimizeDatabase()">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Veritabanını Optimize Et</span>
+                        </button>
+                        <button class="action-btn" onclick="adminDashboard.repairTables()">
+                            <i class="fas fa-wrench"></i>
+                            <span>Tabloları Onar</span>
+                        </button>
+                        <button class="action-btn" onclick="adminDashboard.clearCache()">
+                            <i class="fas fa-trash"></i>
+                            <span>Önbelleği Temizle</span>
+                        </button>
+                        <button class="action-btn" onclick="adminDashboard.updateIndexes()">
+                            <i class="fas fa-sync"></i>
+                            <span>İndeksleri Güncelle</span>
+                        </button>
+                        <button class="action-btn" onclick="adminDashboard.analyzeTables()">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Tabloları Analiz Et</span>
+                        </button>
+                        <button class="action-btn" onclick="adminDashboard.checkIntegrity()">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Bütünlüğü Kontrol Et</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tables Management Section -->
+            <section id="tables" class="admin-section hidden">
+                <div class="section-header">
+                    <h2>Tablo Yönetimi</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" onclick="adminDashboard.createTable()">
+                            <i class="fas fa-plus"></i>
+                            Yeni Tablo
+                        </button>
+                        <button class="btn btn-secondary" onclick="adminDashboard.importTable()">
+                            <i class="fas fa-upload"></i>
+                            Tablo İçe Aktar
+                        </button>
+                    </div>
+                </div>
+                <div class="tables-management">
+                    <div id="tables-list-admin" class="admin-tables-list">
+                        <!-- Tablolar burada listelenecek -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Users Management Section -->
+            <section id="users" class="admin-section hidden">
+                <div class="section-header">
+                    <h2>Kullanıcı Yönetimi</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" onclick="adminDashboard.createUser()">
+                            <i class="fas fa-plus"></i>
+                            Yeni Kullanıcı
+                        </button>
+                        <button class="btn btn-secondary" onclick="adminDashboard.importUsers()">
+                            <i class="fas fa-upload"></i>
+                            Kullanıcı İçe Aktar
+                        </button>
+                    </div>
+                </div>
+                <div class="users-management">
+                    <div id="users-list-admin" class="admin-users-list">
+                        <!-- Kullanıcılar burada listelenecek -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Security Section -->
+            <section id="security" class="admin-section hidden">
+                <div class="section-header">
+                    <h2>Güvenlik Yönetimi</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-warning" onclick="adminDashboard.scanSecurity()">
+                            <i class="fas fa-shield-alt"></i>
+                            Güvenlik Taraması
+                        </button>
+                        <button class="btn btn-error" onclick="adminDashboard.blockSuspicious()">
+                            <i class="fas fa-ban"></i>
+                            Şüpheli IP'leri Engelle
+                        </button>
+                    </div>
+                </div>
+                <div class="security-management">
+                    <div class="security-cards">
+                        <div class="security-card">
+                            <h4>Son Güvenlik Olayları</h4>
+                            <div id="security-events" class="security-events">
+                                <!-- Güvenlik olayları burada listelenecek -->
+                            </div>
+                        </div>
+                        <div class="security-card">
+                            <h4>Engellenen IP'ler</h4>
+                            <div id="blocked-ips" class="blocked-ips">
+                                <!-- Engellenen IP'ler burada listelenecek -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Backup Section -->
+            <section id="backup" class="admin-section hidden">
+                <div class="section-header">
+                    <h2>Yedekleme Yönetimi</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" onclick="adminDashboard.createBackup()">
+                            <i class="fas fa-download"></i>
+                            Yedek Oluştur
+                        </button>
+                        <button class="btn btn-secondary" onclick="adminDashboard.scheduleBackup()">
+                            <i class="fas fa-clock"></i>
+                            Otomatik Yedekleme
+                        </button>
+                    </div>
+                </div>
+                <div class="backup-management">
+                    <div class="backup-cards">
+                        <div class="backup-card">
+                            <h4>Son Yedekler</h4>
+                            <div id="recent-backups" class="recent-backups">
+                                <!-- Son yedekler burada listelenecek -->
+                            </div>
+                        </div>
+                        <div class="backup-card">
+                            <h4>Yedekleme Ayarları</h4>
+                            <div class="backup-settings">
+                                <div class="setting-item">
+                                    <label>Otomatik Yedekleme</label>
+                                    <input type="checkbox" id="auto-backup" checked>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Yedekleme Sıklığı</label>
+                                    <select id="backup-frequency">
+                                        <option value="daily">Günlük</option>
+                                        <option value="weekly">Haftalık</option>
+                                        <option value="monthly">Aylık</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Logs Section -->
+            <section id="logs" class="admin-section hidden">
+                <div class="section-header">
+                    <h2>Sistem Logları</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-secondary" onclick="adminDashboard.downloadLogs()">
+                            <i class="fas fa-download"></i>
+                            Logları İndir
+                        </button>
+                        <button class="btn btn-warning" onclick="adminDashboard.clearLogs()">
+                            <i class="fas fa-trash"></i>
+                            Logları Temizle
+                        </button>
+                    </div>
+                </div>
+                <div class="logs-management">
+                    <div class="logs-filter">
+                        <select id="log-level">
+                            <option value="all">Tüm Loglar</option>
+                            <option value="error">Hata</option>
+                            <option value="warning">Uyarı</option>
+                            <option value="info">Bilgi</option>
+                        </select>
+                        <input type="date" id="log-date" placeholder="Tarih seçin">
+                        <button class="btn btn-primary" onclick="adminDashboard.filterLogs()">
+                            <i class="fas fa-filter"></i>
+                            Filtrele
+                        </button>
+                    </div>
+                    <div id="logs-list" class="logs-list">
+                        <!-- Loglar burada listelenecek -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <span>Yükleniyor...</span>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Admin Modal -->
+    <div id="admin-modal" class="modal-overlay hidden">
+        <div class="modal-container admin-modal">
+            <div class="modal-header">
+                <h3 id="admin-modal-title">Modal Başlık</h3>
+                <button class="modal-close" id="admin-modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="admin-modal-body">
+                <p>Modal içeriği burada görünecek.</p>
+            </div>
+            <div class="modal-footer" id="admin-modal-footer">
+                <button class="btn btn-secondary" id="admin-modal-cancel">İptal</button>
+                <button class="btn btn-primary" id="admin-modal-confirm">Onayla</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="../database dashboard/database_dashboard.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

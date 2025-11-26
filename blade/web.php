@@ -20,6 +20,8 @@ Route::get('/welcome', function () {
     $kullaniciBilgisi = [];
     $bilgiAlanlari = ['ziyaretTarihi', 'sayfaAdi', 'versiyon', 'durum'];
     $bilgiDegerleri = [date('d.m.Y H:i:s'), 'Welcome', 'v2.1.0', 'Aktif'];
+    $bilgiGirişimleri = count($bilgiAlanlari);
+    $kullaniciBilgisi['girisimler'] = $bilgiGirişimleri;
     
     for ($i = 0; $i < count($bilgiAlanlari); $i++) {
         $kullaniciBilgisi[$bilgiAlanlari[$i]] = $bilgiDegerleri[$i];
@@ -57,11 +59,16 @@ Route::get('/bilgi', function () {
 Route::get('/kullanici/{id}', function ($id) {
     // Kullanıcı verilerini simüle et
     $kullanicilar = [
-        1 => ['ad' => 'Ahmet', 'soyad' => 'Yılmaz', 'email' => 'ahmet@merthtmlcss.com', 'rol' => 'Admin'],
-        2 => ['ad' => 'Fatma', 'soyad' => 'Demir', 'email' => 'fatma@merthtmlcss.com', 'rol' => 'Kullanıcı'],
-        3 => ['ad' => 'Mehmet', 'soyad' => 'Kaya', 'email' => 'mehmet@merthtmlcss.com', 'rol' => 'Moderatör'],
-        4 => ['ad' => 'Ayşe', 'soyad' => 'Özkan', 'email' => 'ayse@merthtmlcss.com', 'rol' => 'Kullanıcı'],
-        5 => ['ad' => 'Ali', 'soyad' => 'Çelik', 'email' => 'ali@merthtmlcss.com', 'rol' => 'Editör']
+        'ahmet' => ['ad' => 'Ahmet', 'soyad' => 'Yılmaz', 'email' => 'ahmet@merthtmlcss.com', 'rol' => 'Admin', 'id' => 1],
+        'fatma' => ['ad' => 'Fatma', 'soyad' => 'Demir', 'email' => 'fatma@merthtmlcss.com', 'rol' => 'Kullanıcı', 'id' => 2],
+        'mehmet' => ['ad' => 'Mehmet', 'soyad' => 'Kaya', 'email' => 'mehmet@merthtmlcss.com', 'rol' => 'Moderatör', 'id' => 3],
+        'ayse' => ['ad' => 'Ayşe', 'soyad' => 'Özkan', 'email' => 'ayse@merthtmlcss.com', 'rol' => 'Kullanıcı', 'id' => 4],
+        'ali' => ['ad' => 'Ali', 'soyad' => 'Çelik', 'email' => 'ali@merthtmlcss.com', 'rol' => 'Editör', 'id' => 5]
+        'zeynep' => ['ad' => 'Zeynep', 'soyad' => 'Arslan', 'email' => 'zeynep@merthtmlcss.com', 'rol' => 'Sunucu Yöneticisi', 'id' => 6],
+        'can' => ['ad' => 'Can', 'soyad' => 'Yıldız', 'email' => 'can@merthtmlcss.com', 'rol' => 'Kanal Moderatörü', 'id' => 7],
+        'elif' => ['ad' => 'Elif', 'soyad' => 'Kurt', 'email' => 'elif@merthtmlcss.com', 'rol' => 'Ajans Sorumlusu', 'id' => 8],
+        'mert' => ['ad' => 'Mert', 'soyad' => 'Şahin', 'email' => 'mert@merthtmlcss.com', 'rol' => 'Teknik Destek', 'id' => 9],
+        'seda' => ['ad' => 'Seda', 'soyad' => 'Güneş', 'email' => 'seda@merthtmlcss.com', 'rol' => 'Halkla İlişkiler', 'id' => 10]
     ];
     
     // Kullanıcı ID'sine göre veri oluştur
@@ -104,6 +111,11 @@ Route::get('/kullanicilar', function () {
         ['id' => 3, 'ad' => 'Mehmet', 'soyad' => 'Kaya', 'rol' => 'Moderatör'],
         ['id' => 4, 'ad' => 'Ayşe', 'soyad' => 'Özkan', 'rol' => 'Kullanıcı'],
         ['id' => 5, 'ad' => 'Ali', 'soyad' => 'Çelik', 'rol' => 'Editör']
+        ['id' => 6, 'ad' => 'Zeynep', 'soyad' => 'Arslan', 'rol' => 'Sunucu Yöneticisi'],
+        ['id' => 7, 'ad' => 'Can', 'soyad' => 'Yıldız', 'rol' => 'Kanal Möderatörü'],
+        ['id' => 8, 'ad' => 'Elif', 'soyad' => 'Kurt', 'rol' => 'Ajans Sorumlusu'],
+        ['id' => 9, 'ad' => 'Mert', 'soyad' => 'Şahin', 'rol' => 'Teknik Destek'],
+        ['id' => 10, 'ad' => 'Seda', 'soyad' => 'Güneş', 'rol' => 'Halkla İlişkiler']
     ];
     
     $kullaniciListesi = [];
@@ -138,6 +150,11 @@ Route::post('/giris', function (\Illuminate\Http\Request $request) {
         'mehmet' => ['ad' => 'Mehmet', 'soyad' => 'Kaya', 'email' => 'mehmet@merthtmlcss.com', 'rol' => 'Moderatör', 'id' => 3],
         'ayse' => ['ad' => 'Ayşe', 'soyad' => 'Özkan', 'email' => 'ayse@merthtmlcss.com', 'rol' => 'Kullanıcı', 'id' => 4],
         'ali' => ['ad' => 'Ali', 'soyad' => 'Çelik', 'email' => 'ali@merthtmlcss.com', 'rol' => 'Editör', 'id' => 5]
+        'zeynep' => ['ad' => 'Zeynep', 'soyad' => 'Arslan', 'email' => 'zeynep@merthtmlcss.com', 'rol' => 'Sunucu Yöneticisi', 'id' => 6],
+        'can' => ['ad' => 'Can', 'soyad' => 'Yıldız', 'email' => 'can@merthtmlcss.com', 'rol' => 'Kanal Moderatörü', 'id' => 7],
+        'elif' => ['ad' => 'Elif', 'soyad' => 'Kurt', 'email' => 'elif@merthtmlcss.com', 'rol' => 'Ajans Sorumlusu', 'id' => 8],
+        'mert' => ['ad' => 'Mert', 'soyad' => 'Şahin', 'email' => 'mert@merthtmlcss.com', 'rol' => 'Teknik Destek', 'id' => 9],
+        'seda' => ['ad' => 'Seda', 'soyad' => 'Güneş', 'email' => 'seda@merthtmlcss.com', 'rol' => 'Halkla İlişkiler', 'id' => 10]
     ];
     $girisBasarili = false;
     $kullaniciVerisi = [];
@@ -237,6 +254,12 @@ Route::get('/ornek-for', function () {
         'mehmet' => ['ad' => 'Mehmet', 'soyad' => 'Kaya', 'email' => 'mehmet@merthtmlcss.com', 'rol' => 'Moderatör', 'id' => 3],
         'ayse' => ['ad' => 'Ayşe', 'soyad' => 'Özkan', 'email' => 'ayse@merthtmlcss.com', 'rol' => 'Kullanıcı', 'id' => 4],
         'ali' => ['ad' => 'Ali', 'soyad' => 'Çelik', 'email' => 'ali@merthtmlcss.com', 'rol' => 'Editör', 'id' => 5]
+        'zeynep' => ['ad' => 'Zeynep', 'soyad' => 'Arslan', 'email' => 'zeynep@merthtmlcss.com', 'rol' => 'Sunucu Yöneticisi', 'id' => 6],
+        'can' => ['ad' => 'Can', 'soyad' => 'Yıldız', 'email' => 'can@merthtmlcss.com', 'rol' => 'Kanal Moderatörü', 'id' => 7],
+        'elif' => ['ad' => 'Elif', 'soyad' => 'Kurt', 'email' => 'elif@merthtmlcss.com', 'rol' => 'Ajans Sorumlusu', 'id' => 8],
+        'mert' => ['ad' => 'Mert', 'soyad' => 'Şahin', 'email' => 'mert@merthtmlcss.com', 'rol' => 'Teknik Destek', 'id' => 9],
+        'seda' => ['ad' => 'Seda', 'soyad' => 'Güneş', 'email' => 'seda@merthtmlcss.com', 'rol' => 'Halkla İlişkiler', 'id' => 10]
+
     ];
     $anahtarlar = array_keys($kullanicilar);
     $liste = '';
@@ -256,6 +279,11 @@ Route::get('/ornek-while', function () {
         'mehmet' => ['ad' => 'Mehmet', 'soyad' => 'Kaya', 'email' => 'mehmet@merthtmlcss.com', 'rol' => 'Moderatör', 'id' => 3],
         'ayse' => ['ad' => 'Ayşe', 'soyad' => 'Özkan', 'email' => 'ayse@merthtmlcss.com', 'rol' => 'Kullanıcı', 'id' => 4],
         'ali' => ['ad' => 'Ali', 'soyad' => 'Çelik', 'email' => 'ali@merthtmlcss.com', 'rol' => 'Editör', 'id' => 5]
+        'zeynep' => ['ad' => 'Zeynep', 'soyad' => 'Arslan', 'email' => 'zeynep@merthtmlcss.com', 'rol' => 'Sunucu Yöneticisi', 'id' => 6],
+        'can' => ['ad' => 'Can', 'soyad' => 'Yıldız', 'email' => 'can@merthtmlcss.com', 'rol' => 'Kanal Moderatörü', 'id' => 7],
+        'elif' => ['ad' => 'Elif', 'soyad' => 'Kurt', 'email' => 'elif@merthtmlcss.com', 'rol' => 'Ajans Sorumlusu', 'id' => 8],
+        'mert' => ['ad' => 'Mert', 'soyad' => 'Şahin', 'email' => 'mert@merthtmlcss.com', 'rol' => 'Teknik Destek', 'id' => 9],
+        'seda' => ['ad' => 'Seda', 'soyad' => 'Güneş', 'email' => 'seda@merthtmlcss.com', 'rol' => 'Halkla İlişkiler', 'id' => 10]
     ];
     $anahtarlar = array_keys($kullanicilar);
     $i = 0;

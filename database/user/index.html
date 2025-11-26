@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kullanıcı Paneli - Veritabanı</title>
+    <meta name="description" content="Kullanıcılar için veritabanı arayüzü">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.css">
+    <link rel="stylesheet" href="../database dashboard/dashboard.css">
+    <link rel="stylesheet" href="user.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="user-theme">
+    <!-- Header -->
+    <header class="user-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1 class="user-title">
+                        <i class="fas fa-user-circle"></i>
+                        Kullanıcı Paneli
+                    </h1>
+                    <p class="user-subtitle">Kişisel veritabanı görünümünüz</p>
+                </div>
+                <div class="header-right">
+                    <div class="connection-status" id="connection-status">
+                        <div class="status-indicator"></div>
+                        <span id="connection-text">Bağlantı Kontrol Ediliyor...</span>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary theme-toggle" title="Tema Değiştir">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="btn btn-primary refresh-btn" title="Yenile">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="user-nav">
+        <div class="container">
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="#overview" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Genel Bakış
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#my-tables" class="nav-link">
+                        <i class="fas fa-table"></i>
+                        Tablolarım
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#activity" class="nav-link">
+                        <i class="fas fa-history"></i>
+                        Aktivite
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="user-main">
+        <div class="container">
+            <!-- Overview -->
+            <section id="overview" class="user-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-table"></i></div>
+                        <div class="stat-content">
+                            <h3 id="my-tables-count">0</h3>
+                            <p>Tablolarım</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-star"></i></div>
+                        <div class="stat-content">
+                            <h3 id="favorites-count">0</h3>
+                            <p>Favoriler</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-content">
+                            <h3 id="recent-queries">0</h3>
+                            <p>Son Sorgular</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-download"></i></div>
+                        <div class="stat-content">
+                            <h3 id="exports-count">0</h3>
+                            <p>İndirilenler</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <h3>Hızlı İşlemler</h3>
+                    <div class="actions-grid">
+                        <button class="action-btn" id="export-all"><i class="fas fa-file-export"></i><span>Tümünü Dışa Aktar</span></button>
+                        <button class="action-btn" id="refresh-tables"><i class="fas fa-sync"></i><span>Tabloları Yenile</span></button>
+                        <button class="action-btn" id="toggle-favorites"><i class="fas fa-star"></i><span>Favorileri Göster</span></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- My Tables -->
+            <section id="my-tables" class="user-section hidden">
+                <div class="section-header">
+                    <h2>Tablolarım</h2>
+                    <div class="section-actions">
+                        <div class="search-box">
+                            <input type="text" id="user-table-search" placeholder="Tablo ara...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <button class="btn btn-secondary" id="show-filters"><i class="fas fa-filter"></i> Filtreler</button>
+                    </div>
+                </div>
+                <div class="tables-container">
+                    <div id="user-tables-list" class="tables-list"></div>
+                </div>
+            </section>
+
+            <!-- Activity -->
+            <section id="activity" class="user-section hidden">
+                <div class="section-header">
+                    <h2>Son Aktivite</h2>
+                </div>
+                <div id="recent-activity" class="activity-list">
+                    <div class="no-data">Henüz aktivite yok</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <span>Yükleniyor...</span>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="../database dashboard/database_dashboard.js"></script>
+    <script src="user.js"></script>
+</body>
+</html>

@@ -50,3 +50,9 @@ def unregister_javascript_api(app):
     # This is a placeholder for any cleanup if needed.
     logger.info('JavaScript API unregistered'):
         in_table_c11_c12(code, input_data)
+
+def execute_javascript(code, input_data):
+    # Execute the JavaScript code
+    # Return the result
+    # Return the result
+    return execute_javascript(code, input_data)

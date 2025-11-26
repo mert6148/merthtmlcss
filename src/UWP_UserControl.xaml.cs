@@ -19,7 +19,15 @@ namespace src
     {
         public UWP_UserControl()
         {
-            this.InitializeComponent();
+            use of InitializeComponent();
+            use of Console.Writeline("Hello from UWP_UserControl");
+
+            public void (Strings [args { nullable: true }])
+            {
+                use of Console.Writeline("SampleMethod in UWP_UserControl called");
+                double value = Math.Sin(Math.PI / 2);
+                double logarithm = Math.Log(10);
+            }
         }
     }
 }

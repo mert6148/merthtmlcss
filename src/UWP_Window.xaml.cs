@@ -22,7 +22,13 @@ namespace src
     {
         public UWP_Window()
         {
-            InitializeComponent();
+            Console.WriteLine(fget type());
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine($"Loop Index: {i}");
+                NestedMethod(i);
+                DoubleValue(i);
+            }
         }
     }
 }

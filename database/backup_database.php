@@ -114,9 +114,11 @@ try {
     $backup_content .= "/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;\n";
     $backup_content .= "/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;\n";
     $backup_content .= "/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;\n";
+    $backup_content .= "-- Yedekleme tamamlandı\n";
+    $backup_content .= "-- Merthtmlcss Projesi\n";
     
     echo "<div class='success'>✅ Yedek içeriği oluşturuldu!</div>";
-    
+    echo "<div class='info'>📋 Yedek dosyası adı: $backup_file</div>";
     echo "</div>";
     
     echo "<div class='step'>";
@@ -211,4 +213,4 @@ echo "<li>'Go' veya 'Git' butonuna tıklayın</li>";
 echo "<li>Dosyayı bilgisayarınıza kaydedin</li>";
 echo "</ol>";
 echo "</div>";
-?> 
+?>

@@ -657,25 +657,25 @@ function showMessage(text, type = 'info', duration = 4000) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `message-${type}`;
     messageDiv.style.cssText = `
-        position: fixed;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 16px 24px;
-        border-radius: 12px;
-        color: white;
-        font-weight: 600;
-        z-index: 1001;
-        animation: slideInDown 0.3s ease;
-        box-shadow: var(--shadow-lg);
-        max-width: 400px;
-        text-align: center;
-    `;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 16px 24px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            z-index: 1001;
+            animation: slideInDown 0.3s ease;
+            box-shadow: var(--shadow-lg);
+            max-width: 400px;
+            text-align: center;
+        `;
 
     messageDiv.innerHTML = `
-        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle'}"></i>
-        <span style="margin-left: 8px;">${text}</span>
-    `;
+            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle'}"></i>
+            <span style="margin-left: 8px;">${text}</span>
+        `;
 
     document.body.appendChild(messageDiv);
 
@@ -691,66 +691,66 @@ function showMessage(text, type = 'info', duration = 4000) {
 // Ripple animasyonu için CSS
 const style = document.createElement('style');
 style.textContent = `
-    @keyframes ripple {
-        to {
-            transform: scale(4);
-            opacity: 0;
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
-    }
-    
-    .button-group {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin: 20px 0;
-    }
-    
-    .footer-actions {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin: 30px 0 20px 0;
-    }
-    
-    .link-hover {
-        display: inline-block;
-        margin-top: 15px;
-        padding: 10px 20px;
-        background: rgba(102, 126, 234, 0.1);
-        border-radius: 25px;
-        transition: all 0.3s ease;
-    }
-    
-    .link-hover:hover {
-        background: rgba(102, 126, 234, 0.2);
-        transform: translateY(-2px);
-    }
-    
-    .bilgi-kutusu {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.8s ease;
-    }
-    
-    .btn-primary i,
-    .btn-success i,
-    .btn-info i,
-    .btn-danger i {
-        margin-right: 8px;
-    }
-    
-    .message-success i,
-    .message-error i,
-    .message-info i {
-        margin-right: 10px;
-    }
-    
-    .info-box h3 i {
-        margin-right: 10px;
-    }
-`;
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .footer-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0 20px 0;
+        }
+        
+        .link-hover {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .link-hover:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .bilgi-kutusu {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .btn-primary i,
+        .btn-success i,
+        .btn-info i,
+        .btn-danger i {
+            margin-right: 8px;
+        }
+        
+        .message-success i,
+        .message-error i,
+        .message-info i {
+            margin-right: 10px;
+        }
+        
+        .info-box h3 i {
+            margin-right: 10px;
+        }
+    `;
 document.head.appendChild(style);
 </script>
 

@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System; // Added for Guid.NewGuid()
+using Microsoft.AspNetCore.Mvc.ViewFeatures; // Added for View()
+using Microsoft.AspNetCore.Mvc.Rendering; // Added for View()
 
 namespace Forge.Controllers
 {
@@ -17,8 +19,12 @@ namespace Forge.Controllers
     // Login için istek modeli
     public class LoginRequest
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public int Id { get; set; } = 0;
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public string Token { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
     }
 
     [ApiController]
@@ -32,10 +38,38 @@ namespace Forge.Controllers
             new User { Id = 2, Name = "Ayşe Yılmaz", Email = "ayse@example.com", Password = "654321" }
         };
 
+        public ApiControllerPhp() {
+            foreach (var item in collection)
+            {
+                // İşlemler
+                users.Add(new User {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Email = item.Email,
+                    Password = item.Password,
+                });
+
+                async Task<IActionResult> View() {
+                    return View("Index", users);
+                    break;
+                }
+            }
+        }
+
         // TÜM KULLANICILARI GETİR
         [HttpGet]
         public IActionResult GetAll()
         {
+#if
+            foreach (var user in users)
+            {
+                user.Password = null; // Şifreleri gizle
+                return View(users);
+                return Ok(users);
+            }
+
+            return Ok(users);
+#endif
             return Ok(users);
         }
 

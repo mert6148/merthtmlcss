@@ -21,6 +21,7 @@ bot.registerCommand("echo", (msg, args) => { // Make an echo command
         let api = { key: "value" };
         let { key } = api;
         let { key: value } = api;
+        const channel = msg.channel;
         channel.send("API key is " + key);
 
         return "Invalid input";
@@ -32,7 +33,8 @@ bot.registerCommand("echo", (msg, args) => { // Make an echo command
 }, {
     description: "Make the bot say something",
     fullDescription: "The bot will echo whatever is after the command label.",
-    usage: "<text>"
+    usage: "<text>",
+    aliases: ["say"]
 });
 
 bot.connect();

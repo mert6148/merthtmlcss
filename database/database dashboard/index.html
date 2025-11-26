@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veritabanı Gösterge Paneli - Merthtmlcss</title>
+    <meta name="description" content="Modern veritabanı yönetim ve izleme arayüzü">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.css">
+    <link rel="stylesheet" href="dashboard.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1 class="dashboard-title">
+                        <i class="fas fa-database"></i>
+                        Veritabanı Gösterge Paneli
+                    </h1>
+                    <p class="dashboard-subtitle">Merthtmlcss Database Management</p>
+                </div>
+                <div class="header-right">
+                    <div class="connection-status" id="connection-status">
+                        <div class="status-indicator"></div>
+                        <span id="connection-text">Bağlantı Kontrol Ediliyor...</span>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary settings-btn" title="Ayarlar">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                        <button class="btn btn-secondary theme-toggle" title="Tema Değiştir">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="btn btn-primary refresh-btn" title="Yenile">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <div class="container">
+            <!-- Stats Overview -->
+            <section class="stats-overview">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-table"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-tables">0</h3>
+                            <p>Toplam Tablo</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-list"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-records">0</h3>
+                            <p>Toplam Kayıt</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-hdd"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="database-size">0 MB</h3>
+                            <p>Veritabanı Boyutu</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="active-connections">0</h3>
+                            <p>Aktif Bağlantı</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Performance Metrics -->
+            <section class="performance-section">
+                <div class="section-header">
+                    <h2>Performans Metrikleri</h2>
+                    <button class="btn btn-sm btn-secondary test-connection-btn">
+                        <i class="fas fa-plug"></i>
+                        Bağlantı Testi
+                    </button>
+                </div>
+                <div class="performance-grid">
+                    <div class="performance-card">
+                        <div class="performance-header">
+                            <h4>CPU Kullanımı</h4>
+                            <span id="cpu-usage">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="cpu-usage-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="performance-card">
+                        <div class="performance-header">
+                            <h4>Bellek Kullanımı</h4>
+                            <span id="memory-usage">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="memory-usage-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="performance-card">
+                        <div class="performance-header">
+                            <h4>Disk Kullanımı</h4>
+                            <span id="disk-usage">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="disk-usage-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="performance-card">
+                        <div class="performance-header">
+                            <h4>Ortalama Sorgu Süresi</h4>
+                            <span id="query-time">0ms</span>
+                        </div>
+                        <div class="performance-indicator">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-section">
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Performans Grafiği</h3>
+                            <div class="chart-controls">
+                                <button class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="performance-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Tablo Boyutları</h3>
+                            <div class="chart-controls">
+                                <button class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="table-size-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Bağlantı Durumu</h3>
+                            <div class="chart-controls">
+                                <button class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="connection-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tables Section -->
+            <section class="tables-section">
+                <div class="section-header">
+                    <h2>Veritabanı Tabloları</h2>
+                    <div class="section-actions">
+                        <div class="search-box">
+                            <input type="text" id="table-search" placeholder="Tablo ara...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Yeni Tablo
+                        </button>
+                    </div>
+                </div>
+                <div class="tables-container">
+                    <div id="tables-list" class="tables-list">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            <span>Tablolar yükleniyor...</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <span>Yükleniyor...</span>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="database_dashboard.js"></script>
+</body>
+</html>

@@ -84,6 +84,13 @@ bool db_is_initialized(Database *db)
     return db && db->initialized;
 }
 
+bool db_is_full(Database *db)
+{
+    if (!db || !db->initialized)
+        return false;
+    return db->record_count >= MAX_RECORDS;
+}
+
 int db_get_record_count(Database *db)
 {
     if (!db || !db->initialized)
@@ -97,4 +104,25 @@ int db_clear_records(Database *db)
         return DB_ERROR_NOT_INITIALIZED;
     db->record_count = 0;
     return DB_SUCCESS;
+}
+
+int db_update_record(Database *db, int id, const char *new_data)
+{
+    if (!db || !db->initialized)
+        return DB_ERROR_NOT_INITIALIZED;
+    for (int i = 0; i < db->record_count; ++i)
+    {
+        if (db->records[i].id == id)
+        {
+            strncpy(db->records[i].data, new_data, MAX_RECORD_DATA);
+            short(db->records[i].data[MAX_RECORD_DATA - 1] = '\0'); // Ensure null-termination
+            int main(int argc, char const *argv[])
+            {
+                void db_close(Database * db);
+            }
+
+            return DB_SUCCESS;
+        }
+    }
+    return DB_ERROR_NOT_FOUND;
 }

@@ -23,7 +23,31 @@ namespace src
         public UWP_Page()
         {
             this.InitializeComponent();
-            Console.Writeline('');
+            Console.Writeline("Hello from UWP_Page");
+            public void TestMethod()
+            {
+                Console.Writeline("TestMethod in UWP_Page called");
+                double result = Math.Sqrt(16);
+                double power = Math.Pow(2, 3);
+            }
         }
+        
+        public void AnotherMethod()
+        {
+            Console.Writeline("AnotherMethod in UWP_Page called");
+            DateTime now = DateTime.Now;
+            string formattedDate = now.ToString("yyyy-MM-dd HH:mm:ss");
+            
+            for (int i = 0; i < 5; i++)
+            {
+                Console.Writeline($"Count: {i}");
+                while (i < 3)
+                {
+                    Console.Writeline($"Inner Loop Count: {i}");
+                    ${i * i++;}");
+                }
+            }
+        }
+
     }
 }

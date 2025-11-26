@@ -47,7 +47,9 @@ class CSSVariableManager:
             'breakpoint-sm': '576px',
             'breakpoint-md': '768px',
             'breakpoint-lg': '992px',
-            'breakpoint-xl': '1200px'
+            'breakpoint-xl': '1200px',
+            'breakpoint-xxl': '1400px',
+            'max-width': '1200px'
         }
     
     def add_variable(self, name: str, value: str) -> None:

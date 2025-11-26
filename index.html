@@ -25,6 +25,15 @@
     <meta property="og:description" content="Modern web teknolojileri ile geliştirilmiş kapsamlı web uygulaması">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://merthtmlcss.com">
+
+    <!-- 🔥 Yeni Navigasyon Menüsü Eklendi -->
+    <nav class="main-nav" style="width:100%; padding:1rem 2rem; display:flex; justify-content:center; gap:1.5rem; background:rgba(255,255,255,0.2); backdrop-filter:blur(10px); position:fixed; top:0; left:0; z-index:2000; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+        <a href="/" class="nav-link" style="font-weight:600; color:white; text-decoration:none;">Anasayfa</a>
+        <a href="/giris" class="nav-link" style="font-weight:600; color:white; text-decoration:none;">Giriş Yap</a>
+        <a href="/kayit" class="nav-link" style="font-weight:600; color:white; text-decoration:none;">Kayıt Ol</a>
+        <a href="/kullanicilar" class="nav-link" style="font-weight:600; color:white; text-decoration:none;">Kullanıcılar</a>
+        <a href="#iletisim" class="nav-link" style="font-weight:600; color:white; text-decoration:none;">Bize Ulaşın</a>
+    </nav>
     
     <style>
         :root {
@@ -1214,11 +1223,11 @@
                     url: 'https://www.youtube.com/@mert_doganay',
                     icon: 'fab fa-youtube'
                 },
-                linkedin: { 
-                    message: 'LinkedIn profilinizi görüntülemek için tıklayın', 
-                    url: '#',
-                    icon: 'fab fa-linkedin'
-                }
+                instagram: { 
+                    message: 'Instagram hesabınızı görüntülemek için tıklayın', 
+                    url: 'https://www.instagram.com/doganay_mert_5092',
+                    icon: 'fab fa-instagram'
+                },
             };
             
             const platformInfo = platforms[platform];
@@ -1252,10 +1261,10 @@
                     }
                 },
                 phone: {
-                    message: 'Telefon numarası: +90 555 123 45 67',
+                    message: 'Telefon numarası: +90 533 472 75 61',
                     action: () => {
                         showMessage('Telefon numarası kopyalandı!', 'success');
-                        navigator.clipboard.writeText('+90 555 123 45 67');
+                        navigator.clipboard.writeText('+90 533 472 75 61');
                     }
                 },
                 whatsapp: {
@@ -1365,7 +1374,7 @@
                         { tag: 'twitter', icon: 'fab fa-twitter', name: 'Twitter', color: '#1DA1F2' },
                         { tag: 'github', icon: 'fab fa-github', name: 'GitHub', color: '#333' },
                         { tag: 'youtube', icon: 'fab fa-youtube', name: 'YouTube', color: '#FF0000' },
-                        { tag: 'linkedin', icon: 'fab fa-linkedin', name: 'LinkedIn', color: '#0077B5' }
+                        { tag: 'instagram', icon: 'fab fa-instagram', name: 'Instagram', color: '#0077B5' }
                     ];
                     
                     socialPlatforms.forEach(platform => {
@@ -1547,6 +1556,29 @@
         window.addEventListener('unhandledrejection', function(e) {
             console.error('Promise hatası:', e.reason);
             showMessage('Bir işlem başarısız oldu. Lütfen tekrar deneyin.', 'error');
+        });
+
+        // NodeList için forEach polyfill
+        window.addEventListener('load', () => {
+            window.NodeList && !NodeList.prototype.forEach && (NodeList.prototype.forEach = Array.prototype.forEach);
+            window.addEventListener && !Element.prototype.matches && (Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector || ElementInternals.prototype.matches);
+            window.addEventListener && !Element.prototype.closest && (Element.prototype.closest = function(s) {
+                let el = this;
+                do {
+                    if (el.matches(s)) return el;
+                    el = el.parentElement || el.parentNode;
+                    el = el.nodeType === 11 ? el.host : el;
+                    
+                    /** @type {Element | null} 
+                     * @param {string} Elemet || null
+                    */
+
+                } while (el !== null && el.nodeType === 1);
+                return null;
+            });
+            webkitURL = window.URL || window.webkitURL || window.mozURL || window.msURL || WebGLUniformLocation; 
+            
+            let lastScrollTop = 0;
         });
     </script>
 </body>

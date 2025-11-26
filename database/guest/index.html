@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misafir Görünümü - Veritabanı Bilgileri</title>
+    <meta name="description" content="Sınırlı veritabanı görüntüleme arayüzü">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.css">
+    <link rel="stylesheet" href="../database dashboard/dashboard.css">
+    <link rel="stylesheet" href="guest.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="guest-theme">
+    <!-- Guest Header -->
+    <header class="guest-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1 class="guest-title">
+                        <i class="fas fa-eye"></i>
+                        Misafir Görünümü
+                    </h1>
+                    <p class="guest-subtitle">Sınırlı Veritabanı Bilgileri</p>
+                </div>
+                <div class="header-right">
+                    <div class="guest-status">
+                        <div class="status-badge guest-badge">
+                            <i class="fas fa-user"></i>
+                            <span>Misafir</span>
+                        </div>
+                        <div class="connection-status" id="connection-status">
+                            <div class="status-indicator"></div>
+                            <span id="connection-text">Bağlantı Kontrol Ediliyor...</span>
+                        </div>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary guest-btn" id="login-btn" title="Giriş Yap">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Giriş Yap
+                        </button>
+                        <button class="btn btn-secondary theme-toggle" title="Tema Değiştir">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="btn btn-primary refresh-btn" title="Yenile">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Guest Navigation -->
+    <nav class="guest-nav">
+        <div class="container">
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="#overview" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Genel Bakış
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#public-tables" class="nav-link">
+                        <i class="fas fa-table"></i>
+                        Genel Tablolar
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#statistics" class="nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        İstatistikler
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="guest-main">
+        <div class="container">
+            <!-- Overview Section -->
+            <section id="overview" class="guest-section">
+                <!-- Guest Notice -->
+                <div class="guest-notice">
+                    <div class="notice-content">
+                        <i class="fas fa-info-circle"></i>
+                        <div class="notice-text">
+                            <h3>Misafir Görünümü</h3>
+                            <p>Bu görünümde sadece genel veritabanı bilgileri görüntülenebilir. Daha fazla özellik için giriş yapın.</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="guestDashboard.showLoginModal()">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Giriş Yap
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Public Stats -->
+                <div class="public-stats">
+                    <div class="stat-card public-stat">
+                        <div class="stat-icon public-icon">
+                            <i class="fas fa-table"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="public-tables-count">0</h3>
+                            <p>Genel Tablo</p>
+                        </div>
+                    </div>
+                    <div class="stat-card public-stat">
+                        <div class="stat-icon public-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="public-db-size">0 MB</h3>
+                            <p>Veritabanı Boyutu</p>
+                        </div>
+                    </div>
+                    <div class="stat-card public-stat">
+                        <div class="stat-icon public-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="public-uptime">0</h3>
+                            <p>Çalışma Süresi</p>
+                        </div>
+                    </div>
+                    <div class="stat-card public-stat">
+                        <div class="stat-icon public-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="public-status">Aktif</h3>
+                            <p>Sistem Durumu</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Info -->
+                <div class="system-info">
+                    <div class="info-card">
+                        <div class="info-header">
+                            <h3>Sistem Bilgileri</h3>
+                            <div class="info-status" id="system-status">
+                                <span class="status-text">Aktif</span>
+                                <div class="status-indicator connected"></div>
+                            </div>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-item">
+                                <span class="info-label">Veritabanı Versiyonu</span>
+                                <span class="info-value" id="db-version">MySQL 8.0</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Son Güncelleme</span>
+                                <span class="info-value" id="last-update">--</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Toplam Bağlantı</span>
+                                <span class="info-value" id="total-connections">--</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Platform</span>
+                                <span class="info-value" id="platform">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Public Tables Section -->
+            <section id="public-tables" class="guest-section hidden">
+                <div class="section-header">
+                    <h2>Genel Tablolar</h2>
+                    <div class="section-info">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Sadece genel tablolar görüntülenebilir</span>
+                    </div>
+                </div>
+                <div class="public-tables-container">
+                    <div class="search-box">
+                        <input type="text" id="public-table-search" placeholder="Tablo ara...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div id="public-tables-list" class="public-tables-list">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            <span>Tablolar yükleniyor...</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics Section -->
+            <section id="statistics" class="guest-section hidden">
+                <div class="section-header">
+                    <h2>Genel İstatistikler</h2>
+                    <div class="section-info">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Anonim istatistikler</span>
+                    </div>
+                </div>
+                <div class="statistics-container">
+                    <div class="stats-charts">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Tablo Boyutları</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="public-table-chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Sistem Kullanımı</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="public-usage-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-summary">
+                        <div class="summary-card">
+                            <h4>Genel Özet</h4>
+                            <div class="summary-content">
+                                <div class="summary-item">
+                                    <span class="summary-label">Toplam Tablo</span>
+                                    <span class="summary-value" id="summary-tables">0</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Toplam Kayıt</span>
+                                    <span class="summary-value" id="summary-records">0</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Ortalama Boyut</span>
+                                    <span class="summary-value" id="summary-avg-size">0 MB</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">En Büyük Tablo</span>
+                                    <span class="summary-value" id="summary-largest">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal-overlay hidden">
+        <div class="modal-container login-modal">
+            <div class="modal-header">
+                <h3>
+                    <i class="fas fa-sign-in-alt"></i>
+                    Giriş Yap
+                </h3>
+                <button class="modal-close" id="login-modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="username">Kullanıcı Adı</label>
+                        <input type="text" id="username" class="form-input" placeholder="Kullanıcı adınızı girin" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Şifre</label>
+                        <input type="password" id="password" class="form-input" placeholder="Şifrenizi girin" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="remember-me">
+                            <span class="checkmark"></span>
+                            Beni hatırla
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="login-cancel">İptal</button>
+                <button class="btn btn-primary" id="login-submit">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Giriş Yap
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <span>Yükleniyor...</span>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="../database dashboard/database_dashboard.js"></script>
+    <script src="guest.js"></script>
+</body>
+</html>
