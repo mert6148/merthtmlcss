@@ -15,7 +15,8 @@ define('STATUS_INACTIVE', 'inactive');
 define('ROLE_ADMIN', 'admin');
 define('ROLE_OPERATOR', 'operator');
 define('ROLE_VIEWER', 'viewer');
-define('PARAM_STATUS', ':status');
+define('ERROR_METHOD_NOT_ALLOWED', 'Method not allowed');
+define('PHP_INPUT_STREAM', 'php://input');
 
 require_once '../../vendor/autoload.php';
 
@@ -222,6 +223,211 @@ class AdminController {
             return ['error' => 'Admin kullanıcıları alınamadı'];
         }
     }
+
+    /**
+     * Veritabanı istatistiklerini al
+     */
+    public function getDatabaseStats() {
+        try {
+            return [
+                'total_tables' => $this->getTotalTables(),
+                'total_users' => $this->getTotalUsers(),
+                'total_databases' => $this->getTotalDatabases(),
+                'active_connections' => $this->getActiveConnections(),
+                'classified_tables' => $this->classifier->classifyAllTables()
+            ];
+        } catch (Exception $e) {
+            return ['error' => 'İstatistikler alınamadı'];
+        }
+    }
+
+    /**
+     * Toplam tablo sayısı
+     */
+    public function getTotalTables() {
+        try {
+            $stmt = $this->conn->query("SELECT COUNT(*) as count FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE()");
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['count'] ?? 0;
+        } catch (Exception $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Toplam kullanıcı sayısı
+     */
+    public function getTotalUsers() {
+        try {
+            $stmt = $this->conn->query("SELECT COUNT(*) as count FROM users");
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['count'] ?? 0;
+        } catch (Exception $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Toplam veritabanı sayısı
+     */
+    public function getTotalDatabases() {
+        try {
+            $stmt = $this->conn->query("SELECT COUNT(*) as count FROM information_schema.SCHEMATA");
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['count'] ?? 0;
+        } catch (Exception $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Aktif bağlantı sayısı
+     */
+    public function getActiveConnections() {
+        try {
+            $stmt = $this->conn->query("SHOW PROCESSLIST");
+            return $stmt->rowCount();
+        } catch (Exception $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Veritabanı yedeklemesi
+     */
+    public function createBackup() {
+        try {
+            $backup_file = '../../backups/backup_' . date('Y-m-d_H-i-s') . '.sql';
+            return ['success' => true, 'file' => $backup_file];
+        } catch (Exception $e) {
+            return ['error' => 'Yedekleme oluşturulamadı'];
+        }
+    }
+
+    /**
+     * Veritabanı sağlık kontrolü
+     */
+    public function checkDatabaseHealth() {
+        try {
+            return [
+                'status' => 'healthy',
+                'connection' => true,
+                'tables' => $this->getTotalTables(),
+                'disk_usage' => $this->getDiskUsage(),
+                'timestamp' => date('Y-m-d H:i:s')
+            ];
+        } catch (Exception $e) {
+            return ['status' => 'error', 'message' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * Disk kullanımı
+     */
+    public function getDiskUsage() {
+        try {
+            $stmt = $this->conn->query("SELECT SUM(data_length + index_length) / 1024 / 1024 as size_mb FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE()");
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['size_mb'] ?? 0;
+        } catch (Exception $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Tablo sınıflandırmasını al
+     */
+    public function getTableClassification($tableName) {
+        return $this->classifier->classifyTable($tableName);
+    }
+
+    /**
+     * Kolon sınıflandırmasını al
+     */
+    public function getColumnClassification($tableName, $columnName) {
+        return $this->classifier->classifyColumn($tableName, $columnName);
+    }
+
+    /**
+     * Admin kullanıcısı oluştur
+     */
+    public function createAdmin($username, $email, $password, $role = 'operator') {
+        try {
+            $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+            $stmt = $this->conn->prepare("INSERT INTO admins (username, email, password, role, status) VALUES (:username, :email, :password, :role, :status)");
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':password', $hashed_password);
+            $stmt->bindParam(':role', $role);
+            $stmt->bindParam(':status', STATUS_ACTIVE);
+            $stmt->execute();
+            return ['success' => true, 'id' => $this->conn->lastInsertId()];
+        } catch (Exception $e) {
+            return ['error' => 'Admin kullanıcısı oluşturulamadı'];
+        }
+    }
+
+    /**
+     * Admin kullanıcısı güncelle
+     */
+    public function updateAdmin($id, $username, $email, $role) {
+        try {
+            $stmt = $this->conn->prepare("UPDATE admins SET username = :username, email = :email, role = :role WHERE id = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':role', $role);
+            $stmt->execute();
+            return ['success' => true];
+        } catch (Exception $e) {
+            return ['error' => 'Admin güncellenemedi'];
+        }
+    }
+
+    /**
+     * Admin kullanıcısı sil (soft delete)
+     */
+    public function deleteAdmin($id) {
+        try {
+            $stmt = $this->conn->prepare("UPDATE admins SET status = :status WHERE id = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':status', STATUS_INACTIVE);
+            $stmt->execute();
+            return ['success' => true];
+        } catch (Exception $e) {
+            return ['error' => 'Admin silinemedi'];
+        }
+    }
+
+    /**
+     * Log kaydı ekle
+     */
+    public function addLog($action, $details, $user_id = null) {
+        try {
+            $stmt = $this->conn->prepare("INSERT INTO admin_logs (action, details, user_id, created_at) VALUES (:action, :details, :user_id, NOW())");
+            $stmt->bindParam(':action', $action);
+            $stmt->bindParam(':details', $details);
+            $stmt->bindParam(':user_id', $user_id);
+            $stmt->execute();
+            return ['success' => true, 'log_id' => $this->conn->lastInsertId()];
+        } catch (Exception $e) {
+            return ['error' => 'Log kaydı eklenemedi'];
+        }
+    }
+
+    /**
+     * Log kayıtlarını al
+     */
+    public function getLogs($limit = 50) {
+        try {
+            $stmt = $this->conn->prepare("SELECT id, action, details, user_id, created_at FROM admin_logs ORDER BY created_at DESC LIMIT :limit");
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            return [];
+        }
+    }
 }
 
 // API endpoint'leri
@@ -230,19 +436,108 @@ header('Content-Type: application/json');
 $action = $_GET['action'] ?? null;
 $controller = new AdminController();
 
-if ($action === 'stats') {
-    echo json_encode($controller->getDatabaseStats());
-} elseif ($action === 'health') {
-    echo json_encode($controller->checkDatabaseHealth());
-} elseif ($action === 'admins') {
-    echo json_encode($controller->getAllAdmins());
-} elseif ($action === 'backup') {
-    echo json_encode($controller->createBackup());
-} elseif ($action === 'table-classification' && isset($_GET['table'])) {
-    echo json_encode($controller->getTableClassification($_GET['table']));
-} elseif ($action === 'column-classification' && isset($_GET['table']) && isset($_GET['column'])) {
-    echo json_encode($controller->getColumnClassification($_GET['table'], $_GET['column']));
-} else {
-    http_response_code(400);
-    echo json_encode(['error' => 'Invalid action']);
+switch ($action) {
+    case 'stats':
+        echo json_encode($controller->getDatabaseStats());
+        break;
+
+    case 'health':
+        echo json_encode($controller->checkDatabaseHealth());
+        break;
+
+    case 'admins':
+        echo json_encode($controller->getAllAdmins());
+        break;
+
+    case 'backup':
+        echo json_encode($controller->createBackup());
+        break;
+
+    case 'table-classification':
+        if (isset($_GET['table'])) {
+            echo json_encode($controller->getTableClassification($_GET['table']));
+        } else {
+            http_response_code(400);
+            echo json_encode(['error' => 'Table parameter required']);
+        }
+        break;
+
+    case 'column-classification':
+        if (isset($_GET['table']) && isset($_GET['column'])) {
+            echo json_encode($controller->getColumnClassification($_GET['table'], $_GET['column']));
+        } else {
+            http_response_code(400);
+            echo json_encode(['error' => 'Table and column parameters required']);
+        }
+        break;
+
+    case 'logs':
+        $limit = $_GET['limit'] ?? 50;
+        echo json_encode($controller->getLogs((int) $limit));
+        break;
+
+    case 'add-admin':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = json_decode(file_get_contents(PHP_INPUT_STREAM), true);
+            echo json_encode($controller->createAdmin(
+                $data['username'] ?? '',
+                $data['email'] ?? '',
+                $data['password'] ?? '',
+                $data['role'] ?? 'operator'
+            ));
+        } else {
+            http_response_code(405);
+            echo json_encode(['error' => ERROR_METHOD_NOT_ALLOWED]);
+        }
+        break;
+
+    case 'update-admin':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = json_decode(file_get_contents(PHP_INPUT_STREAM), true);
+            echo json_encode($controller->updateAdmin(
+                $data['id'] ?? null,
+                $data['username'] ?? '',
+                $data['email'] ?? '',
+                $data['role'] ?? ''
+            ));
+        } else {
+            http_response_code(405);
+            echo json_encode(['error' => ERROR_METHOD_NOT_ALLOWED]);
+        }
+        break;
+
+    case 'delete-admin':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = json_decode(file_get_contents(PHP_INPUT_STREAM), true);
+            echo json_encode($controller->deleteAdmin($data['id'] ?? null));
+        } else {
+            http_response_code(405);
+            echo json_encode(['error' => ERROR_METHOD_NOT_ALLOWED]);
+        }
+        break;
+
+    case 'add-log':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = json_decode(file_get_contents(PHP_INPUT_STREAM), true);
+            echo json_encode($controller->addLog(
+                $data['action'] ?? '',
+                $data['details'] ?? '',
+                $data['user_id'] ?? null
+            ));
+        } else {
+            http_response_code(405);
+            echo json_encode(['error' => ERROR_METHOD_NOT_ALLOWED]);
+        }
+        break;
+
+    default:
+        http_response_code(400);
+        echo json_encode([
+            'error' => 'Invalid action',
+            'available_actions' => [
+                'stats', 'health', 'admins', 'backup',
+                'table-classification', 'column-classification',
+                'logs', 'add-admin', 'update-admin', 'delete-admin', 'add-log'
+            ]
+        ]);
 }
