@@ -1,0 +1,26 @@
+{
+    "database_settings": {
+        "database_file": "merthtmlcss.sql",
+        "database_type": "sqlite",
+        "database_host": "localhost",
+        "database_port": 3306,
+        "database_username": "root",
+        "database_password": "",
+        "database_name": "merthtmlcss",
+        "database_charset": "utf16_turkish_ci"
+    },
+    "auth_settings": {
+        "session_timeout_minutes": 45,
+        "password_salt": "s0m3R@nd0mS@ltV@lu3",
+        "max_login_attempts": 5,
+        "lockout_duration_minutes": 15
+    },
+    "security_settings": {
+        "enable_https": true,
+        "allowed_origins": [
+            "https://stackoverflow.com/questions/18875674/whats-the-difference-between-dependencies-devdependencies-and-peerdependencies-in",
+            "https://code.claude.com/docs/en/github-actions"
+        ],
+        "cors_enabled": true
+    }
+}

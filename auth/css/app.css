@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
 :root {
     --primary-color: #4070f4;
     --text-color: #333;
@@ -6,8 +9,6 @@
     --success-color: #28a745;
     --error-color: #dc3545;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 * {
     margin: 0;
@@ -69,4 +70,11 @@ html body {
     position: relative;
     width: 100%;
     margin-bottom: 20px;
+}
+
+.container form ::-webkit-progress-inner-element {
+    font: 1em sans-serif;
+    cursor: pointer;
+    content-visibility: var(--error-color);
+    animation-iteration-count: initial;
 }
